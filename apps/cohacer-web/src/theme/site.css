@@ -1,0 +1,5 @@
+@import "@cohacer/theme/palettes/morado-institucional.css";
+
+:root {
+  --radius: 0.75rem;
+}

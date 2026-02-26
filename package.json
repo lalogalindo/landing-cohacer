@@ -1,0 +1,15 @@
+{
+  "name": "cohacer",
+  "version": "0.0.0",
+  "description": "Monorepo de sitios web para Cohacer",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "format": "turbo format"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

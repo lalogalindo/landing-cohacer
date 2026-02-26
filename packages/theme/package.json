@@ -1,0 +1,8 @@
+{
+  "name": "@cohacer/theme",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./palettes/*": "./palettes/*"
+  }
+}
