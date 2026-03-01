@@ -1,4 +1,5 @@
 import type { HeroVariant, HeroCta } from "@cohacer/ui";
+import type { ProgramsContent } from "./programs";
 
 export type SiteKey = 'cohacer-web' | 'unidho-web' | 'acuerdo286-web';
 export type LayoutKey = 'stacked' | 'twoColumnLead' | 'longForm';
@@ -30,7 +31,8 @@ export type LandingSection =
   | TrustSection
   | PricingSection
   | BenefitsSection
-  | LeadFormSection;
+  | LeadFormSection
+  | ProgramsSection;
 
 
 export type HeroSection = {
@@ -53,6 +55,12 @@ export type HeroSection = {
     alt: string;
   };
   overlayOpacity: number;
+};
+
+export type ProgramsSection = {
+  type: "programs";
+  id: string;
+  content: ProgramsContent;
 };
 
 export type BulletsSection = {

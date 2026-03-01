@@ -7,7 +7,10 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
-    "format": "turbo format"
+    "format": "turbo format",
+    "dev:cohacer": "pnpm --filter cohacer-web dev",
+    "dev:unidho": "pnpm --filter unidho-web dev",
+    "dev:acuerdo": "pnpm --filter acuerdo286-web dev"
   },
   "devDependencies": {
     "turbo": "^2.0.0"
