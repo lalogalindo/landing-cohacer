@@ -21,16 +21,30 @@ export const cohacerWebContent: LandingPageContent = {
     ],
   },
   sections: [
-    {
+    { 
       type: 'hero',
       id: 'inicio',
-      eyebrow: 'Acuerdo 286 de la SEP',
-      title: 'TITULACIÓN POR EXPERIENCIA LABORAL',
-      subtitle: 'EN MÉXICO — Legal, seguro, confiable, personalizado y con garantía por escrito.',
-      ctas: [
-        { label: 'Solicitar contacto', href: '#contacto', variant: 'default' },
-        { label: 'Ver requisitos', href: '#requisitos', variant: 'secondary' },
-      ],
+      variant: 'background',
+      eyebrow: 'Titulación por experiencia laboral',
+      title: 'Titúlate sin volver a estudiar una carrera',
+      subtitle: 'Proceso claro, rápido y acompañado.',
+      primaryCta: {
+        label: 'Iniciar por WhatsApp',
+        href: 'https://wa.me/52...',
+        external: true,
+        button: {
+          className: 'jamon',
+        },
+      },
+      secondaryCta: {
+        label: 'Ver programas',
+        href: '#programas'
+      },
+      media: {
+        src: 'https://picsum.photos/1600/900',
+        alt: 'Graduación'
+      },
+      overlayOpacity: 0.6
     },
     {
       type: 'bullets',

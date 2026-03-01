@@ -1,3 +1,5 @@
+import type { HeroVariant, HeroCta } from "@cohacer/ui";
+
 export type SiteKey = 'cohacer-web' | 'unidho-web' | 'acuerdo286-web';
 export type LayoutKey = 'stacked' | 'twoColumnLead' | 'longForm';
 
@@ -11,7 +13,6 @@ export type LandingPageContent = {
   header: {
     brand: {
       name: string;
-      // si ya tienes assets, aquí va la ruta local.
       logoSrc?: string;
     };
     nav?: Array<{ label: string; href: string }>;
@@ -31,13 +32,27 @@ export type LandingSection =
   | BenefitsSection
   | LeadFormSection;
 
+
 export type HeroSection = {
   type: 'hero';
   id: string;
+  variant: HeroVariant;
   eyebrow?: string;
   title: string;
-  subtitle?: string;
-  ctas: Array<{ label: string; href: string; variant?: 'default' | 'secondary' }>;
+
+  /** ✅ requerido para el componente */
+  subtitle: string;
+
+  /** ✅ reemplaza ctas[] por el patrón definitivo */
+  primaryCta: HeroCta;
+  secondaryCta?: HeroCta;
+
+  /** ✅ imagen opcional */
+  media?: {
+    src: string;
+    alt: string;
+  };
+  overlayOpacity: number;
 };
 
 export type BulletsSection = {
