@@ -12,6 +12,7 @@ import {
   Button,
   Section,
 } from "@cohacer/ui";
+import { ProgramsSection } from "@/components";
 
 type Props = {
   content: LandingPageContent;
@@ -94,6 +95,13 @@ function Footer({ content }: { content: LandingPageContent }) {
  */
 function SectionRenderer({ section }: { section: LandingSection }) {
   switch (section.type) {
+    /**
+     * Hero principal (dinámico desde JSON).
+     *
+     * - Presenta el mensaje principal del sitio y el CTA primario.
+     * - Soporta variantes de layout del Hero (background / imageLeft / imageRight).
+     *
+     */
     case "hero":
       return (
         <div className="flex flex-wrap gap-3">
@@ -103,45 +111,14 @@ function SectionRenderer({ section }: { section: LandingSection }) {
 
     /**
      * Programas (dinámico desde JSON).
-     * Esta sección debe existir en `content.sections` justo después del hero:
-     * { type: "programs", id: "programas", content: programsJson }
+     *
+     * - Muestra el listado de programas en cards.
+     * - Permite ver detalles dentro de la misma card mediante un acordeón interno:
+     *
      */
     case "programs":
       return (
-        <Section id={section.id} spacing="sm">
-          <div className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold">{section.content.sectionTitle}</h2>
-            <p className="mt-2 text-sm text-muted-foreground">{section.content.sectionSubtitle}</p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {section.content.programs.map((program) => (
-              <Card
-                key={program.id}
-                className={program.highlighted ? "border-2 border-[oklch(var(--primary))]" : ""}
-              >
-                <CardHeader>
-                  <CardTitle>{program.title}</CardTitle>
-                  <CardDescription>{program.price}</CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                  <ul className="list-disc pl-5 text-sm space-y-1">
-                    {program.bullets.map((bullet, i) => (
-                      <li key={`${program.id}-bullet-${i}`}>{bullet}</li>
-                    ))}
-                  </ul>
-                </CardContent>
-
-                <CardFooter>
-                  <Button fullWidth href={`#${section.id}-${program.id}`}>
-                    Ver detalles
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        </Section>
+        <ProgramsSection {...section} />
       );
 
     case "bullets":

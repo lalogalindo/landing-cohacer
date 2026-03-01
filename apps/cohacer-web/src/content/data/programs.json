@@ -1,0 +1,50 @@
+{
+  "sectionTitle": "Programas",
+  "sectionSubtitle": "Elige la ruta que mejor se ajuste a tu perfil. Revisa requisitos, acuerdos y costos en cada opción.",
+  "programs": [
+    {
+      "id": "experiencia",
+      "title": "Titulación por Experiencia Laboral",
+      "price": "Evaluación sin costo",
+      "highlighted": true,
+      "bullets": ["Ruta guiada", "Acompañamiento", "Proceso claro"],
+      "details": {
+        "requisitos": ["Identificación oficial", "CURP", "Evidencias de experiencia"],
+        "acuerdos": {
+          "label": "Certificado de ejemplo (Acuerdo 286)",
+          "description": "Consulta un ejemplo del certificado.",
+          "certificate": { "src": "https://picsum.photos/1600/900", "alt": "Certificado de ejemplo" }
+        },
+        "costos": ["Diagnóstico: sin costo", "Proceso: según perfil", "Evaluación: según ruta"]
+      }
+    },
+    {
+      "id": "conocimientos",
+      "title": "Acreditación de Conocimientos",
+      "price": "Ruta por evaluación",
+      "bullets": ["Evaluación teórica/práctica", "Preparación enfocada", "Soporte"],
+      "details": {
+        "requisitos": ["Identificación oficial", "Formato de registro"],
+        "acuerdos": {
+          "label": "Constancia de acreditación",
+          "description": "Ejemplo de constancia/resultado."
+        },
+        "costos": ["Registro: variable", "Evaluación: según área", "Emisión: según proceso"]
+      }
+    },
+    {
+      "id": "asesoria",
+      "title": "Regularización / Asesoría",
+      "price": "Acompañamiento",
+      "bullets": ["Plan de estudio", "Revisión de evidencias", "Seguimiento"],
+      "details": {
+        "requisitos": ["Entrevista inicial", "Diagnóstico de perfil"],
+        "acuerdos": {
+          "label": "Guía de preparación",
+          "description": "Material de ejemplo para tu ruta."
+        },
+        "costos": ["Paquetes: según alcance", "Sesiones: por bloque", "Revisión: según volumen"]
+      }
+    }
+  ]
+}
