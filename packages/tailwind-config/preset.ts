@@ -5,32 +5,33 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "oklch(var(--background))",
+        foreground: "oklch(var(--foreground))",
 
-        card: "var(--card)",
-        "card-foreground": "var(--card-foreground)",
+        card: "oklch(var(--card))",
+        "card-foreground": "oklch(var(--card-foreground))",
 
-        popover: "var(--popover)",
-        "popover-foreground": "var(--popover-foreground)",
+        popover: "oklch(var(--popover))",
+        "popover-foreground": "oklch(var(--popover-foreground))",
 
-        primary: "var(--primary)",
-        "primary-foreground": "var(--primary-foreground)",
+        primary: "oklch(var(--primary))",
+        "primary-foreground": "oklch(var(--primary-foreground))",
 
-        secondary: "var(--secondary)",
-        "secondary-foreground": "var(--secondary-foreground)",
+        secondary: "oklch(var(--secondary))",
+        "secondary-foreground": "oklch(var(--secondary-foreground))",
 
-        muted: "var(--muted)",
-        "muted-foreground": "var(--muted-foreground)",
+        muted: "oklch(var(--muted))",
+        "muted-foreground": "oklch(var(--muted-foreground))",
 
-        accent: "var(--accent)",
-        "accent-foreground": "var(--accent-foreground)",
+        accent: "oklch(var(--accent))",
+        "accent-foreground": "oklch(var(--accent-foreground))",
 
-        destructive: "var(--destructive)",
+        destructive: "oklch(var(--destructive))",
+        "destructive-foreground": "oklch(var(--destructive-foreground))",
 
-        border: "var(--border)",
-        input: "var(--input)",
-        ring: "var(--ring)",
+        border: "oklch(var(--border))",
+        input: "oklch(var(--input))",
+        ring: "oklch(var(--ring))",
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -1,8 +1,11 @@
 {
   "name": "@cohacer/theme",
   "private": true,
+  "version": "0.0.1",
   "type": "module",
+  "sideEffects": false,
   "exports": {
+    "./site.css": "./site.css",
     "./palettes/*": "./palettes/*"
   }
 }
