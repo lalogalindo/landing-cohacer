@@ -1,49 +1,97 @@
 {
   "sectionTitle": "Programas",
-  "sectionSubtitle": "Elige la ruta que mejor se ajuste a tu perfil. Revisa requisitos, acuerdos y costos en cada opción.",
+  "sectionSubtitle": "Elige la ruta que mejor se ajuste a tu perfil. En cada opción puedes ver requisitos, acuerdos aplicables y costos estimados.",
   "programs": [
     {
       "id": "experiencia",
       "title": "Titulación por Experiencia Laboral",
-      "price": "Evaluación sin costo",
+      "price": "Diagnóstico sin costo",
       "highlighted": true,
-      "bullets": ["Ruta guiada", "Acompañamiento", "Proceso claro"],
+      "bullets": [
+        "Ruta guiada paso a paso",
+        "Acompañamiento personalizado",
+        "Checklist de evidencias"
+      ],
       "details": {
-        "requisitos": ["Identificación oficial", "CURP", "Evidencias de experiencia"],
+        "requisitos": [
+          "Identificación oficial vigente",
+          "CURP y acta de nacimiento",
+          "Evidencias de experiencia laboral (constancias, contratos, recibos o similares)",
+          "Información académica disponible (si aplica)"
+        ],
         "acuerdos": {
-          "label": "Certificado de ejemplo (Acuerdo 286)",
-          "description": "Consulta un ejemplo del certificado.",
-          "certificate": { "src": "https://picsum.photos/1600/900", "alt": "Certificado de ejemplo" }
+          "label": "Ejemplo de certificado (referencia visual)",
+          "description": "Consulta una referencia visual del documento asociado al proceso.",
+          "certificate": {
+            "src": "https://picsum.photos/1600/900",
+            "alt": "Certificado de ejemplo (referencia visual)"
+          }
         },
-        "costos": ["Diagnóstico: sin costo", "Proceso: según perfil", "Evaluación: según ruta"]
+        "costos": [
+          "Diagnóstico: sin costo",
+          "Acompañamiento y gestión: según perfil",
+          "Evaluación y trámites: variables según ruta"
+        ]
       }
     },
     {
       "id": "conocimientos",
       "title": "Acreditación de Conocimientos",
       "price": "Ruta por evaluación",
-      "bullets": ["Evaluación teórica/práctica", "Preparación enfocada", "Soporte"],
+      "bullets": [
+        "Evaluación teórica/práctica",
+        "Preparación enfocada",
+        "Soporte durante el proceso"
+      ],
       "details": {
-        "requisitos": ["Identificación oficial", "Formato de registro"],
+        "requisitos": [
+          "Identificación oficial vigente",
+          "Formato de registro (te ayudamos a completarlo)",
+          "Evidencias o material de apoyo (si aplica)"
+        ],
         "acuerdos": {
-          "label": "Constancia de acreditación",
-          "description": "Ejemplo de constancia/resultado."
+          "label": "Constancia o resultado (referencia visual)",
+          "description": "Ejemplo de constancia/resultado para que conozcas el formato.",
+          "certificate": {
+            "src": "https://picsum.photos/1600/900",
+            "alt": "Constancia o resultado de ejemplo (referencia visual)"
+          }
         },
-        "costos": ["Registro: variable", "Evaluación: según área", "Emisión: según proceso"]
+        "costos": [
+          "Registro: variable según institución",
+          "Evaluación: depende del área",
+          "Emisión de documentos: según proceso"
+        ]
       }
     },
     {
       "id": "asesoria",
       "title": "Regularización / Asesoría",
-      "price": "Acompañamiento",
-      "bullets": ["Plan de estudio", "Revisión de evidencias", "Seguimiento"],
+      "price": "Acompañamiento flexible",
+      "bullets": [
+        "Plan de preparación",
+        "Revisión de evidencias",
+        "Seguimiento por etapas"
+      ],
       "details": {
-        "requisitos": ["Entrevista inicial", "Diagnóstico de perfil"],
+        "requisitos": [
+          "Entrevista inicial (para conocer tu caso)",
+          "Diagnóstico de perfil y objetivos",
+          "Documentos y evidencias disponibles (lo que tengas)"
+        ],
         "acuerdos": {
-          "label": "Guía de preparación",
-          "description": "Material de ejemplo para tu ruta."
+          "label": "Guía de preparación (referencia)",
+          "description": "Material de ejemplo para ayudarte a estructurar tu expediente.",
+          "certificate": {
+            "src": "https://picsum.photos/1600/900",
+            "alt": "Guía de preparación (referencia visual)"
+          }
         },
-        "costos": ["Paquetes: según alcance", "Sesiones: por bloque", "Revisión: según volumen"]
+        "costos": [
+          "Diagnóstico: sin costo",
+          "Paquetes: según alcance",
+          "Sesiones y revisión: según volumen"
+        ]
       }
     }
   ]

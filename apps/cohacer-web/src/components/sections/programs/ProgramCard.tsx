@@ -15,6 +15,7 @@ import {
   AccordionContent,
 } from "@cohacer/ui";
 import type { Program } from "@/types/programs";
+import { ProgramAgreements } from "./ProgramAgreements";
 
 type AccordionKey = "requisitos" | "acuerdos" | "costos";
 type ListaKey = "requisitos" | "costos";
@@ -41,8 +42,7 @@ type Props = {
  * - Mostrar detalles en acordeón (requisitos/acuerdos/costos).
  *
  * Información adicional:
- * - “Ver certificado” abrirá un modal tipo lightbox (pendiente).
- * - El acordeón se arma sin duplicación con helpers internos.
+ * - “Acuerdos” se delega a ProgramAgreements para evitar crecimiento del archivo.
  */
 export function ProgramCard({
   program,
@@ -51,13 +51,6 @@ export function ProgramCard({
   showFooterButton = true,
 }: Props) {
   const shouldShowAccordion = showFooterButton ? isOpen : true;
-
-  /**
-   * Acción temporal para el certificado.
-   */
-  function handleVerCertificado() {
-    alert("Abrir modal con el certificado");
-  }
 
   /**
    * Determina si la clave corresponde a un campo tipo lista (string[]).
@@ -98,32 +91,7 @@ export function ProgramCard({
       return renderLista(dataString, key);
     }
 
-    const acuerdos = program.details.acuerdos;
-
-    return (
-      <div className="flex flex-col justify-between gap-3">
-        <div className="text-sm">
-          <div className="font-medium">{acuerdos.label}</div>
-          {acuerdos.description ? (
-            <div className="text-muted-foreground">{acuerdos.description}</div>
-          ) : null}
-        </div>
-
-        <div className="flex gap-3 w-full">
-          {acuerdos.certificate?.src ? (
-            <img
-              src={acuerdos.certificate.src}
-              alt={acuerdos.certificate.alt ?? "Certificado"}
-              className="h-14 w-24 rounded-md border border-border object-cover"
-            />
-          ) : null}
-
-          <Button variant="outline" onClick={handleVerCertificado} className="w-full">
-            Ver certificado
-          </Button>
-        </div>
-      </div>
-    );
+    return <ProgramAgreements programId={program.id} acuerdos={program.details.acuerdos} />;
   }
 
   /**
@@ -134,10 +102,16 @@ export function ProgramCard({
    * @param children Contenido del accordion
    * @returns JSX del item completo
    */
-  function renderAccordionItem(value: AccordionKey, label: string, children: React.ReactNode) {
+  function renderAccordionItem(
+    value: AccordionKey,
+    label: string,
+    children: React.ReactNode
+  ) {
     return (
       <AccordionItem key={`${program.id}-acc-${value}`} value={value}>
-        <AccordionTrigger rightIcon={<span aria-hidden>⌄</span>}>{label}</AccordionTrigger>
+        <AccordionTrigger rightIcon={<span aria-hidden>⌄</span>}>
+          {label}
+        </AccordionTrigger>
         <AccordionContent>{children}</AccordionContent>
       </AccordionItem>
     );
