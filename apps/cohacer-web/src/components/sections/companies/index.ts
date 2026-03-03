@@ -1,0 +1,1 @@
+export { CompaniesMarquee } from "./CompaniesMarquee";

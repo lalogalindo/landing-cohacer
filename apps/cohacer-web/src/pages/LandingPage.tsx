@@ -12,7 +12,7 @@ import {
   Button,
   Section,
 } from "@cohacer/ui";
-import { ProgramsSection } from "@/components";
+import { CompaniesMarquee, ProgramsSection } from "@/components";
 
 type Props = {
   content: LandingPageContent;
@@ -120,7 +120,10 @@ function SectionRenderer({ section }: { section: LandingSection }) {
       return (
         <ProgramsSection {...section} />
       );
-
+    case "companies":
+      return (
+        <CompaniesMarquee {...section} />
+      )
     case "bullets":
       return (
         <Section id={section.id} spacing="sm">

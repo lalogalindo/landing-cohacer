@@ -1,5 +1,6 @@
 import type { HeroVariant, HeroCta } from "@cohacer/ui";
-import type { ProgramsContent } from "./programs";
+import type { ProgramsContent } from "@/types/programs";
+import type { CompaniesContent } from "@/types/companies";
 
 export type SiteKey = 'cohacer-web' | 'unidho-web' | 'acuerdo286-web';
 export type LayoutKey = 'stacked' | 'twoColumnLead' | 'longForm';
@@ -25,16 +26,6 @@ export type LandingPageContent = {
   };
 };
 
-export type LandingSection =
-  | HeroSection
-  | BulletsSection
-  | TrustSection
-  | PricingSection
-  | BenefitsSection
-  | LeadFormSection
-  | ProgramsSection;
-
-
 export type HeroSection = {
   type: 'hero';
   id: string;
@@ -57,10 +48,30 @@ export type HeroSection = {
   overlayOpacity: number;
 };
 
+/**
+ * Sección de programas (renderizable).
+ *
+ * Propósito:
+ * - Ser parte del arreglo `content.sections`.
+ * - Proveer el discriminante `type` para el renderer.
+ */
 export type ProgramsSection = {
   type: "programs";
   id: string;
   content: ProgramsContent;
+};
+
+/**
+ * Sección de empresas (renderizable).
+ *
+ * Propósito:
+ * - Ser parte del arreglo `content.sections`.
+ * - Proveer el discriminante `type` para el renderer.
+ */
+export type CompaniesSection = {
+  type: "companies";
+  id: string;
+  content: CompaniesContent;
 };
 
 export type BulletsSection = {
@@ -110,3 +121,20 @@ export type LeadFormSection = {
     | { key: 'source'; label: string; required?: boolean; options: string[] }
   >;
 };
+
+/**
+ * Unión discriminada de secciones renderizables.
+ *
+ * Propósito:
+ * - Habilitar `switch(section.type)` sin `if`s frágiles.
+ * - Forzar que cada sección tenga `type`.
+ */
+export type LandingSection =
+  | HeroSection
+  | BulletsSection
+  | TrustSection
+  | PricingSection
+  | BenefitsSection
+  | LeadFormSection
+  | ProgramsSection
+  | CompaniesSection;
