@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { LandingPage } from '@/pages/LandingPage';
 import { cohacerWebContent } from '@/content/sites/cohacer-web';
 

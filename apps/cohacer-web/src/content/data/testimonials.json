@@ -1,0 +1,55 @@
+{
+  "title": "Historias reales",
+  "subtitle": "Personas que avanzaron con su titulación por experiencia laboral.",
+  "items": [
+    {
+      "id": "t-1",
+      "name": "María G.",
+      "program": "Acuerdo 286 — Titulación por experiencia",
+      "quote": "Me dieron claridad desde la primera llamada. Sentí que por fin tenía un plan real y acompañamiento.",
+      "image": { "src": "https://picsum.photos/1600/900", "alt": "Foto de María" }
+    },
+    {
+      "id": "t-2",
+      "name": "Luis R.",
+      "program": "Acuerdo 286 — Evaluación y asesoría",
+      "quote": "El proceso fue más ordenado de lo que imaginaba. Me explicaron requisitos y tiempos sin letras chiquitas.",
+      "image": { "src": "https://picsum.photos/1600/900", "alt": "Foto de Luis" }
+    },
+    {
+      "id": "t-3",
+      "name": "Karla S.",
+      "program": "Acuerdo 286 — Acompañamiento",
+      "quote": "Lo que más me gustó fue el seguimiento. Me contestaron rápido y siempre supe qué seguía.",
+      "image": { "src": "https://picsum.photos/1600/900", "alt": "Foto de Karla" }
+    },
+    {
+      "id": "t-4",
+      "name": "Jorge A.",
+      "program": "Acuerdo 286 — Titulación por experiencia",
+      "quote": "Trabajo tiempo completo y aun así pude avanzar. Me ayudaron a ordenar documentos y pasos sin estrés.",
+      "image": { "src": "https://picsum.photos/1600/900", "alt": "Foto de Jorge" }
+    },
+    {
+      "id": "t-5",
+      "name": "Fernanda L.",
+      "program": "Acuerdo 286 — Evaluación y asesoría",
+      "quote": "Fueron transparentes con costos y acuerdos. Eso me dio confianza para avanzar sin dudas.",
+      "image": { "src": "https://picsum.photos/1600/900", "alt": "Foto de Fernanda" }
+    },
+    {
+      "id": "t-6",
+      "name": "Ricardo M.",
+      "program": "Acuerdo 286 — Acompañamiento",
+      "quote": "Me gustó que no me vendieron humo. Me dijeron exactamente qué necesitaba y en qué tiempos.",
+      "image": { "src": "https://picsum.photos/1600/900", "alt": "Foto de Ricardo" }
+    },
+    {
+      "id": "t-7",
+      "name": "Daniela P.",
+      "program": "Acuerdo 286 — Titulación por experiencia",
+      "quote": "Me sentí acompañada todo el proceso. La comunicación fue clara y constante, eso vale muchísimo.",
+      "image": { "src": "https://picsum.photos/1600/900", "alt": "Foto de Daniela" }
+    }
+  ]
+}

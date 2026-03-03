@@ -15,9 +15,12 @@ export const sectionStyles = {
     lg: "py-20",
   },
   background: {
-    default: "",
+    default: "bg-[oklch(var(--background))]",
     muted: "bg-[oklch(var(--muted))]",
     card: "bg-[oklch(var(--card))]",
+    primary:
+      "bg-[oklch(var(--primary))] text-[oklch(var(--primary-foreground))]",
+    transparent: "bg-transparent",
   },
 } as const;
 

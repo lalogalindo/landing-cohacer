@@ -1,5 +1,5 @@
 import type { LandingPageContent } from "@/types/types";
-import { programsContent, companiesContent } from "@/content/data";
+import { programsContent, companiesContent, testimonialsContent, teamContent } from "@/content/data";
 
 export const cohacerWebContent: LandingPageContent = {
   siteKey: "cohacer-web",
@@ -64,6 +64,16 @@ export const cohacerWebContent: LandingPageContent = {
       type: "companies",
       id: "empresas",
       content: companiesContent,
+    },
+    {
+      type: "testimonials",
+      id: "testimonios",
+      content: testimonialsContent
+    },
+    {
+      type: "team",
+      id: "equipo",
+      content: teamContent
     },
     {
       type: "bullets",

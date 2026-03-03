@@ -1,0 +1,47 @@
+{
+  "sectionTitle": "Nuestro equipo",
+  "sectionSubtitle": "Personas reales, acompañamiento humano y un proceso claro de principio a fin.",
+  "employees": [
+    {
+      "id": "emp-1",
+      "name": "Mariana López",
+      "role": "Coordinación Académica",
+      "quote": "Convertimos tu experiencia en una titulación con claridad y acompañamiento personalizado.",
+      "avatar": {
+        "src": "https://picsum.photos/400/600",
+        "alt": "Foto de Mariana López"
+      },
+      "socials": {
+        "linkedin": "https://linkedin.com",
+        "x": "https://x.com",
+        "instagram": "https://instagram.com"
+      }
+    },
+    {
+      "id": "emp-2",
+      "name": "Carlos Méndez",
+      "role": "Asesor de Titulación",
+      "quote": "Te guiamos paso a paso para que el proceso sea claro, legal y seguro.",
+      "avatar": {
+        "src": "https://picsum.photos/400/600",
+        "alt": "Foto de Carlos Méndez"
+      },
+      "socials": {
+        "linkedin": "https://linkedin.com"
+      }
+    },
+    {
+      "id": "emp-3",
+      "name": "Laura Hernández",
+      "role": "Atención al Estudiante",
+      "quote": "Tu tranquilidad es nuestra prioridad durante todo el proceso.",
+      "avatar": {
+        "src": "https://picsum.photos/400/600",
+        "alt": "Foto de Laura Hernández"
+      },
+      "socials": {
+        "instagram": "https://instagram.com"
+      }
+    }
+  ]
+}

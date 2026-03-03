@@ -1,6 +1,8 @@
 import type { HeroVariant, HeroCta } from "@cohacer/ui";
 import type { ProgramsContent } from "@/types/programs";
 import type { CompaniesContent } from "@/types/companies";
+import type { TestimonialsSection } from "@/types/testimonials";
+import type { TeamContent } from "@/types/team";
 
 export type SiteKey = 'cohacer-web' | 'unidho-web' | 'acuerdo286-web';
 export type LayoutKey = 'stacked' | 'twoColumnLead' | 'longForm';
@@ -74,6 +76,19 @@ export type CompaniesSection = {
   content: CompaniesContent;
 };
 
+/**
+ * Sección de equipo (renderizable).
+ *
+ * Propósito:
+ * - Ser parte del arreglo `content.sections`.
+ * - Proveer el discriminante `type` para el renderer.
+ */
+export type TeamSection = {
+  type: "team";
+  id: string;
+  content: TeamContent;
+};
+
 export type BulletsSection = {
   type: 'bullets';
   id: string;
@@ -137,4 +152,6 @@ export type LandingSection =
   | BenefitsSection
   | LeadFormSection
   | ProgramsSection
-  | CompaniesSection;
+  | CompaniesSection
+  | TestimonialsSection
+  | TeamSection;

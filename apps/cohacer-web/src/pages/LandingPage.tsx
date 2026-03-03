@@ -1,18 +1,7 @@
-import * as React from "react";
 import type { LandingPageContent, LandingSection } from "@/types/types";
 
 import { HeroSection } from "@cohacer/ui";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-  Button,
-  Section,
-} from "@cohacer/ui";
-import { CompaniesMarquee, ProgramsSection } from "@/components";
+import { CompaniesMarquee, ProgramsSection, TestimonialsCarousel, TeamSection } from "@/components";
 
 type Props = {
   content: LandingPageContent;
@@ -124,57 +113,19 @@ function SectionRenderer({ section }: { section: LandingSection }) {
       return (
         <CompaniesMarquee {...section} />
       )
-    case "bullets":
+    case "testimonials":
       return (
-        <Section id={section.id} spacing="sm">
-          <Card>
-            <CardHeader>
-              <CardTitle>{section.title}</CardTitle>
-              <CardDescription>Requisitos generales</CardDescription>
-            </CardHeader>
-
-            <CardContent>
-              <ul className="list-disc pl-5 text-sm space-y-2">
-                {section.items.map((item, i) => (
-                  <li key={`${section.id}-item-${i}`}>{item}</li>
-                ))}
-              </ul>
-            </CardContent>
-
-            <CardFooter>
-              <Button href="#contacto">Solicitar información</Button>
-            </CardFooter>
-          </Card>
-        </Section>
+        <TestimonialsCarousel
+          id={section.id}
+          title={section.content.title}
+          subtitle={section.content.subtitle}
+          items={section.content.items}
+          autoplay={section.carousel?.autoplay ?? true}
+          autoplayMs={section.carousel?.autoplayMs ?? 4500}
+        />
       );
-
-    case "trust":
-      return (
-        <section id={section.id} className="mx-auto max-w-6xl px-4 py-10">
-          card trust
-        </section>
-      );
-
-    case "pricing":
-      return (
-        <section id={section.id} className="mx-auto max-w-6xl px-4 py-10">
-          card pricing
-        </section>
-      );
-
-    case "benefits":
-      return (
-        <section id={section.id} className="mx-auto max-w-6xl px-4 py-10">
-          card benefits
-        </section>
-      );
-
-    case "leadForm":
-      return (
-        <section id={section.id} className="mx-auto max-w-6xl px-4 py-10">
-          card lead
-        </section>
-      );
+    case "team":
+      return <TeamSection {...section} />;
 
     default:
       return null;

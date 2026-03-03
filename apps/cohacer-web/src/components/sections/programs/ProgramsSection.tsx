@@ -39,7 +39,7 @@ export function ProgramsSection({ id, content, showFooterButton = false }: Props
   }
 
   return (
-    <Section id={id} spacing="sm">
+    <Section id={id} spacing="sm" >
       <div className="mb-10 text-center">
         <h2 className="text-2xl font-bold md:text-3xl">{content.sectionTitle}</h2>
         {content.sectionSubtitle ? (
