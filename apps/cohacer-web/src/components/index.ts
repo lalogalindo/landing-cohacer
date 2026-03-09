@@ -1,4 +1,4 @@
-export * from './sections/programs';
-export * from './sections/companies';
-export * from './sections/testimonials';
-export * from './sections/teams';
+// src/components/index.ts
+export * from "./pages/home";
+export * from "./site/header/Header";
+export * from "./site/footer/Footer";

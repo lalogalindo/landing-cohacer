@@ -1,0 +1,46 @@
+{
+  "title": "Da el Primer Paso. ¿Estás Listo para Invertir en tu Futuro?",
+  "investment": {
+    "amount": "$15,000 MXN",
+    "label": "Inversión Total desde"
+  },
+  "form": {
+    "title": "Recibe tu Plan Personalizado GRATIS",
+    "subtitle": "Con planes flexibles de pago y financiamiento disponible",
+    "submitLabel": "Recibir mi Plan Personalizado GRATIS",
+    "privacyText": "Tus datos están protegidos. Consulta nuestro",
+    "privacyHref": "/aviso-de-privacidad",
+    "fields": [
+      {
+        "key": "fullName",
+        "label": "Nombre Completo *",
+        "placeholder": ""
+      },
+      {
+        "key": "email",
+        "label": "Email *",
+        "placeholder": ""
+      },
+      {
+        "key": "phone",
+        "label": "Teléfono *",
+        "placeholder": ""
+      },
+      {
+        "key": "yearsExperience",
+        "label": "Años de Experiencia *",
+        "placeholder": ""
+      },
+      {
+        "key": "interestLevel",
+        "label": "Nivel de Interés *",
+        "options": [
+          "Solo quiero información",
+          "Estoy evaluando opciones",
+          "Quiero iniciar pronto",
+          "Quiero iniciar de inmediato"
+        ]
+      }
+    ]
+  }
+}

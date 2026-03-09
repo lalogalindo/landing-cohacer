@@ -1,4 +1,10 @@
+/* apps/cohacer-web/src/index.css */
 @config "../tailwind.config.ts";
+
+/* ✅ Escanea TU app (esto te faltaba si no veías estilos) */
+@source "./**/*.{ts,tsx}";
+
+/* ✅ Escanea paquetes del monorepo */
 @source "../../packages/ui/src/**/*.{ts,tsx}";
 @source "../../packages/theme/**/*.{css}";
 

@@ -1,0 +1,23 @@
+{
+  "title": "Historias Reales: Quienes ya dieron el paso",
+  "items": [
+    {
+      "name": "María Carmen López",
+      "role": "Gerente de Recursos Humanos",
+      "quote": "Después de 15 años trabajando sin título, finalmente obtuve mi Licenciatura. En 6 meses me ascendieron a Directora y mi sueldo aumentó 45%.",
+      "highlight": "Aumento salarial: 45%"
+    },
+    {
+      "name": "Jorge Ramírez",
+      "role": "Supervisor de Producción",
+      "quote": "Mi experiencia de 20 años en manufactura ahora tiene el respaldo oficial. Conseguí el puesto de Jefe de Planta que siempre quise.",
+      "highlight": "Ascenso logrado"
+    },
+    {
+      "name": "Ana Sofía Mendoza",
+      "role": "Contadora Pública",
+      "quote": "Ahora puedo firmar estados financieros y abrir mi propio despacho. El proceso fue más fácil de lo que imaginé.",
+      "highlight": "Independencia profesional"
+    }
+  ]
+}

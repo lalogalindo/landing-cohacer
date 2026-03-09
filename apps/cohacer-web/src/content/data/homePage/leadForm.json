@@ -1,0 +1,51 @@
+{
+  "title": "Recibe tu Plan Personalizado GRATIS",
+  "subtitle": "Déjanos tus datos y te contactamos con la mejor ruta para tu caso.",
+  "submitLabel": "Recibir mi Plan Personalizado GRATIS",
+  "privacyText": "Al enviar aceptas el Aviso de Privacidad.",
+  "privacyHref": "/aviso-de-privacidad",
+  "fields": [
+    {
+      "key": "fullName",
+      "label": "Nombre completo",
+      "required": true,
+      "placeholder": "Ej. Juan Pérez"
+    },
+    {
+      "key": "email",
+      "label": "Email",
+      "required": true,
+      "placeholder": "correo@ejemplo.com"
+    },
+    {
+      "key": "phone",
+      "label": "Teléfono",
+      "required": true,
+      "placeholder": "+52 ..."
+    },
+    {
+      "key": "program",
+      "label": "Área de experiencia",
+      "required": true,
+      "options": [
+        "Administración",
+        "Recursos Humanos",
+        "Producción",
+        "Contabilidad",
+        "Educación",
+        "Salud",
+        "Otra"
+      ]
+    },
+    {
+      "key": "source",
+      "label": "Nivel de interés",
+      "required": true,
+      "options": [
+        "Solo estoy explorando",
+        "Quiero información pronto",
+        "Quiero iniciar ya"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "title": "Deja de Estar Estancado. ¡Es el Momento de Crecer!",
+  "subtitle": "Tu experiencia merece reconocimiento oficial. Descubre todo lo que puedes lograr con tu título de la SEP.",
+  "items": [
+    {
+      "icon": "trendUp",
+      "title": "Ascenso Asegurado",
+      "description": "Rompe el tope profesional y accede a puestos directivos"
+    },
+    {
+      "icon": "money",
+      "title": "Más Ingresos",
+      "description": "Aumenta tu potencial salarial hasta un 40%"
+    },
+    {
+      "icon": "graduation",
+      "title": "Acceso a Posgrados",
+      "description": "Tu título es la llave a una Maestría o Doctorado"
+    },
+    {
+      "icon": "spark",
+      "title": "Orgullo y Confianza",
+      "description": "Reconocimiento formal a tu trayectoria profesional"
+    }
+  ]
+}

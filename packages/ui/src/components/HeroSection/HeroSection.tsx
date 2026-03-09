@@ -3,6 +3,7 @@ import * as React from "react";
 import { cn } from "../../lib/cn";
 import { heroSectionStyles as s } from "./HeroSection.styles";
 import { Button } from "@cohacer/ui";
+import { GraduationCapIcon, ManatSignIcon } from "@cohacer/ui";
 
 /**
  * Variantes disponibles para el botón (según tu componente Button).
@@ -30,7 +31,7 @@ export type HeroCtaButtonSize = "sm" | "md" | "lg" | "icon";
  * Configuración visual/funcional del botón de un CTA.
  *
  * Propósito:
- * - Permitir seleccionar tipo de botón (variant), tamaño y clases custom.
+ * - Permitir seleccionar tipo de botón, tamaño y clases custom.
  * - Permitir estados como `loading` e `isActive`.
  * - Permitir iconos left/right para CTAs.
  */
@@ -38,20 +39,17 @@ export type HeroCtaButtonConfig = {
   variant?: HeroCtaButtonVariant;
   size?: HeroCtaButtonSize;
   fullWidth?: boolean;
-
   className?: string;
-
   loading?: boolean;
   isActive?: boolean;
-
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 };
 
 /**
- * Define la estructura de un CTA (Call To Action) mostrado dentro del Hero.
+ * Define la estructura de un CTA mostrado dentro del Hero.
  *
- * Notas:
+ * Información adicional:
  * - `external` permite forzar apertura en nueva pestaña incluso si no es http(s).
  * - `ariaLabel` mejora accesibilidad.
  * - `button` permite controlar el estilo/tamaño/clases/estados del Button.
@@ -64,25 +62,43 @@ export type HeroCta = {
   button?: HeroCtaButtonConfig;
 };
 
+/**
+ * Variantes visuales disponibles del Hero.
+ *
+ * Propósito:
+ * - Permitir distintas composiciones reutilizables del componente.
+ */
 export type HeroVariant = "background" | "imageLeft" | "imageRight";
 
+/**
+ * Íconos decorativos soportados por el Hero.
+ *
+ * Propósito:
+ * - Exponer íconos serializables desde JSON sin pasar ReactNode.
+ */
+export type HeroDecorativeIcon =
+  | "graduationCap"
+  | "manatSign";
+/**
+ * Props del HeroSection.
+ *
+ * Propósito:
+ * - Definir la estructura reusable del hero del design system.
+ */
 export type HeroSectionProps = {
   id: string;
   variant?: HeroVariant;
-
   eyebrow?: string;
   title: string;
   subtitle: string;
-
   primaryCta: HeroCta;
   secondaryCta?: HeroCta;
-
   media?: {
     src: string;
     alt: string;
   };
-
   overlayOpacity?: number;
+  decorativeIcon?: HeroDecorativeIcon;
   className?: string;
 };
 
@@ -93,7 +109,7 @@ export type HeroSectionProps = {
  * - Clasificar URLs que deberían abrirse fuera del sitio.
  *
  * Parámetros:
- * @param href - URL/URI destino.
+ * @param href URL o URI destino.
  *
  * Regresa:
  * @returns `true` si coincide con http(s), mailto o tel.
@@ -109,10 +125,10 @@ function isExternalUrl(href: string) {
  * - Estandarizar `target="_blank"` y `rel="noopener noreferrer"`.
  *
  * Parámetros:
- * @param cta - CTA.
+ * @param cta CTA a evaluar.
  *
  * Regresa:
- * @returns Un objeto con `{ target, rel }` cuando es externo; si no, `undefined`.
+ * @returns Props adicionales para anchors externos o `undefined`.
  */
 function getExternalAnchorProps(cta: HeroCta) {
   const external = cta.external ?? isExternalUrl(cta.href);
@@ -126,13 +142,16 @@ function getExternalAnchorProps(cta: HeroCta) {
  * - Evitar hardcodear estilos en el Hero y permitir override por CTA.
  *
  * Parámetros:
- * @param role - "primary" o "secondary"
+ * @param role Rol del CTA dentro del hero.
  *
  * Regresa:
- * @returns Un objeto `{ variant, size }` con defaults.
+ * @returns Variante y tamaño por defecto.
  */
 function getCtaDefaults(role: "primary" | "secondary") {
-  if (role === "primary") return { variant: "primary" as const, size: "lg" as const };
+  if (role === "primary") {
+    return { variant: "primary" as const, size: "lg" as const };
+  }
+
   return { variant: "outline" as const, size: "lg" as const };
 }
 
@@ -140,14 +159,14 @@ function getCtaDefaults(role: "primary" | "secondary") {
  * Renderiza un CTA usando el componente Button del design system.
  *
  * Propósito:
- * - Unificar estilos y comportamiento de CTAs (incluyendo `loading`, `isActive`, iconos).
+ * - Unificar estilos y comportamiento de CTAs.
  *
  * Parámetros:
- * @param cta - CTA a renderizar.
- * @param role - Rol del CTA ("primary" | "secondary") para defaults.
+ * @param cta CTA a renderizar.
+ * @param role Rol del CTA.
  *
  * Regresa:
- * @returns JSX.Element (Button).
+ * @returns JSX.Element.
  */
 function renderHeroCta(cta: HeroCta, role: "primary" | "secondary") {
   const defaults = getCtaDefaults(role);
@@ -173,6 +192,36 @@ function renderHeroCta(cta: HeroCta, role: "primary" | "secondary") {
 }
 
 /**
+ * Renderiza el ícono decorativo inferior del hero.
+ *
+ * Propósito:
+ * - Permitir que el Hero use íconos configurables desde JSON.
+ *
+ * Parámetros:
+ * @param decorativeIcon Nombre del ícono decorativo.
+ *
+ * Regresa:
+ * @returns JSX.Element | null.
+ */
+function renderDecorativeIcon(decorativeIcon?: HeroDecorativeIcon) {
+  if (!decorativeIcon) return null;
+
+  const baseClass =
+    "mt-12 text-4xl sm:text-5xl text-[oklch(var(--primary))] opacity-90 animate-bounce";
+
+  switch (decorativeIcon) {
+    case "graduationCap":
+      return <GraduationCapIcon className={baseClass} />;
+
+    case "manatSign":
+      return <ManatSignIcon className={baseClass} />;
+
+    default:
+      return null;
+  }
+}
+
+/**
  * HeroSection
  *
  * Propósito:
@@ -194,6 +243,7 @@ export function HeroSection({
   secondaryCta,
   media,
   overlayOpacity = 0.55,
+  decorativeIcon,
   className,
 }: HeroSectionProps) {
   const isBackground = variant === "background";
@@ -205,38 +255,38 @@ export function HeroSection({
       <section
         id={id}
         data-section="hero"
-        className={cn(s.base, "min-h-[70vh] flex items-center", "text-white", className)}
+        className={cn(s.base, s.backgroundBase, "text-white", className)}
       >
-        <div className="absolute inset-0">
-          {media ? (
+        {media ? (
+          <div className="absolute inset-0">
             <img
               src={media.src}
               alt={media.alt}
-              className={cn("w-full h-full object-cover")}
+              className="h-full w-full object-cover"
               loading="eager"
               decoding="async"
             />
-          ) : (
-            <div className="w-full h-full bg-[oklch(var(--foreground))]" />
-          )}
+            <div className="absolute inset-0 bg-black" style={{ opacity: overlayOpacity }} />
+          </div>
+        ) : null}
 
-          <div className="absolute inset-0 bg-black" style={{ opacity: overlayOpacity }} />
-        </div>
+        <div className={cn(s.container, s.backgroundContainer)}>
+          <div className={cn(s.content, s.backgroundContent)}>
+            {eyebrow ? <p className={s.eyebrow}>{eyebrow}</p> : null}
 
-        <div className={cn(s.container, "relative z-10 py-16")}>
-          <div className={cn(s.content, "max-w-2xl")}>
-            {eyebrow ? (
-              <p className="text-xs uppercase tracking-widest opacity-80">{eyebrow}</p>
-            ) : null}
+            <h1
+              className={cn(s.title, s.backgroundTitle, "text-white")}
+              dangerouslySetInnerHTML={{ __html: title }}
+            />
 
-            <h1 className={cn(s.title, "text-white")}>{title}</h1>
+            <p className={cn(s.subtitle, s.backgroundSubtitle, "text-white/90")}>{subtitle}</p>
 
-            <p className={cn(s.subtitle, "text-white/90")}>{subtitle}</p>
-
-            <div className={s.actions}>
+            <div className={cn(s.actions, s.backgroundActions)}>
               {renderHeroCta(primaryCta, "primary")}
               {secondaryCta ? renderHeroCta(secondaryCta, "secondary") : null}
             </div>
+
+            {renderDecorativeIcon(decorativeIcon)}
           </div>
         </div>
       </section>
@@ -249,8 +299,8 @@ export function HeroSection({
         {isImageLeft && media ? (
           <div
             className={cn(
-              "rounded-2xl overflow-hidden border border-[oklch(var(--border))]",
-              "bg-[oklch(var(--card))]"
+              "overflow-hidden rounded-2xl border border-[oklch(var(--border))]",
+              "bg-[oklch(var(--card))]",
             )}
           >
             <img
@@ -283,8 +333,8 @@ export function HeroSection({
         {isImageRight && media ? (
           <div
             className={cn(
-              "rounded-2xl overflow-hidden border border-[oklch(var(--border))]",
-              "bg-[oklch(var(--card))]"
+              "overflow-hidden rounded-2xl border border-[oklch(var(--border))]",
+              "bg-[oklch(var(--card))]",
             )}
           >
             <img

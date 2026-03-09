@@ -48,8 +48,13 @@ export function buttonClassName(opts?: {
   };
 
   const variants: Record<ButtonVariant, string> = {
-    primary:
-      'min-w-26 bg-[oklch(var(--primary))] text-[oklch(var(--primary-foreground))] hover:opacity-90',
+primary:
+  "min-w-26 rounded-xl border-0 " +
+  "bg-[oklch(var(--primary))] text-[oklch(var(--primary-foreground))] " +
+  "shadow-[0_10px_30px_rgba(249,115,22,0.30)] " +
+  "hover:bg-[oklch(var(--primary-hover))] " +
+  "hover:shadow-[0_16px_38px_rgba(234,88,12,0.35)] " +
+  "active:scale-[0.98] transition-all duration-200",
     secondary:
       'min-w-26 bg-[oklch(var(--secondary))] text-[oklch(var(--secondary-foreground))] hover:opacity-90',
     ghost:
