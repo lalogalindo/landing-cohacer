@@ -1,4 +1,3 @@
-import * as React from "react";
 
 import { SiteShell } from "@/components/site/SiteShell/SiteShell";
 import {

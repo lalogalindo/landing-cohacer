@@ -1,5 +1,4 @@
 // src/components/pages/validez/CedulaProcessSection/CedulaProcessSection.tsx
-import * as React from "react";
 import type {
   CedulaProcessContent,
   CedulaProcessStep,

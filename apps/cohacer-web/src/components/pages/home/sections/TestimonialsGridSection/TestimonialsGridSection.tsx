@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { TestimonialsGridContent } from "@/types/pages/home/sections/testimonialsGrid.section";
 import { testimonialsGridStyles as s } from "./TestimonialsGridSection.styles";
 

@@ -1,5 +1,4 @@
 // src/components/site/footer/Footer.tsx
-import * as React from "react";
 import { footerStyles as s } from "./Footer.styles";
 
 export type FooterLink = {

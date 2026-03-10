@@ -1,5 +1,4 @@
 // src/components/pages/home/sections/InvestmentCtaSection/InvestmentCtaSection.tsx
-import * as React from "react";
 import type { InvestmentCtaContent } from "@/types/pages/home/sections/investmentCta.section";
 import { investmentCtaStyles as s } from "./InvestmentCtaSection.styles";
 

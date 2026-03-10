@@ -1,4 +1,3 @@
-import * as React from "react";
 
 import type { HomePageContent } from "@/types/pages/home/home.types";
 import type { HomeSection } from "@/types/pages/home/home.sections";

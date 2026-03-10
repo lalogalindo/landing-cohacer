@@ -1,12 +1,13 @@
 // src/App.tsx
-import * as React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { RoutePlaceholderPage } from "@/pages/RoutePlaceholderPage";
 import { SITE_ROUTES } from "@/routes/siteRoutes";
+import { ScrollToTop } from "@/components/site/ScrollToTop";
 
 import { HomePage, ValidezPage } from "@/pages";
 import { homePageContent } from "@/content/sites/homePage";
 import { validezPageContent } from "@/content/sites/validezPage";
+
 
 /**
  * App
@@ -21,6 +22,8 @@ import { validezPageContent } from "@/content/sites/validezPage";
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
+
       <Routes>
         <Route path={SITE_ROUTES.home} element={<HomePage content={homePageContent} />} />
 

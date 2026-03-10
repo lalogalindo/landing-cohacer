@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { ProcessStepsContent } from "@/types/pages/home/sections/processSteps.section";
 import { processStepsStyles as s } from "./ProcessStepsSection.styles";
 

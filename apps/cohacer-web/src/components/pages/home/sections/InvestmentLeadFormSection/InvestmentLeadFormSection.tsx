@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Button } from "@cohacer/ui";
 import type {
   InvestmentLeadFormContent,
