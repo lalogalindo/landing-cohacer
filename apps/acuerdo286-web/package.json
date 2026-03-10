@@ -12,7 +12,8 @@
   "dependencies": {
     "@cohacer/theme": "workspace:^",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
     "@cohacer/tailwind-config": "workspace:^",

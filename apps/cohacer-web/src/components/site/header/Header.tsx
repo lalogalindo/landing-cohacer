@@ -1,5 +1,6 @@
 // src/components/site/header/Header.tsx
 import * as React from "react";
+import { Link, NavLink } from "react-router-dom";
 import { Button } from "@cohacer/ui";
 import { headerStyles as s } from "./Header.styles";
 
@@ -22,7 +23,7 @@ export type HeaderCta = {
 /**
  * Props del Header.
  */
-type Props = {
+export type HeaderProps = {
   brand: HeaderBrand;
   nav?: HeaderNavItem[];
 
@@ -30,7 +31,7 @@ type Props = {
    * CTA opcional a la derecha (desktop) y al final del menú mobile.
    *
    * Propósito:
-   * - Soportar un CTA tipo “Evaluar perfil gratis” sin hardcodear copy.
+   * - Soportar un CTA sin hardcodear copy.
    */
   cta?: HeaderCta;
 };
@@ -45,7 +46,7 @@ type Props = {
  * - enabled: Si true, bloquea el scroll.
  *
  * Información adicional:
- * - Evita que el usuario “mueva” la página detrás del panel.
+ * - Evita que el usuario mueva la página detrás del panel.
  */
 function useLockBodyScroll(enabled: boolean) {
   React.useEffect(() => {
@@ -84,22 +85,114 @@ function useEscapeToClose(open: boolean, onClose: () => void) {
 }
 
 /**
+ * isExternalHref
+ *
+ * Propósito:
+ * - Detectar si un href apunta a un recurso externo o protocolo especial.
+ *
+ * Parámetros:
+ * - href: Ruta o URL a evaluar.
+ *
+ * Regresa:
+ * - `true` cuando es un link externo, `mailto:` o `tel:`.
+ */
+function isExternalHref(href: string) {
+  return /^https?:\/\//.test(href) || href.startsWith("mailto:") || href.startsWith("tel:");
+}
+
+/**
+ * isHashHref
+ *
+ * Propósito:
+ * - Detectar si un href es un ancla dentro de la misma página.
+ *
+ * Parámetros:
+ * - href: Ruta a evaluar.
+ *
+ * Regresa:
+ * - `true` cuando el href inicia con `#`.
+ */
+function isHashHref(href: string) {
+  return href.startsWith("#");
+}
+
+/**
+ * isInternalRouteHref
+ *
+ * Propósito:
+ * - Detectar si un href debe navegarse mediante `react-router-dom`.
+ *
+ * Parámetros:
+ * - href: Ruta a evaluar.
+ *
+ * Regresa:
+ * - `true` cuando es una ruta interna tipo `/ruta`.
+ */
+function isInternalRouteHref(href: string) {
+  return href.startsWith("/") && !isExternalHref(href);
+}
+
+/**
+ * HeaderNavLink
+ *
+ * Propósito:
+ * - Renderizar un item del menú usando `NavLink` para rutas internas
+ *   o `<a>` cuando el href es externo/ancla.
+ *
+ * Parámetros:
+ * - item: Item de navegación.
+ * - className: Clases visuales base.
+ * - onNavigate: Callback opcional al navegar.
+ *
+ * Regresa:
+ * - Link renderizado para desktop o mobile.
+ */
+function HeaderNavLink({
+  item,
+  className,
+  onNavigate,
+}: {
+  item: HeaderNavItem;
+  className: string;
+  onNavigate?: () => void;
+}) {
+  if (isInternalRouteHref(item.href)) {
+    return (
+      <NavLink
+        to={item.href}
+        className={className}
+        onClick={onNavigate}
+      >
+        {item.label}
+      </NavLink>
+    );
+  }
+
+  return (
+    <a href={item.href} className={className} onClick={onNavigate}>
+      {item.label}
+    </a>
+  );
+}
+
+/**
  * Header
  *
  * Propósito:
- * - Renderizar marca + navegación (desktop) + menú mobile.
- * - Mantenerse agnóstico de páginas: solo recibe datos (brand/nav/cta).
+ * - Renderizar marca + navegación desktop + menú mobile.
+ * - Soportar navegación interna con router y links externos/anclas.
  *
  * Parámetros:
- * - brand: Marca (nombre, logo opcional).
+ * - brand: Marca del sitio.
  * - nav: Links de navegación.
  * - cta: CTA opcional.
  *
  * Información adicional:
- * - En desktop se muestra nav + cta.
- * - En mobile se muestra un panel deslizable con nav + cta.
+ * - El logo navega al home usando `Link`.
+ * - Los items internos usan `NavLink`.
+ * - Los externos o hashes siguen usando `<a>`.
  */
-export function Header({ brand, nav, cta }: Props) {
+export function Header({ brand, nav, cta }: HeaderProps) {
   const [open, setOpen] = React.useState(false);
 
   useLockBodyScroll(open);
@@ -118,20 +211,18 @@ export function Header({ brand, nav, cta }: Props) {
   return (
     <header className={s.root}>
       <div className={s.inner}>
-        <a href="/" className={s.brandWrap} aria-label="Ir al inicio">
+        <Link to="/" className={s.brandWrap} aria-label="Ir al inicio">
           {brand.logoSrc ? (
             <img src={brand.logoSrc} alt={brand.name} className={s.brandLogo} />
           ) : (
             <span className={s.brandText}>{brand.name}</span>
           )}
-        </a>
+        </Link>
 
         {nav?.length ? (
           <nav className={s.desktopNav} aria-label="Navegación principal">
             {nav.map((n) => (
-              <a key={n.href} href={n.href} className={s.navLink}>
-                {n.label}
-              </a>
+              <HeaderNavLink key={n.href} item={n} className={s.navLink} />
             ))}
           </nav>
         ) : null}
@@ -185,14 +276,12 @@ export function Header({ brand, nav, cta }: Props) {
             {nav?.length ? (
               <nav className={s.mobileNav} aria-label="Navegación móvil">
                 {nav.map((n) => (
-                  <a
+                  <HeaderNavLink
                     key={n.href}
-                    href={n.href}
+                    item={n}
                     className={s.mobileNavLink}
-                    onClick={closeOnNavigate}
-                  >
-                    {n.label}
-                  </a>
+                    onNavigate={closeOnNavigate}
+                  />
                 ))}
               </nav>
             ) : null}
@@ -204,7 +293,11 @@ export function Header({ brand, nav, cta }: Props) {
                   variant={cta.variant ?? "primary"}
                   size="lg"
                   fullWidth
-                  onClick={closeOnNavigate}
+                  onClick={() => {
+                    if (!isExternalHref(cta.href) && !isHashHref(cta.href)) {
+                      closeOnNavigate();
+                    }
+                  }}
                 >
                   {cta.label}
                 </Button>

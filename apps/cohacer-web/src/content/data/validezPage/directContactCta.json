@@ -1,0 +1,12 @@
+{
+  "title": "¿Tienes Más Dudas? Hablemos Directamente",
+  "description": "Nuestro compromiso es la transparencia total. Si tienes alguna pregunta específica sobre la validez de tu título, contáctanos sin compromiso.",
+  "primaryAction": {
+    "label": "Evaluar mi Perfil GRATIS",
+    "href": "#contacto"
+  },
+  "secondaryAction": {
+    "label": "Hablar con un Especialista",
+    "href": "https://wa.me/5210000000000"
+  }
+}

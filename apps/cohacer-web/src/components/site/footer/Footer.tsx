@@ -1,18 +1,19 @@
+// src/components/site/footer/Footer.tsx
 import * as React from "react";
 import { footerStyles as s } from "./Footer.styles";
 
-type Link = {
+export type FooterLink = {
   label: string;
   href: string;
 };
 
-type Props = {
+export type FooterProps = {
   brand: {
     name: string;
     tagline?: string;
   };
 
-  infoLinks: Link[];
+  infoLinks: FooterLink[];
 
   contact: {
     email?: string;
@@ -20,7 +21,7 @@ type Props = {
     schedule?: string;
   };
 
-  socialLinks: Link[];
+  socialLinks: FooterLink[];
 
   copyright: string;
 };
@@ -31,6 +32,13 @@ type Props = {
  * Propósito:
  * - Renderizar el footer completo del sitio con 4 columnas.
  * - Mantener layout separado del contenido.
+ *
+ * Parámetros:
+ * - brand: Información principal de marca.
+ * - infoLinks: Links informativos.
+ * - contact: Datos de contacto.
+ * - socialLinks: Links a redes.
+ * - copyright: Texto legal inferior.
  */
 export function Footer({
   brand,
@@ -38,20 +46,16 @@ export function Footer({
   contact,
   socialLinks,
   copyright,
-}: Props) {
+}: FooterProps) {
   return (
     <footer className={s.root}>
       <div className={s.inner}>
         <div className={s.grid}>
-          {/* Brand */}
           <div>
             <div className={s.title}>{brand.name}</div>
-            {brand.tagline ? (
-              <p className={s.text}>{brand.tagline}</p>
-            ) : null}
+            {brand.tagline ? <p className={s.text}>{brand.tagline}</p> : null}
           </div>
 
-          {/* Información */}
           <div>
             <div className={s.title}>Información</div>
             <div className={s.list}>
@@ -63,23 +67,15 @@ export function Footer({
             </div>
           </div>
 
-          {/* Contacto */}
           <div>
             <div className={s.title}>Contacto</div>
             <div className={s.list}>
-              {contact.email && (
-                <div className={s.contactItem}>{contact.email}</div>
-              )}
-              {contact.phone && (
-                <div className={s.contactItem}>{contact.phone}</div>
-              )}
-              {contact.schedule && (
-                <div className={s.contactItem}>{contact.schedule}</div>
-              )}
+              {contact.email ? <div className={s.contactItem}>{contact.email}</div> : null}
+              {contact.phone ? <div className={s.contactItem}>{contact.phone}</div> : null}
+              {contact.schedule ? <div className={s.contactItem}>{contact.schedule}</div> : null}
             </div>
           </div>
 
-          {/* Redes */}
           <div>
             <div className={s.title}>Síguenos</div>
             <div className={s.list}>

@@ -1,0 +1,1 @@
+export * from './Acuerdo286Section';

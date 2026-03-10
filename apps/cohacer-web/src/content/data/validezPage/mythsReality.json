@@ -1,0 +1,70 @@
+{
+  "title": "Desmintiendo Mitos y Dudas Comunes",
+  "subtitle": "Aclaramos las dudas más frecuentes con información oficial y transparente",
+  "items": [
+    {
+      "myth": {
+        "prefix": "MITO:",
+        "title": "\"Es un título falso\"",
+        "description": "Algunas personas creen que los títulos por experiencia laboral no son reales o no tienen validez oficial."
+      },
+      "reality": {
+        "prefix": "REALIDAD:",
+        "title": "Validez oficial completa",
+        "description": "Los títulos expedidos bajo el Acuerdo 286 tienen la misma validez legal que cualquier título universitario tradicional. Están respaldados por la SEP y registrados en el sistema nacional.",
+        "highlight": {
+          "label": "Verificable en:",
+          "text": "Consulta de Cédulas Profesionales - DGP"
+        }
+      }
+    },
+    {
+      "myth": {
+        "prefix": "MITO:",
+        "title": "\"No sirve para trabajar\"",
+        "description": "Existe la creencia de que los empleadores no reconocen estos títulos o que no sirven para ascensos."
+      },
+      "reality": {
+        "prefix": "REALIDAD:",
+        "title": "Reconocimiento laboral pleno",
+        "description": "Los empleadores están obligados por ley a reconocer estos títulos. Miles de profesionales han obtenido ascensos y mejores salarios.",
+        "highlight": {
+          "label": "Base legal:",
+          "text": "Ley Federal del Trabajo, Art. 3° Constitucional"
+        }
+      }
+    },
+    {
+      "myth": {
+        "prefix": "MITO:",
+        "title": "\"Es muy fácil, debe ser fraude\"",
+        "description": "La simplicidad del proceso genera desconfianza en algunas personas que esperan un trámite más complicado."
+      },
+      "reality": {
+        "prefix": "REALIDAD:",
+        "title": "Proceso riguroso y legal",
+        "description": "Aunque el proceso es eficiente, incluye evaluaciones rigurosas de competencias, revisión documental exhaustiva y cumplimiento de todos los requisitos legales.",
+        "highlight": {
+          "label": "Supervisión:",
+          "text": "Comités académicos certificados por SEP"
+        }
+      }
+    },
+    {
+      "myth": {
+        "prefix": "MITO:",
+        "title": "\"No puedo hacer posgrados\"",
+        "description": "Algunos creen que estos títulos no permiten acceder a estudios de maestría o doctorado."
+      },
+      "reality": {
+        "prefix": "REALIDAD:",
+        "title": "Acceso completo a posgrados",
+        "description": "Con tu título y cédula profesional puedes acceder a cualquier programa de maestría o doctorado en universidades públicas y privadas.",
+        "highlight": {
+          "label": "Confirmado por:",
+          "text": "CONACYT, universidades públicas y privadas"
+        }
+      }
+    }
+  ]
+}

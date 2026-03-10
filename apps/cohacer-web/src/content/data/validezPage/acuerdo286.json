@@ -1,0 +1,60 @@
+{
+  "title": "¿Qué es el Acuerdo 286 de la SEP?",
+  "documentLabel": "Documento Oficial",
+  "documentTitle": "ACUERDO número 286 por el que se establecen los lineamientos que determinan las normas y criterios generales, a que se ajustarán la revalidación de estudios realizados en el extranjero y la equivalencia de estudios, así como los procedimientos por medio de los cuales se acreditarán conocimientos correspondientes a niveles educativos o grados escolares adquiridos en forma autodidacta o a través de la experiencia laboral.",
+  "documentDescription": "",
+  "documentFootnote": "Publicado en el Diario Oficial de la Federación el 30 de octubre de 2000",
+  "highlights": [
+    {
+      "number": "1",
+      "title": "Base Legal",
+      "description": "Fundamentado en los artículos 3° de la Constitución y la Ley General de Educación"
+    },
+    {
+      "number": "2",
+      "title": "Propósito",
+      "description": "Reconocer oficialmente los conocimientos adquiridos por experiencia laboral"
+    },
+    {
+      "number": "3",
+      "title": "Validez",
+      "description": "Los títulos expedidos tienen la misma validez que los universitarios tradicionales"
+    }
+  ],
+  "sidebarTitle": "Requisitos Legales",
+  "infoBlocks": [
+    {
+      "title": "Documentación Requerida",
+      "icon": "📋",
+      "tone": "blue",
+      "items": [
+        { "text": "Certificado de bachillerato" },
+        { "text": "Constancias laborales (mínimo 3 años)" },
+        { "text": "Evaluación de competencias profesionales" },
+        { "text": "Documentos de identidad oficial" }
+      ]
+    },
+    {
+      "title": "Marco Jurídico",
+      "icon": "⚖️",
+      "tone": "green",
+      "items": [
+        { "text": "Constitución Política (Art. 3°)" },
+        { "text": "Ley General de Educación" },
+        { "text": "Acuerdo Secretarial 286" },
+        { "text": "Reglamento Interior de la SEP" }
+      ]
+    },
+    {
+      "title": "Resultado Final",
+      "icon": "🎓",
+      "tone": "purple",
+      "items": [
+        { "text": "Título profesional oficial" },
+        { "text": "Cédula profesional DGP" },
+        { "text": "Registro en el Sistema Nacional" },
+        { "text": "Validez en todo el territorio nacional" }
+      ]
+    }
+  ]
+}
