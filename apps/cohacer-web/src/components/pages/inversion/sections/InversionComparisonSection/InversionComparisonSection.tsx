@@ -13,36 +13,6 @@ type Props = {
 };
 
 /**
- * renderCellValue
- *
- * Propósito:
- * - Renderizar el valor de una celda con el estilo semántico
- *   correspondiente según su variante visual.
- *
- * Parámetros:
- * - value: Texto a mostrar en la celda.
- * - tone: Variante visual de la celda.
- *
- * Regresa:
- * - Nodo React con el valor estilizado.
- */
-function renderCellValue(
-  value: string,
-  tone: "neutral" | "danger" | "success" | "highlight"
-) {
-  const toneClassName =
-    tone === "danger"
-      ? s.cellDanger
-      : tone === "success"
-      ? s.cellSuccess
-      : tone === "highlight"
-      ? s.cellHighlight
-      : s.cellNeutral;
-
-  return <span className={toneClassName}>{value}</span>;
-}
-
-/**
  * renderComparisonRow
  *
  * Propósito:
@@ -51,11 +21,12 @@ function renderCellValue(
  *
  * Parámetros:
  * - row: Fila individual de comparación.
+ * - index: Posición de la fila dentro del arreglo.
  *
  * Regresa:
  * - Fila HTML renderizada.
  */
-function renderComparisonRow(row: InversionComparisonRow) {
+function renderComparisonRow(row: InversionComparisonRow, index: number) {
   const conceptCellClassName = row.isTotal ? s.totalConceptCell : s.conceptCell;
   const valueCellClassName = row.isTotal ? s.totalValueCell : s.valueCell;
 
@@ -70,7 +41,10 @@ function renderComparisonRow(row: InversionComparisonRow) {
     : s.cellHighlight;
 
   return (
-    <tr key={row.concept} className={row.isTotal ? s.totalRow : s.bodyRow}>
+    <tr
+      key={`${row.concept}-${index}`}
+      className={row.isTotal ? s.totalRow : s.bodyRow}
+    >
       <th scope="row" className={conceptCellClassName}>
         {row.concept}
       </th>
@@ -117,23 +91,33 @@ export function InversionComparisonSection({ id, content }: Props) {
         <div className={s.tableCard}>
           <div className={s.tableScroll}>
             <table className={s.table}>
-            <colgroup>
+              <colgroup>
                 <col style={{ width: "42%" }} />
                 <col style={{ width: "19%" }} />
                 <col style={{ width: "19%" }} />
                 <col style={{ width: "20%" }} />
-            </colgroup>
+              </colgroup>
 
-            <thead>
+              <thead>
                 <tr className={s.headRow}>
-                <th className={s.headConcept}>{content.columns.concept}</th>
-                <th className={s.headTraditional}>{content.columns.traditional}</th>
-                <th className={s.headCohacer}>{content.columns.cohacer}</th>
-                <th className={s.headSaving}>{content.columns.saving}</th>
+                  <th scope="col" className={s.headConcept}>
+                    {content.columns.concept}
+                  </th>
+                  <th scope="col" className={s.headTraditional}>
+                    {content.columns.traditional}
+                  </th>
+                  <th scope="col" className={s.headCohacer}>
+                    {content.columns.cohacer}
+                  </th>
+                  <th scope="col" className={s.headSaving}>
+                    {content.columns.saving}
+                  </th>
                 </tr>
-            </thead>
+              </thead>
 
-            <tbody>{content.rows.map((row) => renderComparisonRow(row))}</tbody>
+              <tbody>
+                {content.rows.map((row, index) => renderComparisonRow(row, index))}
+              </tbody>
             </table>
           </div>
         </div>
