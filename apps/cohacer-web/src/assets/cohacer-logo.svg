@@ -1,0 +1,28 @@
+<svg width="1600" height="360" viewBox="0 0 1600 360" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cohacerLogoTitle cohacerLogoDesc">
+  <title id="cohacerLogoTitle">COHACER</title>
+  <desc id="cohacerLogoDesc">Logotipo tipográfico de COHACER en azul con un degradado sutil.</desc>
+
+  <defs>
+    <linearGradient id="cohacerBlue" x1="0" y1="0" x2="1600" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2149B3"/>
+      <stop offset="55%" stop-color="#1E46AE"/>
+      <stop offset="100%" stop-color="#183D9D"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="360" fill="transparent"/>
+
+  <text
+    x="50%"
+    y="50%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill="url(#cohacerBlue)"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="230"
+    font-weight="700"
+    letter-spacing="2"
+  >
+    COHACER
+  </text>
+</svg>

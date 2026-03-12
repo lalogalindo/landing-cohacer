@@ -1,6 +1,9 @@
 // src/content/site/siteChrome.ts
 import type { HeaderProps } from "@/components/site/header/Header";
 import type { FooterProps } from "@/components/site/footer/Footer";
+
+import LOGO from "@/assets/cohacer-logo.svg";
+
 import { SITE_ROUTES } from "@/routes/siteRoutes";
 
 /**
@@ -13,7 +16,7 @@ import { SITE_ROUTES } from "@/routes/siteRoutes";
 export const siteHeaderContent: HeaderProps = {
   brand: {
     name: "Cohacer",
-    logoSrc: "/logo.svg",
+    logoSrc: LOGO,
   },
   nav: [
     { label: "Inicio", href: SITE_ROUTES.home },

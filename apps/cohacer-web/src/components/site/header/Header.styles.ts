@@ -15,7 +15,7 @@ export const headerStyles = {
   inner: "mx-auto flex max-w-6xl items-center justify-between px-4 py-3",
 
   brandWrap: "flex items-center gap-2",
-  brandLogo: "h-7 w-auto",
+  brandLogo: "h-8 w-auto sm:h-10",
   brandText: "text-sm font-semibold tracking-tight text-foreground",
 
   desktopNav: "hidden items-center gap-6 md:flex",
