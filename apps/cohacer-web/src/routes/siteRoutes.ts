@@ -21,10 +21,9 @@ export type SiteRouteItem = {
 export const SITE_ROUTES = {
   home: "/",
   validez: "/validez",
-  programas: "/programas",
+  inversion: "/inversion",
   beneficios: "/beneficios",
   proceso: "/proceso",
-  testimonios: "/testimonios",
   contacto: "/contacto",
 } as const;
 
@@ -49,9 +48,9 @@ export const siteNavItems: SiteRouteItem[] = [
     enabled: true,
   },
   {
-    label: "Programas",
-    path: SITE_ROUTES.programas,
-    enabled: false,
+    label: "Inversión",
+    path: SITE_ROUTES.inversion,
+    enabled: true,
   },
   {
     label: "Beneficios",
@@ -61,11 +60,6 @@ export const siteNavItems: SiteRouteItem[] = [
   {
     label: "Proceso",
     path: SITE_ROUTES.proceso,
-    enabled: false,
-  },
-  {
-    label: "Testimonios",
-    path: SITE_ROUTES.testimonios,
     enabled: false,
   },
   {

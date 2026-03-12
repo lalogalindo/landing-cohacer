@@ -160,7 +160,9 @@ function HeaderNavLink({
     return (
       <NavLink
         to={item.href}
-        className={className}
+        className={({ isActive }) =>
+          isActive ? `${className} active` : className
+        }
         onClick={onNavigate}
       >
         {item.label}

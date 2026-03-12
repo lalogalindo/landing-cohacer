@@ -20,7 +20,7 @@ export const headerStyles = {
 
   desktopNav: "hidden items-center gap-6 md:flex",
   navLink:
-    "text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline",
+    "text-sm text-muted-foreground hover:text-foreground underline-offset-4 hover:underline [&.active]:text-[#2563eb]",
 
   actions: "flex items-center gap-2",
   mobileToggleWrap: "md:hidden",
@@ -31,6 +31,6 @@ export const headerStyles = {
   mobileHeader: "flex items-center justify-between gap-3",
   mobileTitle: "text-sm font-semibold text-foreground",
   mobileNav: "mt-5 flex flex-col gap-1",
-  mobileNavLink: "rounded-xl px-3 py-2 text-sm text-foreground hover:bg-muted",
+  mobileNavLink: "rounded-xl px-3 py-2 text-sm text-foreground hover:bg-muted  [&.active]:text-[#2563eb]",
   mobileCtaWrap: "mt-4",
 } as const;

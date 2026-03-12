@@ -18,10 +18,9 @@ export const siteHeaderContent: HeaderProps = {
   nav: [
     { label: "Inicio", href: SITE_ROUTES.home },
     { label: "Validez Oficial", href: SITE_ROUTES.validez },
-    { label: "Programas", href: SITE_ROUTES.programas },
+    { label: "Inversión", href: SITE_ROUTES.inversion },
     { label: "Beneficios", href: SITE_ROUTES.beneficios },
     { label: "Proceso", href: SITE_ROUTES.proceso },
-    { label: "Testimonios", href: SITE_ROUTES.testimonios },
     { label: "Contacto", href: SITE_ROUTES.contacto },
   ],
   cta: {

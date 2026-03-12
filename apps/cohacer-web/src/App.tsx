@@ -4,10 +4,10 @@ import { RoutePlaceholderPage } from "@/pages/RoutePlaceholderPage";
 import { SITE_ROUTES } from "@/routes/siteRoutes";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 
-import { HomePage, ValidezPage } from "@/pages";
+import { HomePage, ValidezPage, InversionPage } from "@/pages";
 import { homePageContent } from "@/content/sites/homePage";
 import { validezPageContent } from "@/content/sites/validezPage";
-
+import { inversionPageContent } from "@/content/sites/inversionPage";
 
 /**
  * App
@@ -29,15 +29,7 @@ export default function App() {
 
         <Route path={SITE_ROUTES.validez} element={<ValidezPage content={validezPageContent} />} />
 
-        <Route
-          path={SITE_ROUTES.programas}
-          element={
-            <RoutePlaceholderPage
-              title="Programas"
-              description="Aquí vivirá la página de programas. La ruta ya existe y el menú ya navega correctamente hacia ella."
-            />
-          }
-        />
+        <Route path={SITE_ROUTES.inversion} element={<InversionPage content={inversionPageContent} />} />
 
         <Route
           path={SITE_ROUTES.beneficios}
@@ -55,16 +47,6 @@ export default function App() {
             <RoutePlaceholderPage
               title="Proceso"
               description="Aquí vivirá la página del proceso. La navegación ya está lista aunque todavía no exista el layout final."
-            />
-          }
-        />
-
-        <Route
-          path={SITE_ROUTES.testimonios}
-          element={
-            <RoutePlaceholderPage
-              title="Testimonios"
-              description="Aquí vivirá la página de testimonios. Se deja creada para que el menú ya no dependa de la misma landing."
             />
           }
         />
