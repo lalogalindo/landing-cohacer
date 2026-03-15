@@ -2,6 +2,8 @@
 
 import type { InversionIntroContent } from "@/types/pages/inversion/sections/inversionIntro.section";
 import type { InversionComparisonContent } from "@/types/pages/inversion/sections/inversionComparison.section";
+import type { InversionROIContent } from "@/types/pages/inversion/sections/inversionROI.section";
+import type { InversionPricingContent } from "@/types/pages/inversion/sections/inversionPricing.section";
 
 /**
  * InversionIntroSection
@@ -30,6 +32,32 @@ export type InversionComparisonSection = {
 };
 
 /**
+ * InversionROISection
+ *
+ * Propósito:
+ * - Envolver el contenido tipado de la sección
+ *   de calculadora ROI.
+ */
+export type InversionROISection = {
+  type: "inversionROI";
+  id: string;
+  content: InversionROIContent;
+};
+
+/**
+ * Sección de planes de inversión.
+ *
+ * Propósito:
+ * - Envolver el contenido tipado de la sección
+ *   de precios usando un discriminante estable.
+ */
+export type InversionPricingSection = {
+  type: "inversionPricing";
+  id: string;
+  content: InversionPricingContent;
+};
+
+/**
  * InversionSection
  *
  * Propósito:
@@ -41,4 +69,6 @@ export type InversionComparisonSection = {
  */
 export type InversionSection = 
   | InversionIntroSection
-  | InversionComparisonSection;
+  | InversionComparisonSection
+  | InversionROISection
+  | InversionPricingSection;

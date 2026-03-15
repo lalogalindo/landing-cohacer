@@ -3,7 +3,9 @@
 import { SiteShell } from "@/components/site/SiteShell/SiteShell";
 import { 
   InversionIntroSection,
-  InversionComparisonSection 
+  InversionComparisonSection ,
+  InversionROISection,
+  InversionPricingSection
 } from "@/components/pages/inversion";
 
 import {
@@ -63,6 +65,12 @@ function SectionRenderer({ section }: { section: InversionSection }) {
     case "inversionComparison":
       return <InversionComparisonSection id={section.id} content={section.content} />;
 
+    case "inversionROI":
+      return <InversionROISection id={section.id} content={section.content} />;
+
+    case "inversionPricing":
+      return <InversionPricingSection id={section.id} content={section.content} />;
+    
     default:
       return null;
   }

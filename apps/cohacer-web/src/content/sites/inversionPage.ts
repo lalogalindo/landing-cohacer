@@ -1,7 +1,9 @@
 import type { InversionPageContent } from "@/types/pages/inversion/inversion.types";
 import { 
   inversionIntroContent,
-  inversionComparisonContent 
+  inversionComparisonContent ,
+  inversionROIContent,
+  inversionPricingContent
 } from "@/content/data/inversionPage";
 
 /**
@@ -29,6 +31,16 @@ export const inversionPageContent: InversionPageContent = {
       type: "inversionComparison",
       id: "comparacion-costos",
       content: inversionComparisonContent
+    },
+    {
+      type: "inversionROI",
+      id: "calculadora-roi",
+      content: inversionROIContent
+    },
+    {
+      type: "inversionPricing",
+      id: "planes",
+      content: inversionPricingContent
     }
   ],
 };

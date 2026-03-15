@@ -1,0 +1,65 @@
+{
+  "title": "Calculadora de Retorno de Inversión",
+  "formTitle": "Ingresa tus datos",
+  "resultsTitle": "Resultados",
+  "salaryLabel": "Salario Actual Mensual",
+  "expectedIncreaseLabel": "Aumento Esperado (%)",
+  "investmentLabel": "Inversión en COHACER",
+  "buttonLabel": "Calcular mi ROI",
+  "salaryInput": {
+    "placeholder": "25000",
+    "min": 5000,
+    "max": 200000,
+    "step": 500
+  },
+  "salaryOptions": [
+    {
+      "label": "Ejemplo sugerido",
+      "value": 25000
+    }
+  ],
+  "expectedIncreaseOptions": [20, 30, 40, 50, 60],
+  "investmentOptions": [
+    {
+      "label": "$20,000 - Plan Estándar",
+      "amount": 20000,
+      "description": "Escenario base de inversión."
+    },
+    {
+      "label": "$30,000 - Plan Integral",
+      "amount": 30000,
+      "description": "Incluye mayor acompañamiento."
+    },
+    {
+      "label": "$40,000 - Plan Premium",
+      "amount": 40000,
+      "description": "Acompañamiento más completo."
+    }
+  ],
+  "resultCards": [
+    {
+      "metric": "newSalaryMonthly",
+      "label": "Nuevo Salario Mensual",
+      "icon": "💼",
+      "tone": "info"
+    },
+    {
+      "metric": "recoveryMonths",
+      "label": "Recuperación de Inversión",
+      "icon": "⏱️",
+      "tone": "success"
+    },
+    {
+      "metric": "roiOneYear",
+      "label": "ROI a 1 año",
+      "icon": "📈",
+      "tone": "purple"
+    },
+    {
+      "metric": "roiFiveYears",
+      "label": "ROI a 5 años",
+      "icon": "🚀",
+      "tone": "warning"
+    }
+  ]
+}

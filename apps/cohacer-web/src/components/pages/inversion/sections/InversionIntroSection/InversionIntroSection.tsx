@@ -1,3 +1,5 @@
+// src/components/pages/inversion/sections/InversionIntroSection/InversionIntroSection.tsx
+
 import type { InversionIntroContent } from "@/types/pages/inversion/sections/inversionIntro.section";
 import { inversionIntroSectionStyles as s } from "./InversionIntroSection.styles";
 
