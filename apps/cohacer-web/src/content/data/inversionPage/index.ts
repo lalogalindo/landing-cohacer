@@ -15,6 +15,8 @@ import type {
 import rawInversionPricing from "./inversionPricing.json";
 import type { InversionPricingContent } from "@/types/pages/inversion/sections/inversionPricing.section";
 
+import rawInversionFinancing from "./inversionFinancing.json";
+import type { InversionFinancingContent } from "@/types/pages/inversion/sections/inversionFinancing.section";
 
 /**
  * inversionIntroContent
@@ -99,3 +101,15 @@ export const inversionROIContent: InversionROIContent = {
   ...rawInversionROI,
   resultCards: inversionROIResultCards,
 };
+
+/**
+ * inversionFinancingContent
+ *
+ * Propósito:
+ * - Exponer el contenido tipado de la sección
+ *   de opciones de financiamiento.
+ *
+ * Información adicional:
+ * - Este archivo actúa como wrapper tipado del JSON puro.
+ */
+export const inversionFinancingContent: InversionFinancingContent = rawInversionFinancing;

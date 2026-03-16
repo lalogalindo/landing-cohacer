@@ -8,3 +8,7 @@ export * from "./BriefcaseIcon";
 export * from "./ClockIcon";
 export * from "./ChartGrowthIcon";
 export * from "./RocketIcon";
+export * from "./CreditCardIcon";
+export * from "./ShieldIcon";
+export * from "./PlusIcon";
+export * from "./TargetIcon";

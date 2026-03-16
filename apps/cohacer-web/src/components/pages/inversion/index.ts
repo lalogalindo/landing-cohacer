@@ -4,3 +4,4 @@ export * from "./sections/InversionIntroSection";
 export * from "./sections/InversionComparisonSection";
 export * from "./sections/InversionROISection";
 export * from "./sections/InversionPricingSection";
+export * from "./sections/InversionFinancingSection";

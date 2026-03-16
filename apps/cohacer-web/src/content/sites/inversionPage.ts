@@ -3,7 +3,8 @@ import {
   inversionIntroContent,
   inversionComparisonContent ,
   inversionROIContent,
-  inversionPricingContent
+  inversionPricingContent,
+  inversionFinancingContent
 } from "@/content/data/inversionPage";
 
 /**
@@ -41,6 +42,11 @@ export const inversionPageContent: InversionPageContent = {
       type: "inversionPricing",
       id: "planes",
       content: inversionPricingContent
+    },
+    {
+      type: "inversionFinancing",
+      id: "financiamiento",
+      content: inversionFinancingContent,
     }
   ],
 };

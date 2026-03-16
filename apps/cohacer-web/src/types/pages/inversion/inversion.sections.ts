@@ -4,6 +4,7 @@ import type { InversionIntroContent } from "@/types/pages/inversion/sections/inv
 import type { InversionComparisonContent } from "@/types/pages/inversion/sections/inversionComparison.section";
 import type { InversionROIContent } from "@/types/pages/inversion/sections/inversionROI.section";
 import type { InversionPricingContent } from "@/types/pages/inversion/sections/inversionPricing.section";
+import type { InversionFinancingContent } from "@/types/pages/inversion/sections/inversionFinancing.section";
 
 /**
  * InversionIntroSection
@@ -58,6 +59,19 @@ export type InversionPricingSection = {
 };
 
 /**
+ * InversionFinancingSection
+ *
+ * Propósito:
+ * - Envolver el contenido tipado de la sección
+ *   de opciones de financiamiento.
+ */
+export type InversionFinancingSection = {
+  type: "inversionFinancing";
+  id: string;
+  content: InversionFinancingContent;
+};
+
+/**
  * InversionSection
  *
  * Propósito:
@@ -71,4 +85,5 @@ export type InversionSection =
   | InversionIntroSection
   | InversionComparisonSection
   | InversionROISection
-  | InversionPricingSection;
+  | InversionPricingSection
+  | InversionFinancingSection;

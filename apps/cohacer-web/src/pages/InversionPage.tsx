@@ -5,7 +5,8 @@ import {
   InversionIntroSection,
   InversionComparisonSection ,
   InversionROISection,
-  InversionPricingSection
+  InversionPricingSection,
+  InversionFinancingSection
 } from "@/components/pages/inversion";
 
 import {
@@ -71,6 +72,9 @@ function SectionRenderer({ section }: { section: InversionSection }) {
     case "inversionPricing":
       return <InversionPricingSection id={section.id} content={section.content} />;
     
+    case "inversionFinancing":
+      return <InversionFinancingSection id={section.id} content={section.content} />;
+
     default:
       return null;
   }
