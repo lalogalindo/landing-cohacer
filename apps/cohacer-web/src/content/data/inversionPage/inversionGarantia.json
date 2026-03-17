@@ -1,0 +1,24 @@
+{
+  "title": "Garantías que Protegen tu Inversión",
+  "cards": [
+    {
+      "icon": "✓",
+      "title": "Garantía de Título",
+      "description": "Si no obtienes tu título y cédula profesional por causas atribuibles a nosotros, te devolvemos el 100% de tu inversión.",
+      "highlight": "100% de tu dinero de vuelta",
+      "tone": "green"
+    },
+    {
+      "icon": "✓",
+      "title": "Garantía de Satisfacción",
+      "description": "Si no estás satisfecho con nuestro servicio en los primeros 30 días, cancelas sin penalizaciones.",
+      "highlight": "30 días para decidir",
+      "tone": "blue"
+    }
+  ],
+  "resultGuarantee": {
+    "icon": "🏆",
+    "title": "Garantía de Resultados",
+    "description": "Más del 95% de nuestros clientes reportan un aumento salarial dentro de los primeros 12 meses. Si tu caso es diferente, trabajamos contigo hasta lograr resultados."
+  }
+}

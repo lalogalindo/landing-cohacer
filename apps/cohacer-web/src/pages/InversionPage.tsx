@@ -6,7 +6,10 @@ import {
   InversionComparisonSection ,
   InversionROISection,
   InversionPricingSection,
-  InversionFinancingSection
+  InversionFinancingSection,
+  InversionCaseStudy,
+  InversionGarantiaSection,
+  InversionCTASection
 } from "@/components/pages/inversion";
 
 import {
@@ -74,6 +77,17 @@ function SectionRenderer({ section }: { section: InversionSection }) {
     
     case "inversionFinancing":
       return <InversionFinancingSection id={section.id} content={section.content} />;
+
+    case "inversionCaseStudy":
+      return <InversionCaseStudy id={section.id} content={section.content} />;
+
+    case "inversionGarantia":
+      return (
+        <InversionGarantiaSection id={section.id} content={section.content} />
+      );
+
+    case "inversionCTA":
+      return <InversionCTASection id={section.id} content={section.content} />;
 
     default:
       return null;

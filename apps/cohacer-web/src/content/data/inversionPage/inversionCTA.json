@@ -1,0 +1,12 @@
+{
+  "title": "¿Listo para la Mejor Inversión de tu Vida?",
+  "description": "No dejes que otro año pase sin el reconocimiento que mereces. Tu experiencia vale un título oficial.",
+  "primaryAction": {
+    "label": "Evaluar mi Perfil GRATIS",
+    "href": "/contacto"
+  },
+  "secondaryAction": {
+    "label": "Solicitar Financiamiento",
+    "href": "/contacto"
+  }
+}

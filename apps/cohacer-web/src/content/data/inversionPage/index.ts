@@ -18,6 +18,15 @@ import type { InversionPricingContent } from "@/types/pages/inversion/sections/i
 import rawInversionFinancing from "./inversionFinancing.json";
 import type { InversionFinancingContent } from "@/types/pages/inversion/sections/inversionFinancing.section";
 
+import rawInversionCaseStudy from "./inversionCaseStudy.json";
+import type { InversionCaseStudyContent } from "@/types/pages/inversion/sections/inversionCaseStudy.section";
+
+import rawInversionGarantia from "./inversionGarantia.json";
+import type { InversionGarantiaContent } from "@/types/pages/inversion/sections/inversionGarantia.section";
+
+import rawInversionCTA from "./inversionCTA.json";
+import type { InversionCTAContent } from "@/types/pages/inversion/sections/inversionCTA.section";
+
 /**
  * inversionIntroContent
  *
@@ -113,3 +122,36 @@ export const inversionROIContent: InversionROIContent = {
  * - Este archivo actúa como wrapper tipado del JSON puro.
  */
 export const inversionFinancingContent: InversionFinancingContent = rawInversionFinancing;
+
+/**
+ * inversionCaseStudyContent
+ *
+ * Propósito:
+ * - Exponer el contenido tipado de la sección
+ *   de casos de éxito.
+ */
+export const inversionCaseStudyContent =
+  rawInversionCaseStudy as InversionCaseStudyContent;
+
+
+/**
+ * inversionGarantiaContent
+ *
+ * Propósito:
+ * - Exponer el contenido tipado de la sección
+ *   de garantías de inversión.
+ *
+ * Información adicional:
+ * - Este archivo actúa como wrapper tipado del JSON puro.
+ */
+export const inversionGarantiaContent: InversionGarantiaContent =
+  rawInversionGarantia;
+
+/**
+ * inversionCTAContent
+ *
+ * Propósito:
+ * - Exponer el contenido tipado de la sección
+ *   CTA de la página Inversión.
+ */
+export const inversionCTAContent: InversionCTAContent = rawInversionCTA;

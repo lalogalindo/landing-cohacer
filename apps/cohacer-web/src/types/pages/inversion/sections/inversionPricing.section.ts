@@ -1,3 +1,5 @@
+// src/types/pages/inversion/sections/inversionPricing.section.ts
+
 /**
  * InversionPricingPlanFeature
  *

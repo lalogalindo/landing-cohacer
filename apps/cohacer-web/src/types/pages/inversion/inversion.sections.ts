@@ -5,6 +5,9 @@ import type { InversionComparisonContent } from "@/types/pages/inversion/section
 import type { InversionROIContent } from "@/types/pages/inversion/sections/inversionROI.section";
 import type { InversionPricingContent } from "@/types/pages/inversion/sections/inversionPricing.section";
 import type { InversionFinancingContent } from "@/types/pages/inversion/sections/inversionFinancing.section";
+import type { InversionCaseStudyContent } from "@/types/pages/inversion/sections/inversionCaseStudy.section";
+import type { InversionGarantiaContent } from "@/types/pages/inversion/sections/inversionGarantia.section";
+import type { InversionCTAContent } from "@/types/pages/inversion/sections/inversionCTA.section";
 
 /**
  * InversionIntroSection
@@ -72,6 +75,45 @@ export type InversionFinancingSection = {
 };
 
 /**
+ * InversionCaseStudySection
+ *
+ * Propósito:
+ * - Envolver el contenido tipado de la sección
+ *   de casos de estudio.
+ */
+export type InversionCaseStudySection = {
+  type: "inversionCaseStudy";
+  id: string;
+  content: InversionCaseStudyContent;
+};
+
+/**
+ * InversionGarantiaSection
+ *
+ * Propósito:
+ * - Envolver el contenido tipado de la sección
+ *   de garantías de inversión.
+ */
+export type InversionGarantiaSection = {
+  type: "inversionGarantia";
+  id: string;
+  content: InversionGarantiaContent;
+};
+
+/**
+ * InversionCTASection
+ *
+ * Propósito:
+ * - Envolver el contenido tipado de la sección
+ *   CTA de conversión de la página Inversión.
+ */
+export type InversionCTASection = {
+  type: "inversionCTA";
+  id: string;
+  content: InversionCTAContent;
+};
+
+/**
  * InversionSection
  *
  * Propósito:
@@ -86,4 +128,7 @@ export type InversionSection =
   | InversionComparisonSection
   | InversionROISection
   | InversionPricingSection
-  | InversionFinancingSection;
+  | InversionFinancingSection
+  | InversionCaseStudySection
+  | InversionGarantiaSection
+  | InversionCTASection;
