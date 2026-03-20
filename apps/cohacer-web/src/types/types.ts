@@ -17,3 +17,7 @@ export type { SiteKey, LayoutKey } from "@/types/site";
 
 export type { HomePageContent as LandingPageContent } from "@/types/pages/home/home.types";
 export type { HomeSection as LandingSection } from "@/types/pages/home/home.sections";
+
+
+export type { BeneficiosPageContent } from "@/types/pages/beneficios/beneficios.types";
+export type { BeneficiosSection } from "@/types/pages/beneficios/beneficios.sections";

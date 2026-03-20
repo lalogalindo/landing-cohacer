@@ -1,0 +1,66 @@
+{
+  "title": "Beneficios que Cambiarán tu Vida Profesional",
+  "description": "No son solo promesas, son resultados comprobados por miles de profesionales",
+  "cards": [
+    {
+      "icon": "salary",
+      "title": "Aumento Salarial Inmediato",
+      "description": "El 89% de nuestros clientes reporta un aumento salarial dentro de los primeros 6 meses.",
+      "highlight": {
+        "title": "Promedio: +$12,500/mes",
+        "description": "Rango: $5,000 - $35,000",
+        "tone": "green"
+      }
+    },
+    {
+      "icon": "promotion",
+      "title": "Ascensos y Promociones",
+      "description": "El título abre puertas que la experiencia sola no puede abrir.",
+      "highlight": {
+        "title": "73% obtiene ascenso",
+        "description": "En los primeros 12 meses",
+        "tone": "blue"
+      }
+    },
+    {
+      "icon": "recognition",
+      "title": "Reconocimiento Profesional",
+      "description": "Respeto inmediato de colegas, clientes y superiores.",
+      "highlight": {
+        "title": "95% reporta mayor respeto",
+        "description": "En su entorno laboral",
+        "tone": "purple"
+      }
+    },
+    {
+      "icon": "independence",
+      "title": "Independencia Profesional",
+      "description": "Capacidad legal para firmar, avalar y responsabilizarse profesionalmente.",
+      "highlight": {
+        "title": "41% abre negocio propio",
+        "description": "Dentro de 2 años",
+        "tone": "orange"
+      }
+    },
+    {
+      "icon": "stability",
+      "title": "Seguridad Laboral",
+      "description": "Protección contra despidos y mayor estabilidad en el empleo.",
+      "highlight": {
+        "title": "67% menos rotación",
+        "description": "Comparado con no titulados",
+        "tone": "green"
+      }
+    },
+    {
+      "icon": "confidence",
+      "title": "Confianza Personal",
+      "description": "Autoestima profesional y personal que impacta todas las áreas de tu vida.",
+      "highlight": {
+        "title": "92% reporta mayor confianza",
+        "description": "En decisiones profesionales",
+        "tone": "blue"
+      }
+    }
+  ]
+}

@@ -4,10 +4,11 @@ import { RoutePlaceholderPage } from "@/pages/RoutePlaceholderPage";
 import { SITE_ROUTES } from "@/routes/siteRoutes";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 
-import { HomePage, ValidezPage, InversionPage } from "@/pages";
+import { HomePage, ValidezPage, InversionPage, BeneficiosPage } from "@/pages";
 import { homePageContent } from "@/content/sites/homePage";
 import { validezPageContent } from "@/content/sites/validezPage";
 import { inversionPageContent } from "@/content/sites/inversionPage";
+import { beneficiosPageContent } from "@/content/sites/beneficiosPage";
 
 /**
  * App
@@ -31,15 +32,7 @@ export default function App() {
 
         <Route path={SITE_ROUTES.inversion} element={<InversionPage content={inversionPageContent} />} />
 
-        <Route
-          path={SITE_ROUTES.beneficios}
-          element={
-            <RoutePlaceholderPage
-              title="Beneficios"
-              description="Aquí vivirá la página de beneficios. Por ahora se deja como placeholder para completar el routeo base."
-            />
-          }
-        />
+        <Route path={SITE_ROUTES.beneficios} element={<BeneficiosPage content={beneficiosPageContent} />} />
 
         <Route
           path={SITE_ROUTES.proceso}

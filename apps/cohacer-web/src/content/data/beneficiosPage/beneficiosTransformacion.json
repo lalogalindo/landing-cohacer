@@ -1,0 +1,28 @@
+{
+  "title": "Tu Transformación Profesional",
+  "transformationLabel": "TRANSFORMACIÓN",
+  "before": {
+    "emoji": "😟",
+    "title": "ANTES (Sin Título)",
+    "items": [
+      "Salario limitado por falta de credenciales",
+      "Ascensos bloqueados por requisitos académicos",
+      "Inseguridad en reuniones profesionales",
+      "Dependencia total del empleador actual",
+      "Oportunidades perdidas constantemente",
+      "Frustración por no ser reconocido"
+    ]
+  },
+  "after": {
+    "emoji": "😊",
+    "title": "DESPUÉS (Con Título)",
+    "items": [
+      "Aumento salarial inmediato y sostenido",
+      "Acceso a puestos directivos y gerenciales",
+      "Confianza y respeto profesional",
+      "Libertad para cambiar de trabajo",
+      "Múltiples ofertas laborales",
+      "Satisfacción y orgullo profesional"
+    ]
+  }
+}
