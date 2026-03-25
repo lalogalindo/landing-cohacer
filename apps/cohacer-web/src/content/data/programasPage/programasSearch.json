@@ -1,0 +1,186 @@
+{
+  "searchPlaceholder": "Busca tu programa ideal (ej: Ingeniería, Administración, Contabilidad...)",
+  "searchButtonLabel": "Buscar Programa",
+  "levelFilterLabel": "Filtrar por Nivel Educativo:",
+  "areaFilterLabel": "Filtrar por Área de Estudio:",
+  "allLevelsLabel": "Todos los Niveles",
+  "allAreasLabel": "Todas las Áreas",
+  "detailButtonLabel": "Ver Detalles",
+  "emptyStateTitle": "No encontramos programas con esos filtros",
+  "emptyStateDescription": "Prueba con otra búsqueda o cambia el nivel educativo y el área de estudio para descubrir más opciones.",
+  "levels": [
+    {
+      "id": "bachillerato",
+      "label": "Bachillerato",
+      "icon": "🎓"
+    },
+    {
+      "id": "licenciatura",
+      "label": "Licenciatura",
+      "icon": "🎯"
+    },
+    {
+      "id": "maestria",
+      "label": "Maestría",
+      "icon": "👑"
+    }
+  ],
+  "areas": [
+    {
+      "id": "ingenieria",
+      "label": "Ingeniería"
+    },
+    {
+      "id": "administracion",
+      "label": "Administración"
+    },
+    {
+      "id": "contabilidad",
+      "label": "Contabilidad"
+    },
+    {
+      "id": "derecho",
+      "label": "Derecho"
+    },
+    {
+      "id": "educacion",
+      "label": "Educación"
+    },
+    {
+      "id": "salud",
+      "label": "Salud"
+    },
+    {
+      "id": "tecnologia",
+      "label": "Tecnología"
+    }
+  ],
+  "programs": [
+    {
+      "id": "bachillerato-general",
+      "title": "Bachillerato General",
+      "description": "Certificado de preparatoria con validez oficial SEP. Ideal para quienes no terminaron la preparatoria y necesitan continuar estudios superiores.",
+      "levelId": "bachillerato",
+      "areaIds": ["educacion"],
+      "durationLabel": "6-12 meses",
+      "modalityLabel": "Mixta",
+      "requirements": [
+        "Certificado de secundaria",
+        "Experiencia laboral mínima 2 años",
+        "Ser mayor de 21 años"
+      ],
+      "priceLabel": "Desde $8,500",
+      "detailHref": "/programas/bachillerato-general",
+      "icon": "🎓",
+      "accent": "warm"
+    },
+    {
+      "id": "bachillerato-tecnico-computacion",
+      "title": "Bachillerato Técnico en Computación",
+      "description": "Preparatoria técnica especializada en computación e informática. Combina formación general con conocimientos técnicos especializados.",
+      "levelId": "bachillerato",
+      "areaIds": ["tecnologia", "ingenieria"],
+      "durationLabel": "8-14 meses",
+      "modalityLabel": "Mixta",
+      "requirements": [
+        "Certificado de secundaria",
+        "Experiencia en sistemas o computación",
+        "Ser mayor de 21 años"
+      ],
+      "priceLabel": "Desde $9,500",
+      "detailHref": "/programas/bachillerato-tecnico-computacion",
+      "icon": "💻",
+      "accent": "warm"
+    },
+    {
+      "id": "ingenieria-industrial",
+      "title": "Ingeniería Industrial",
+      "description": "Título profesional para supervisores, jefes de producción y especialistas en manufactura con experiencia comprobable en el área industrial.",
+      "levelId": "licenciatura",
+      "areaIds": ["ingenieria"],
+      "durationLabel": "3-6 meses",
+      "modalityLabel": "Mixta",
+      "requirements": [
+        "Bachillerato terminado",
+        "5+ años experiencia industrial",
+        "Cartas laborales comprobables"
+      ],
+      "priceLabel": "Desde $18,500",
+      "detailHref": "/programas/ingenieria-industrial",
+      "icon": "⚙️",
+      "accent": "cool"
+    },
+    {
+      "id": "administracion-empresas",
+      "title": "Administración de Empresas",
+      "description": "Programa diseñado para profesionistas con trayectoria en liderazgo, operaciones, gestión de equipos y toma de decisiones empresariales.",
+      "levelId": "licenciatura",
+      "areaIds": ["administracion"],
+      "durationLabel": "4-7 meses",
+      "modalityLabel": "Mixta",
+      "requirements": [
+        "Bachillerato terminado",
+        "Experiencia laboral administrativa",
+        "Evidencia de funciones de coordinación"
+      ],
+      "priceLabel": "Desde $17,900",
+      "detailHref": "/programas/administracion-empresas",
+      "icon": "📊",
+      "accent": "violet"
+    },
+    {
+      "id": "contaduria-publica",
+      "title": "Contaduría Pública",
+      "description": "Ideal para auxiliares contables, analistas financieros y responsables de facturación o nómina con experiencia profesional comprobable.",
+      "levelId": "licenciatura",
+      "areaIds": ["contabilidad", "administracion"],
+      "durationLabel": "4-8 meses",
+      "modalityLabel": "Mixta",
+      "requirements": [
+        "Bachillerato terminado",
+        "Experiencia en procesos contables",
+        "Documentación laboral comprobable"
+      ],
+      "priceLabel": "Desde $18,200",
+      "detailHref": "/programas/contaduria-publica",
+      "icon": "🧾",
+      "accent": "cool"
+    },
+    {
+      "id": "maestria-administracion",
+      "title": "Maestría en Administración",
+      "description": "Programa para líderes con experiencia directiva que buscan fortalecer su perfil con un grado académico orientado a estrategia y gestión.",
+      "levelId": "maestria",
+      "areaIds": ["administracion"],
+      "durationLabel": "6-10 meses",
+      "modalityLabel": "Mixta",
+      "requirements": [
+        "Licenciatura concluida",
+        "Experiencia en liderazgo o dirección",
+        "Trayectoria profesional comprobable"
+      ],
+      "priceLabel": "Desde $28,500",
+      "detailHref": "/programas/maestria-administracion",
+      "icon": "👑",
+      "accent": "violet"
+    },
+    {
+      "id": "licenciatura-derecho",
+      "title": "Licenciatura en Derecho",
+      "description": "Pensada para profesionistas con experiencia en despachos, notarías, áreas legales corporativas o gestión documental jurídica.",
+      "levelId": "licenciatura",
+      "areaIds": ["derecho"],
+      "durationLabel": "4-7 meses",
+      "modalityLabel": "Mixta",
+      "requirements": [
+        "Bachillerato terminado",
+        "Experiencia laboral en área legal",
+        "Constancias o cartas de respaldo"
+      ],
+      "priceLabel": "Desde $19,300",
+      "detailHref": "/programas/licenciatura-derecho",
+      "icon": "⚖️",
+      "accent": "warm"
+    }
+  ]
+}

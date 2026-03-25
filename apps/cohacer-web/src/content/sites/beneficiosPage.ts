@@ -1,9 +1,14 @@
-// src/content/sites/validezPage.ts
+// src/content/sites/beneficiosPage.ts
+
 import type { BeneficiosPageContent } from "@/types/pages/beneficios/beneficios.types";
 import { 
   beneficiosIntroContent,
   beneficiosResultadosContent,
   beneficiosTransformacionContent,
+  beneficiosTestimoniosContent,
+  beneficiosCasosDetalleContent,
+  beneficiosImpactoContent,
+  beneficiosHistoriaExitoContent
  } from "@/content/data/beneficiosPage";
 
 /**
@@ -37,6 +42,26 @@ export const beneficiosPageContent: BeneficiosPageContent = {
       type: "beneficiosTransformacion",
       id: "transformacion",
       content: beneficiosTransformacionContent
-    }
+    },
+    {
+      type: "beneficiosTestimonios",
+      id: "beneficios-testimonios",
+      content: beneficiosTestimoniosContent
+    },
+    {
+      type: "beneficiosCasosDetalle",
+      id: "beneficios-casos-detalle",
+      content: beneficiosCasosDetalleContent,
+    },
+    {
+      type: "beneficiosImpacto",
+      id: "beneficios-impacto",
+      content: beneficiosImpactoContent,
+    },
+    {
+      type: "beneficiosHistoriaExito",
+      id: "beneficios-historia-exito",
+      content: beneficiosHistoriaExitoContent,
+    },
   ],
 };

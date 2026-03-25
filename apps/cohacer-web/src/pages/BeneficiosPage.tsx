@@ -1,8 +1,14 @@
+// src/pages/BeneficiosPage.tsx
+
 import { SiteShell } from "@/components/site/SiteShell/SiteShell";
 import { 
   BeneficiosIntroSection,
   BeneficiosResultadosSection,
   BeneficiosTransformacionSection,
+  BeneficiosTestimoniosSection,
+  BeneficiosCasosDetalleSection,
+  BeneficiosImpactoSection,
+  BeneficiosHistoriaExitoSection
  } from "@/components/pages/beneficios";
 
 import {
@@ -64,6 +70,18 @@ function SectionRenderer({ section }: { section: BeneficiosSection }) {
     
     case "beneficiosTransformacion":
       return <BeneficiosTransformacionSection id={section.id} content={section.content} />;
+    
+    case "beneficiosTestimonios":
+      return <BeneficiosTestimoniosSection id={section.id} content={section.content} />;
+
+    case "beneficiosCasosDetalle":
+      return <BeneficiosCasosDetalleSection id={section.id} content={section.content} /> ;
+
+    case "beneficiosImpacto":
+      return <BeneficiosImpactoSection id={section.id} content={section.content} /> ;
+
+    case "beneficiosHistoriaExito":
+      return <BeneficiosHistoriaExitoSection id={section.id} content={section.content} /> ;
 
     default:
       return null;

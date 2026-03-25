@@ -21,3 +21,9 @@ export type { HomeSection as LandingSection } from "@/types/pages/home/home.sect
 
 export type { BeneficiosPageContent } from "@/types/pages/beneficios/beneficios.types";
 export type { BeneficiosSection } from "@/types/pages/beneficios/beneficios.sections";
+
+export type { InversionPageContent } from "@/types/pages/inversion/inversion.types";
+export type { InversionSection } from "@/types/pages/inversion/inversion.sections";
+
+export type { ProgramasPageContent } from "@/types/pages/programas/programas.types";
+export type { ProgramasSection } from "@/types/pages/programas/programas.sections";

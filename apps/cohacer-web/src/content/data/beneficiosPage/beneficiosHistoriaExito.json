@@ -1,0 +1,21 @@
+{
+  "title": "¿Listo para Escribir tu Historia de Éxito?",
+  "description": "Únete a los miles de profesionales que ya transformaron su carrera. Tu experiencia merece el reconocimiento oficial.",
+  "cardTitle": "Tu Próximo Paso",
+  "cardDescription": "Evaluación gratuita de tu perfil profesional. Sin compromiso, descubre si calificas para obtener tu título oficial.",
+  "primaryAction": {
+    "label": "Evaluar mi Perfil GRATIS",
+    "href": "/contacto"
+  },
+  "secondaryAction": {
+    "label": "Ver Planes de Inversión",
+    "href": "/inversion"
+  },
+  "guaranteeTitle": "Garantía de satisfacción:",
+  "guaranteeDescription": "Si no estás completamente satisfecho en los primeros 30 días, te devolvemos tu dinero.",
+  "trustPoints": [
+    "Proceso 100% legal",
+    "Títulos válidos SEP",
+    "Soporte personalizado"
+  ]
+}

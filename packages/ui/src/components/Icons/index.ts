@@ -3,6 +3,7 @@
 export * from "./ArrowRightIcon";
 export * from "./BriefcaseIcon";
 export * from "./ChartGrowthIcon";
+export * from "./CheckIcon";
 export * from "./ClockIcon";
 export * from "./CreditCardIcon";
 export * from "./DollarSignIcon";
@@ -14,3 +15,4 @@ export * from "./ShieldIcon";
 export * from "./SparkIcon";
 export * from "./TargetIcon";
 export * from "./TrendUpIcon";
+export * from "./WhatsappIcon";

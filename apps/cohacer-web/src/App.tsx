@@ -4,11 +4,12 @@ import { RoutePlaceholderPage } from "@/pages/RoutePlaceholderPage";
 import { SITE_ROUTES } from "@/routes/siteRoutes";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 
-import { HomePage, ValidezPage, InversionPage, BeneficiosPage } from "@/pages";
+import { HomePage, ValidezPage, InversionPage, BeneficiosPage, ProgramasPage } from "@/pages";
 import { homePageContent } from "@/content/sites/homePage";
 import { validezPageContent } from "@/content/sites/validezPage";
 import { inversionPageContent } from "@/content/sites/inversionPage";
 import { beneficiosPageContent } from "@/content/sites/beneficiosPage";
+import { programasPageContent } from "@/content/sites/programasPage";
 
 /**
  * App
@@ -34,15 +35,7 @@ export default function App() {
 
         <Route path={SITE_ROUTES.beneficios} element={<BeneficiosPage content={beneficiosPageContent} />} />
 
-        <Route
-          path={SITE_ROUTES.proceso}
-          element={
-            <RoutePlaceholderPage
-              title="Proceso"
-              description="Aquí vivirá la página del proceso. La navegación ya está lista aunque todavía no exista el layout final."
-            />
-          }
-        />
+        <Route path={SITE_ROUTES.proceso} element={ <ProgramasPage content= {programasPageContent} /> } />
 
         <Route
           path={SITE_ROUTES.contacto}

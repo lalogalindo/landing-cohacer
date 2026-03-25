@@ -4,3 +4,4 @@ export * from "./homePage";
 export * from "./validezPage";
 export * from "./inversionPage";
 export * from "./beneficiosPage";
+export * from "./programasPage";
