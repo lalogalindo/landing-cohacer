@@ -4,3 +4,4 @@ export * from './RoutePlaceholderPage';
 export * from "./InversionPage";
 export * from "./BeneficiosPage";
 export * from "./ProgramasPage";
+export * from "./ContactoPage";

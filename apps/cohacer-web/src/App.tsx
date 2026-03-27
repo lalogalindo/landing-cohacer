@@ -1,15 +1,15 @@
 // src/App.tsx
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { RoutePlaceholderPage } from "@/pages/RoutePlaceholderPage";
 import { SITE_ROUTES } from "@/routes/siteRoutes";
 import { ScrollToTop } from "@/components/site/ScrollToTop";
 
-import { HomePage, ValidezPage, InversionPage, BeneficiosPage, ProgramasPage } from "@/pages";
+import { HomePage, ValidezPage, InversionPage, BeneficiosPage, ProgramasPage, ContactoPage } from "@/pages";
 import { homePageContent } from "@/content/sites/homePage";
 import { validezPageContent } from "@/content/sites/validezPage";
 import { inversionPageContent } from "@/content/sites/inversionPage";
 import { beneficiosPageContent } from "@/content/sites/beneficiosPage";
 import { programasPageContent } from "@/content/sites/programasPage";
+import { contactoPageContent } from "./content/sites/contactoPage";
 
 /**
  * App
@@ -37,15 +37,7 @@ export default function App() {
 
         <Route path={SITE_ROUTES.proceso} element={ <ProgramasPage content= {programasPageContent} /> } />
 
-        <Route
-          path={SITE_ROUTES.contacto}
-          element={
-            <RoutePlaceholderPage
-              title="Contacto"
-              description="Aquí vivirá la página de contacto. Más adelante puedes reemplazar este placeholder por la página real."
-            />
-          }
-        />
+        <Route path={SITE_ROUTES.contacto} element={ <ContactoPage content= {contactoPageContent} /> } />
       </Routes>
     </BrowserRouter>
   );

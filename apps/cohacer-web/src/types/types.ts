@@ -27,3 +27,6 @@ export type { InversionSection } from "@/types/pages/inversion/inversion.section
 
 export type { ProgramasPageContent } from "@/types/pages/programas/programas.types";
 export type { ProgramasSection } from "@/types/pages/programas/programas.sections";
+
+export type { ContactoPageContent } from "@/types/pages/contacto/contacto.types";
+export type { ContactoSection } from "@/types/pages/contacto/contacto.sections";
