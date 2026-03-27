@@ -1,0 +1,47 @@
+{
+  "title": "Horarios de Atención",
+  "cards": [
+    {
+      "title": "Atención Presencial",
+      "items": [
+        {
+          "label": "Lunes a Viernes",
+          "value": "9:00 - 19:00"
+        },
+        {
+          "label": "Sábados",
+          "value": "9:00 - 15:00"
+        },
+        {
+          "label": "Domingos",
+          "value": "Cerrado",
+          "tone": "muted"
+        }
+      ],
+      "noteLabel": "Nota",
+      "noteText": "Se recomienda agendar cita previa para garantizar la disponibilidad de nuestros asesores."
+    },
+    {
+      "title": "Atención Digital",
+      "items": [
+        {
+          "label": "WhatsApp",
+          "value": "24/7",
+          "tone": "success"
+        },
+        {
+          "label": "Email",
+          "value": "24/7",
+          "tone": "success"
+        },
+        {
+          "label": "Chat en línea",
+          "value": "9:00 - 22:00",
+          "tone": "accent"
+        }
+      ],
+      "noteLabel": "Respuesta garantizada",
+      "noteText": "Todas las consultas son respondidas en un máximo de 24 horas."
+    }
+  ]
+}

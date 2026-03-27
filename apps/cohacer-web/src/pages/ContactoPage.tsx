@@ -1,7 +1,14 @@
 // src/pages/ContactoPage.tsx
 
 import { SiteShell } from "@/components/site/SiteShell/SiteShell";
-import { ContactoIntroSection } from "@/components/pages/contacto";
+import { 
+  ContactoIntroSection,
+  ContactoOpcionSection,
+  ContactoFormSection,
+  ContactoPlacesSection,
+  ContactoHoursSection,
+  ContactoFAQSection,
+} from "@/components/pages/contacto";
 
 import {
   siteHeaderContent,
@@ -56,6 +63,21 @@ function SectionRenderer({ section }: { section: ContactoSection }) {
   switch (section.type) {
     case "contactoIntro":
       return <ContactoIntroSection id={section.id} content={section.content} />;
+
+    case "contactoOpcion":
+      return <ContactoOpcionSection id={section.id} content={section.content} /> ;
+
+    case "contactoForm":
+      return <ContactoFormSection id={section.id} content={section.content} />;
+
+    case "contactoPlaces":
+      return <ContactoPlacesSection id={section.id} content={section.content} /> ;
+
+    case "contactoHours":
+      return <ContactoHoursSection id={section.id} content={section.content} />;
+      
+    case "contactoFAQ":
+      return <ContactoFAQSection id={section.id} content={section.content} />;
 
     default:
       return null;

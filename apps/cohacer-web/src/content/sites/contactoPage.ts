@@ -1,7 +1,14 @@
 // src/content/sites/contactoPage.ts
 
 import type { ContactoPageContent } from "@/types/pages/contacto/contacto.types";
-import { contactoIntroContent } from "@/content/data/contactoPage";
+import { 
+  contactoIntroContent,
+  contactoOpcionContent,
+  contactoFormContent,
+  contactoPlacesContent,
+  contactoHoursContent,
+  contactoFAQContent,
+} from "@/content/data/contactoPage";
 
 /**
  * contactoPageContent
@@ -25,5 +32,30 @@ export const contactoPageContent: ContactoPageContent = {
       id: "contacto-intro",
       content: contactoIntroContent,
     },
+    {
+      type: "contactoOpcion",
+      id: "contacto-opcion",
+      content: contactoOpcionContent,
+    },
+    {
+      type: "contactoForm",
+      id: "contacto-form",
+      content: contactoFormContent,
+    },
+    {
+      type: "contactoPlaces",
+      id: "contacto-places",
+      content: contactoPlacesContent,
+    },
+    {
+      type: "contactoHours",
+      id: "horarios-atencion",
+      content: contactoHoursContent
+    },
+    {
+      type: "contactoFAQ",
+      id: "preguntas-frecuentes",
+      content: contactoFAQContent
+    }
   ],
 };

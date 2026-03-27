@@ -1,0 +1,26 @@
+{
+  "title": "Preguntas Frecuentes",
+  "description": "Resolvemos las dudas más comunes sobre nuestros programas",
+  "items": [
+    {
+      "question": "¿Cuánto tiempo toma obtener mi título?",
+      "answer": "El tiempo varía según el programa y tu experiencia. Para licenciaturas, el proceso típico toma entre 3-6 meses. Para maestrías, entre 6-12 meses. El bachillerato puede completarse en 6-12 meses."
+    },
+    {
+      "question": "¿Los títulos tienen validez oficial?",
+      "answer": "Sí, todos nuestros títulos tienen validez oficial SEP (Secretaría de Educación Pública). Puedes verificar la validez en el sistema nacional de información de instituciones de educación superior."
+    },
+    {
+      "question": "¿Qué experiencia necesito para calificar?",
+      "answer": "Para licenciaturas necesitas mínimo 4-5 años de experiencia comprobable en el área. Para maestrías, 7+ años con responsabilidades de liderazgo. Para bachillerato, 2+ años de experiencia laboral general."
+    },
+    {
+      "question": "¿Cuáles son las formas de pago?",
+      "answer": "Ofrecemos múltiples opciones: pago de contado (10% descuento), 3 mensualidades sin intereses, 6 mensualidades (5% interés), o 12 mensualidades (8% interés). También aceptamos tarjetas de crédito y transferencias."
+    },
+    {
+      "question": "¿Necesito asistir a clases presenciales?",
+      "answer": "Nuestro modelo es mixto. La mayoría del proceso es en línea, pero requieres algunas sesiones presenciales para evaluaciones y trámites oficiales. Minimizamos las visitas para adaptarnos a tu horario laboral."
+    }
+  ]
+}
