@@ -35,9 +35,6 @@
   --color-ring: var(--ring);
 }
 
-/* ✅ Importa el tema AL FINAL para que gane (override) */
-@import "./theme/site.css";
-
 /* mínimos */
 @layer base {
 
