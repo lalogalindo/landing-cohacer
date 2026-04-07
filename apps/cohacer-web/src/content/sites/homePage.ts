@@ -1,7 +1,6 @@
 import type { HomePageContent } from "@/types/pages/home/home.types";
 
 import {
-  homeHeroContent,
   homeEligibilityContent,
   homeBenefitsGridContent,
   homeProcessStepsContent,
@@ -26,13 +25,6 @@ export const homePageContent: HomePageContent = {
   },
 
   sections: [
-    {
-      type: "hero",
-      id: "inicio",
-      ...homeHeroContent,
-      className: "cohacer-hero-template",
-    },
-
     {
       type: "eligibility",
       id: "requisitos",

@@ -1,10 +1,5 @@
 // src/types/pages/home/home.sections.ts
 import type { HeroSection } from "@/types/sections/hero.section";
-import type { ProgramsSection } from "@/types/sections/programs.section";
-import type { CompaniesSection } from "@/types/sections/companies.section";
-import type { TeamSection } from "@/types/sections/team.section";
-import type { TestimonialsSection } from "@/types/testimonials";
-
 import type { EligibilitySection } from "@/types/pages/home/sections/eligibility.section";
 import type { BenefitsGridSection } from "@/types/pages/home/sections/benefitsGrid.section";
 import type { ProcessStepsSection } from "@/types/pages/home/sections/processSteps.section";
@@ -22,10 +17,6 @@ import type { InvestmentLeadFormSection } from "@/types/pages/home/sections/inve
  */
 export type HomeSection =
   | HeroSection
-  | ProgramsSection
-  | CompaniesSection
-  | TestimonialsSection
-  | TeamSection
   | EligibilitySection
   | BenefitsGridSection
   | ProcessStepsSection

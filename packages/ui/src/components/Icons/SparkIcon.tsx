@@ -1,6 +1,5 @@
 // packages/ui/src/components/Icons/SparkIcon.tsx
 
-import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCertificate } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "../../lib/cn";

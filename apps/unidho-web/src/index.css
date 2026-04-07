@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-@plugin "tailwindcss-animate";
-@custom-variant dark (&:is(.dark *));
-
 /* ✅ Este bloque es CLAVE en Tailwind v4 + shadcn: mapea tokens -> colores utilitarios */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -43,6 +40,13 @@
 
 /* mínimos */
 @layer base {
-  html, body { height: 100%; }
-  body { margin: 0; }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
 }
