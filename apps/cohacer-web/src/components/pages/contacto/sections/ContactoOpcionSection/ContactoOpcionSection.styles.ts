@@ -17,7 +17,7 @@ export const contactoOpcionSectionStyles = {
     "max-w-2xl text-base leading-7 text-slate-500 sm:text-lg",
   grid: "grid grid-cols-1 gap-6 lg:grid-cols-3",
   card:
-    "flex h-full flex-col rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-[0_18px_40px_rgba(15,23,42,0.06)] sm:p-8",
+    "flex h-full flex-col rounded-[28px] border border-slate-200 bg-white p-6 text-center shadow-[0_18px_40px_rgba(15,23,42,0.06)] sm:p-8 justify-between",
   iconCircle:
     "mx-auto flex h-18 w-18 items-center justify-center rounded-full shadow-[0_14px_32px_rgba(15,23,42,0.16)]",
   iconCircleWhatsapp:

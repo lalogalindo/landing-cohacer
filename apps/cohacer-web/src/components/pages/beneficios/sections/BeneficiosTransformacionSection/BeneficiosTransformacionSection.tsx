@@ -1,6 +1,5 @@
 // src/components/pages/beneficios/sections/BeneficiosTransformacionSection/BeneficiosTransformacionSection.tsx
 
-import { ArrowRightIcon } from "@cohacer/ui";
 import type {
   BeneficiosTransformacionBlock,
   BeneficiosTransformacionContent,
@@ -127,38 +126,13 @@ function renderComparisonCard(
 }
 
 /**
- * renderTransformationIndicator
- *
- * Propósito:
- * - Renderizar el bloque visual central que comunica
- *   la transición entre el antes y el después.
- *
- * Parámetros:
- * - label: Texto inferior del bloque de transformación.
- *
- * Regresa:
- * - Indicador visual renderizado con ícono compartido
- *   del design system.
- */
-function renderTransformationIndicator(label: string) {
-  return (
-    <>
-      <div className={s.transformationIcon}>
-        <ArrowRightIcon className={s.transformationIconGlyph} />
-      </div>
-      <p className={s.transformationLabel}>{label}</p>
-    </>
-  );
-}
-
-/**
  * BeneficiosTransformacionSection
  *
  * Propósito:
  * - Renderizar la sección comparativa entre el antes
  *   y el después de titularse por experiencia.
- * - Mostrar ambos estados con un bloque central
- *   de transformación.
+ * - Mostrar ambas tarjetas en una sola columna en mobile
+ *   y lado a lado en pantallas más amplias.
  *
  * Parámetros:
  * - id: Ancla de la sección.
@@ -175,19 +149,8 @@ export function BeneficiosTransformacionSection({ id, content }: Props) {
 
         <div className={s.panel}>
           <div className={s.grid}>
-            <div className={s.cardsColumn}>
-              {renderComparisonCard(content.before, "before")}
-
-              <div className={s.mobileTransformation}>
-                {renderTransformationIndicator(content.transformationLabel)}
-              </div>
-
-              {renderComparisonCard(content.after, "after")}
-            </div>
-
-            <div className={s.desktopTransformation}>
-              {renderTransformationIndicator(content.transformationLabel)}
-            </div>
+            {renderComparisonCard(content.before, "before")}
+            {renderComparisonCard(content.after, "after")}
           </div>
         </div>
       </div>

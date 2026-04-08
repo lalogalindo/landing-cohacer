@@ -35,9 +35,9 @@ export const inversionPricingSectionStyles = {
   cardPurple: "border-[#e5e7eb]",
 
   badge:
-    "bg-[#f59e0b] px-4 py-2 text-center text-[11px] font-extrabold uppercase tracking-[0.05em] text-white",
+    "bg-[#f59e0b] px-4 py-2 text-center text-[11px] font-extrabold uppercase tracking-[0.05em] text-white absolute w-full",
 
-  cardBody: "flex flex-col gap-6 px-6 py-7",
+  cardBody: "flex flex-col gap-6 px-6 py-7 h-full",
 
   cardHeader: "flex flex-col items-center gap-2 text-center",
 
@@ -53,7 +53,7 @@ export const inversionPricingSectionStyles = {
 
   paymentNote: "min-h-10 text-sm leading-5 text-[#6b7280]",
 
-  featureList: "flex flex-1 flex-col gap-3",
+  featureList: "flex flex-1 flex-col gap-3 border-red-solid",
 
   featureItem: "flex items-start gap-3 text-sm leading-6 text-[#1f2937]",
 

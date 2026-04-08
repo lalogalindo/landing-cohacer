@@ -65,5 +65,5 @@ export const siteFooterContent: FooterProps = {
   ],
 
   copyright:
-    "© 2024 COHACER. Todos los derechos reservados. | Título con validez oficial SEP",
+    "© 2026 COHACER. Todos los derechos reservados. | Título con validez oficial SEP",
 };
