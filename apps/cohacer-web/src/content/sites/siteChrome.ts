@@ -2,7 +2,7 @@
 import type { HeaderProps } from "@/components/site/header/Header";
 import type { FooterProps } from "@/components/site/footer/Footer";
 
-import LOGO from "@/assets/cohacer-logo.svg";
+import LOGO from "@/assets/logo.png";
 
 import { SITE_ROUTES } from "@/routes/siteRoutes";
 
