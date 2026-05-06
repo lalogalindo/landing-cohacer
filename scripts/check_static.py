@@ -12,6 +12,7 @@ required = [
     root / "assets" / "hero-person.svg",
     root / "assets" / "testimonial-main.svg",
     root / "assets" / "assistant-bot.svg",
+    root / "vite.config.js",
 ]
 missing = [str(path.relative_to(root)) for path in required if not path.exists()]
 if missing:
@@ -65,6 +66,12 @@ css = (root / "src" / "styles.css").read_text()
 for color in ["#ffc629", "#151d33", "#876b3f", "#e52320", "#202070", "#8c8880", "#ffffff"]:
     if color not in css:
         print(f"Missing official color {color}")
+        sys.exit(1)
+
+package_json = (root / "package.json").read_text()
+for snippet in ['"dev": "vite --host 0.0.0.0"', '"build": "vite build"', '"preview": "vite preview --host 0.0.0.0"', '"vite"']:
+    if snippet not in package_json:
+        print(f"Missing Vite package configuration: {snippet}")
         sys.exit(1)
 
 print("Static landing checks passed.")
