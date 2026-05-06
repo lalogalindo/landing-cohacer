@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" role="img" aria-labelledby="title desc">
+<title id="title">Adulto usando tablet</title><desc id="desc">Persona adulta madura sonriente, sentada y usando una tablet.</desc>
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fbf7ef"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c88963"/><stop offset="1" stop-color="#a86b4f"/></linearGradient>
+<linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4e86a8"/><stop offset="1" stop-color="#245f82"/></linearGradient>
+<filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#151d33" flood-opacity=".16"/></filter>
+<clipPath id="clip"><path d="M35 112c0-38 31-69 69-69h402c94 0 170 76 170 170v236H35V112Z"/></clipPath>
+</defs>
+<path d="M35 112c0-38 31-69 69-69h402c94 0 170 76 170 170v236H35V112Z" fill="url(#bg)"/>
+<g clip-path="url(#clip)">
+<rect x="35" y="43" width="641" height="406" fill="url(#bg)"/>
+<path d="M0 300h720v164H0z" fill="#e9e1d7"/>
+<path d="M70 180c52-70 135-86 198-41s83 132 31 202-140 91-204 47S18 250 70 180Z" fill="#f6ead3"/>
+<path d="M522 88c25-43 81-57 124-32s58 81 33 124-81 58-124 33-58-81-33-124Z" fill="#ffc629" opacity=".95"/>
+<circle cx="533" cy="165" r="65" fill="#002d74"/>
+<path d="M160 138h155v210H160z" fill="#d8d0c4" opacity=".8"/>
+<path d="M170 150h135v182H170z" fill="#ffffff" opacity=".85"/>
+<ellipse cx="238" cy="245" rx="58" ry="78" fill="#c8d6b9" opacity=".45"/>
+<path d="M242 325c44 17 86 78 88 140H123c1-71 66-154 119-140Z" fill="#ffc629"/>
+<path d="M389 344c-76-42-181-36-241 2-37 24-62 73-69 126h416c-5-53-38-104-106-128Z" fill="url(#shirt)" filter="url(#shadow)"/>
+<path d="M220 311c22 34 81 35 105 0l-5 78c-7 35-87 36-96 0l-4-78Z" fill="url(#skin)"/>
+<path d="M191 118c7-50 53-86 106-78 52 8 86 49 81 101-2 17-7 39-13 63-14 57-45 102-91 102-45 0-79-42-93-100-6-27-8-61 10-88Z" fill="url(#skin)"/>
+<path d="M182 145c-1-61 36-101 93-104 50-3 91 31 102 75-42-10-74-5-115-29-16 21-44 37-80 58Z" fill="#3b332f"/>
+<path d="M198 67c50-48 143-32 171 37-48-7-98-23-137-51-10 2-22 7-34 14Z" fill="#5c5752"/>
+<path d="M200 77c44-46 125-34 156 15-47-10-82-25-120-50-12 6-24 17-36 35Z" fill="#2f2c2a" opacity=".7"/>
+<ellipse cx="176" cy="187" rx="17" ry="26" fill="#ad7153"/>
+<ellipse cx="376" cy="187" rx="16" ry="25" fill="#ad7153"/>
+<circle cx="237" cy="168" r="6" fill="#1f252d"/><circle cx="315" cy="168" r="6" fill="#1f252d"/>
+<path d="M262 207c15 9 33 8 49-1" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+<path d="M205 253c43 45 116 47 158-2" fill="none" stroke="#744832" stroke-width="5" opacity=".25"/>
+<path d="M152 351c50 33 98 51 145 52 34 1 94-13 121-46l31 116H91l61-122Z" fill="#2c6f96"/>
+<path d="M210 347c31 37 85 42 127 1" fill="none" stroke="#ffffff" stroke-width="10" opacity=".92"/>
+<path d="M360 318c50 12 90 52 105 103l-70 34c-22-61-51-100-91-119l56-18Z" fill="#275f82"/>
+<path d="M168 333c-47 18-78 54-96 104l82 35c18-65 48-107 93-130l-79-9Z" fill="#2b719a"/>
+<rect x="158" y="288" width="247" height="160" rx="20" transform="rotate(-8 158 288)" fill="#4a4d54" filter="url(#shadow)"/>
+<rect x="178" y="308" width="206" height="119" rx="11" transform="rotate(-8 178 308)" fill="#6f747d"/>
+<circle cx="302" cy="420" r="5" fill="#c4c8cf"/>
+<path d="M138 391c23-23 53-22 72 8 16 25-7 54-37 42-18-7-42-24-35-50Z" fill="url(#skin)"/>
+<path d="M405 359c31 2 47 30 38 58-6 21-33 27-52 9-15-14-18-49 14-67Z" fill="url(#skin)"/>
+</g>
+</svg>

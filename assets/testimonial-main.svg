@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="430" viewBox="0 0 650 430" role="img" aria-labelledby="t d">
+<title id="t">Testimonio en video</title><desc id="d">Mujer adulta dando testimonio en una sala cálida.</desc>
+<defs><linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e8ded1"/><stop offset="1" stop-color="#fff"/></linearGradient><linearGradient id="skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#bb7b55"/><stop offset="1" stop-color="#8f553f"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="16" stdDeviation="12" flood-opacity=".18" flood-color="#151d33"/></filter></defs>
+<rect width="650" height="430" rx="26" fill="url(#wall)"/>
+<rect y="290" width="650" height="140" fill="#d9d0c6"/>
+<circle cx="82" cy="90" r="52" fill="#b7c8a3" opacity=".5"/><circle cx="580" cy="80" r="76" fill="#ffc629" opacity=".25"/>
+<path d="M245 292c8-70 54-121 108-121s99 51 107 121v98H245v-98Z" fill="#607f55" filter="url(#s)"/>
+<path d="M315 170c18 24 56 24 75 0l-5 56c-12 20-51 21-65 0l-5-56Z" fill="url(#skin)"/>
+<path d="M282 87c0-45 32-76 73-76s73 31 73 76c0 64-32 105-73 105s-73-41-73-105Z" fill="url(#skin)"/>
+<path d="M282 92c-2-55 32-88 75-86 45 2 73 38 70 88-34-7-65-20-92-43-11 20-30 34-53 41Z" fill="#322921"/>
+<circle cx="328" cy="98" r="5" fill="#151d33"/><circle cx="382" cy="98" r="5" fill="#151d33"/>
+<path d="M333 134c15 10 32 10 45 0" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none"/>
+<rect x="260" y="300" width="190" height="50" rx="25" fill="#4f704b"/>
+</svg>
