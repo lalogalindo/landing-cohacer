@@ -1,14 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="220" height="64" viewBox="0 0 220 64" role="img" aria-labelledby="t d">
-<title id="t">COHACER</title><desc id="d">Logo institucional de COHACER</desc>
-<rect width="220" height="64" fill="none"/>
-<g transform="translate(7 8)">
-<path d="M24 3 7 13v21l17 10 17-10V13L24 3Z" fill="#ffffff"/>
-<path d="M24 11 14 17l10 6 10-6-10-6Z" fill="#151d33"/>
-<path d="M24 23v13l11-7V17l-11 6Z" fill="#ffc629"/>
-<path d="M13 18v10l11 7V23l-11-5Z" fill="#202070"/>
-<path d="m41 10-6-5-16 16 6 5L41 10Z" fill="#ffc629"/>
-<path d="m32 31 12-12 5 5-12 12-5-5Z" fill="#876b3f"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="56" viewBox="0 0 220 56" role="img" aria-labelledby="logo-title logo-desc">
+<title id="logo-title">COHACER</title><desc id="logo-desc">Logo institucional de COHACER</desc>
+<rect width="220" height="56" fill="none"/>
+<!-- Icono circular estilizado -->
+<g transform="translate(6, 4)">
+  <path d="M24 2C11.3 2 1 12.3 1 25c0 5.8 2.2 11.1 5.7 15.2" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M42.3 39.8C38.2 43.5 32.9 46 24 46c-2.5 0-5-.4-7.3-1" fill="none" stroke="#876b3f" stroke-width="7" stroke-linecap="round"/>
+  <path d="M43.5 11C46 15.3 47 19.9 47 25c0 5.6-1.7 10.8-4.7 15" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="38" cy="7" r="5" fill="#ffc629"/>
 </g>
-<text x="62" y="30" font-family="Arial, sans-serif" font-size="24" font-weight="800" fill="#ffffff" letter-spacing=".6">COHACER</text>
-<text x="64" y="47" font-family="Arial, sans-serif" font-size="9" font-weight="700" fill="#ffc629">Tu aprendizaje, tu futuro.</text>
+<text x="62" y="30" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#ffffff" letter-spacing="0.5">COHACER</text>
+<text x="63" y="45" font-family="Inter, Arial, sans-serif" font-size="9" font-weight="600" fill="#ffc629">Tu aprendizaje, tu futuro.</text>
 </svg>
