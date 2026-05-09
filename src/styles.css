@@ -166,6 +166,12 @@ ul {
   transition: var(--transition);
 }
 
+/* Al iniciar se conserva el layering del hero; al hacer scroll el header sube sobre el hero. */
+.site-header.is-scrolled,
+.site-header.is-menu-open {
+  z-index: 250;
+}
+
 /* CTA fijo — vive fuera del header para estar encima de todo */
 .header-cta-fixed {
   display: none;
