@@ -8,7 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" href="/assets/logoHome.png" as="image" type="image/png" />
-    <link rel="preload" href="/assets/hero-person.png" as="image" type="image/png" />
+    <link rel="preload" href="/assets/hero-person-movil.png" as="image" type="image/png" media="(max-width: 979px)" />
+    <link rel="preload" href="/assets/hero-person.png" as="image" type="image/png" media="(min-width: 980px)" />
     <link rel="stylesheet" href="/src/styles.css" />
   </head>
   <body>
@@ -65,7 +66,10 @@
 
           <div class="hero-visual fade-up">
             <div class="hero-image-wrapper">
-              <img class="hero-person" src="/assets/hero-person.png" alt="Adulto sonriente usando una tablet" width="720" height="520" />
+              <picture>
+                <source media="(min-width: 980px)" srcset="/assets/hero-person.png" />
+                <img class="hero-person" src="/assets/hero-person-movil.png" alt="Adulto sonriente usando una tablet" width="720" height="520" />
+              </picture>
             </div>
             <aside class="trust-card" aria-label="Mensaje de confianza">
               <span class="trust-icon" aria-hidden="true">👥</span>
@@ -144,10 +148,15 @@
               <h2 id="stories-title">Historias reales</h2>
               <p>Testimonios en video de personas que dieron el siguiente paso.</p>
             </div>
-            <div class="video-card" aria-label="Testimonio en video de Martha R.">
-              <img src="/assets/testimonial-main.svg" alt="Martha R. compartiendo su historia" width="650" height="430" />
-              <button class="play-button" type="button" aria-label="Reproducir testimonio">▶</button>
-              <span class="video-time">1:35</span>
+            <div class="video-card" aria-label="Testimonio en video destacado">
+              <iframe
+                class="testimonial-video-frame"
+                src="https://www.youtube-nocookie.com/embed/F7RQe4eeDIs?rel=0"
+                title="Testimonio destacado de COHACER"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+              ></iframe>
               <span class="video-badge">Historia destacada</span>
             </div>
           </div>
@@ -162,9 +171,18 @@
               <div><strong>92%</strong><span>recomienda el apoyo</span></div>
             </div>
             <div class="mini-videos" aria-label="Más testimonios">
-              <img src="/assets/testimonial-mini-1.svg" alt="Miniatura de testimonio" />
-              <img src="/assets/testimonial-mini-2.svg" alt="Miniatura de testimonio" />
-              <img src="/assets/testimonial-mini-3.svg" alt="Miniatura de testimonio" />
+              <button class="testimonial-video-button is-active" type="button" data-video-id="F7RQe4eeDIs" aria-label="Ver testimonio 1" aria-pressed="true">
+                <img src="https://img.youtube.com/vi/F7RQe4eeDIs/hqdefault.jpg" alt="Miniatura del testimonio 1" />
+              </button>
+              <button class="testimonial-video-button" type="button" data-video-id="5B8-TJ8vsKY" aria-label="Ver testimonio 2" aria-pressed="false">
+                <img src="https://img.youtube.com/vi/5B8-TJ8vsKY/hqdefault.jpg" alt="Miniatura del testimonio 2" />
+              </button>
+              <button class="testimonial-video-button" type="button" data-video-id="1mGo9KXT8Ps" aria-label="Ver testimonio 3" aria-pressed="false">
+                <img src="https://img.youtube.com/vi/1mGo9KXT8Ps/hqdefault.jpg" alt="Miniatura del testimonio 3" />
+              </button>
+              <button class="testimonial-video-button" type="button" data-video-id="3LtO3P7vRtU" aria-label="Ver testimonio 4" aria-pressed="false">
+                <img src="https://img.youtube.com/vi/3LtO3P7vRtU/hqdefault.jpg" alt="Miniatura del testimonio 4" />
+              </button>
             </div>
           </div>
         </div>
