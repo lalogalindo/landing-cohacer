@@ -72,3 +72,24 @@ const observer = new IntersectionObserver(
   { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
 );
 fadeEls.forEach((el) => observer.observe(el));
+
+
+// ─── Testimonial video selector ───
+const testimonialFrame = document.querySelector('.testimonial-video-frame');
+const testimonialVideoButtons = document.querySelectorAll('.testimonial-video-button');
+
+testimonialVideoButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const videoId = button.dataset.videoId;
+
+    if (!testimonialFrame || !videoId) return;
+
+    testimonialFrame.src = `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&autoplay=1`;
+
+    testimonialVideoButtons.forEach((item) => {
+      const isActive = item === button;
+      item.classList.toggle('is-active', isActive);
+      item.setAttribute('aria-pressed', String(isActive));
+    });
+  });
+});
