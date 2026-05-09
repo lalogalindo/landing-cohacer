@@ -27,23 +27,36 @@ toggle?.addEventListener('click', () => {
 navClose?.addEventListener('click', closeMenu);
 navLinks.forEach((link) => link.addEventListener('click', closeMenu));
 
-// ─── Active nav link on scroll ───
+// ─── Header stacking + active nav link on scroll ───
 const sections = document.querySelectorAll('section[id]');
+function updateHeaderState() {
+  header?.classList.toggle('is-scrolled', window.scrollY > 24);
+}
+
 function updateActiveNav() {
-  const scrollY = window.scrollY + 100;
+  const activationPoint = window.scrollY + Math.min(window.innerHeight * 0.42, 280);
+  let currentId = sections[0]?.getAttribute('id');
+
   sections.forEach((section) => {
-    const top = section.offsetTop;
-    const height = section.offsetHeight;
-    const id = section.getAttribute('id');
-    const link = document.querySelector(`.main-nav a[href="#${id}"]`);
-    if (scrollY >= top && scrollY < top + height) {
-      navLinks.forEach((l) => l.classList.remove('active'));
-      link?.classList.add('active');
+    if (activationPoint >= section.offsetTop) {
+      currentId = section.getAttribute('id');
     }
   });
+
+  if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+    currentId = sections[sections.length - 1]?.getAttribute('id');
+  }
+
+  navLinks.forEach((link) => {
+    link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`);
+  });
 }
-updateActiveNav();
-window.addEventListener('scroll', updateActiveNav, { passive: true });
+function handleScrollState() {
+  updateHeaderState();
+  updateActiveNav();
+}
+handleScrollState();
+window.addEventListener('scroll', handleScrollState, { passive: true });
 
 // ─── Scroll fade-up animations ───
 const fadeEls = document.querySelectorAll('.fade-up');
