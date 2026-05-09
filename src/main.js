@@ -7,6 +7,7 @@ const navLinks = document.querySelectorAll('.main-nav a');
 
 function openMenu() {
   toggle?.setAttribute('aria-expanded', 'true');
+  toggle?.setAttribute('aria-label', 'Cerrar menú');
   nav?.classList.add('is-open');
   header?.classList.add('is-menu-open');
   document.body.style.overflow = 'hidden';
@@ -14,6 +15,7 @@ function openMenu() {
 
 function closeMenu() {
   toggle?.setAttribute('aria-expanded', 'false');
+  toggle?.setAttribute('aria-label', 'Abrir menú');
   nav?.classList.remove('is-open');
   header?.classList.remove('is-menu-open');
   document.body.style.overflow = '';
@@ -26,6 +28,14 @@ toggle?.addEventListener('click', () => {
 
 navClose?.addEventListener('click', closeMenu);
 navLinks.forEach((link) => link.addEventListener('click', closeMenu));
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeMenu();
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth >= 980) closeMenu();
+});
 
 // ─── Header stacking + active nav link on scroll ───
 const sections = document.querySelectorAll('section[id]');
