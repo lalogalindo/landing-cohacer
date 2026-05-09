@@ -166,8 +166,7 @@ ul {
   transition: var(--transition);
 }
 
-/* Al iniciar se conserva el layering del hero; al hacer scroll el header sube sobre el hero. */
-.site-header.is-scrolled,
+/* El menú móvil abierto sube sobre el contenido para poder cerrarlo. */
 .site-header.is-menu-open {
   z-index: 250;
 }
@@ -341,6 +340,7 @@ ul {
 
 .hero-visual {
   position: relative;
+  z-index: 60;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -1148,10 +1148,20 @@ blockquote {
     max-width: 440px;
   }
 
+  .hero-visual {
+    min-height: 480px;
+    align-items: flex-start;
+  }
+
   .hero-image-wrapper {
     max-width: none;
-    height: clamp(420px, 48vw, 520px);
     aspect-ratio: auto;
+  }
+
+  .hero-person {
+    margin-top: -60px;
+    width: min(700px, 115%);
+    max-width: none;
   }
 
   .trust-card {
@@ -1291,6 +1301,10 @@ blockquote {
   .course-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+
+  .course-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (min-width: 1200px) {
@@ -1298,8 +1312,16 @@ blockquote {
     grid-template-columns: 460px 1fr;
   }
 
-  .hero-image-wrapper {
-    height: 520px;
+  .hero-actions .btn {
+    min-height: 48px;
+    padding-inline: 10px;
+    font-size: 0.84rem;
+  }
+
+  .trust-card {
+    width: min(82%, 230px);
+    right: 8px;
+    bottom: 12px;
   }
 }
 

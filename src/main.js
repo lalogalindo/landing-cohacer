@@ -42,16 +42,8 @@ function updateActiveNav() {
     }
   });
 }
-function updateHeaderLayer() {
-  header?.classList.toggle('is-scrolled', window.scrollY > 0);
-}
-
 updateActiveNav();
-updateHeaderLayer();
-window.addEventListener('scroll', () => {
-  updateActiveNav();
-  updateHeaderLayer();
-}, { passive: true });
+window.addEventListener('scroll', updateActiveNav, { passive: true });
 
 // ─── Scroll fade-up animations ───
 const fadeEls = document.querySelectorAll('.fade-up');
