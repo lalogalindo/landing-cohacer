@@ -9,6 +9,7 @@ required = [
     root / "src" / "main.js",
     root / "assets" / "cohacer-logo.svg",
     root / "assets" / "cohacer-logo-light.svg",
+    root / "assets" / "logoHome.png",
     root / "assets" / "hero-person.svg",
     root / "assets" / "testimonial-main.svg",
     root / "assets" / "assistant-bot.svg",

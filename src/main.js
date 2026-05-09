@@ -1,4 +1,5 @@
 // ─── Mobile Menu ───
+const header = document.querySelector('.site-header');
 const toggle = document.querySelector('.menu-toggle');
 const nav = document.querySelector('.main-nav');
 const navClose = document.querySelector('.nav-close');
@@ -7,12 +8,14 @@ const navLinks = document.querySelectorAll('.main-nav a');
 function openMenu() {
   toggle?.setAttribute('aria-expanded', 'true');
   nav?.classList.add('is-open');
+  header?.classList.add('is-menu-open');
   document.body.style.overflow = 'hidden';
 }
 
 function closeMenu() {
   toggle?.setAttribute('aria-expanded', 'false');
   nav?.classList.remove('is-open');
+  header?.classList.remove('is-menu-open');
   document.body.style.overflow = '';
 }
 
@@ -39,7 +42,16 @@ function updateActiveNav() {
     }
   });
 }
-window.addEventListener('scroll', updateActiveNav, { passive: true });
+function updateHeaderLayer() {
+  header?.classList.toggle('is-scrolled', window.scrollY > 0);
+}
+
+updateActiveNav();
+updateHeaderLayer();
+window.addEventListener('scroll', () => {
+  updateActiveNav();
+  updateHeaderLayer();
+}, { passive: true });
 
 // ─── Scroll fade-up animations ───
 const fadeEls = document.querySelectorAll('.fade-up');
