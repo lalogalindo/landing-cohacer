@@ -166,6 +166,11 @@ ul {
   transition: var(--transition);
 }
 
+/* El menú móvil abierto sube sobre el contenido para poder cerrarlo. */
+.site-header.is-menu-open {
+  z-index: 250;
+}
+
 /* CTA fijo — vive fuera del header para estar encima de todo */
 .header-cta-fixed {
   display: none;
@@ -256,8 +261,8 @@ ul {
 /* ─── HERO ─── */
 .hero {
   position: relative;
-  z-index: 60;
-  padding: 24px 0 48px;
+  z-index: auto;
+  padding: 24px 0 32px;
   overflow-x: clip;
   overflow-y: visible;
   pointer-events: none;
@@ -272,17 +277,21 @@ ul {
 
 .hero-grid {
   display: grid;
-  gap: 32px;
-  align-items: start;
+  gap: 28px;
+  align-items: stretch;
 }
 
 .hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding-top: 8px;
 }
 
 .eyebrow {
   display: inline-block;
-  margin-bottom: 16px;
+  align-self: flex-start;
+  margin-bottom: 14px;
   padding: 6px 16px;
   border-radius: 999px;
   background: rgba(255, 198, 41, 0.15);
@@ -293,7 +302,7 @@ ul {
 }
 
 .hero h1 {
-  font-size: clamp(2.8rem, 10vw, 5.5rem);
+  font-size: clamp(2.6rem, 9vw, 4.7rem);
   line-height: 0.95;
   letter-spacing: -0.04em;
   font-weight: 900;
@@ -305,24 +314,33 @@ ul {
 }
 
 .hero-description {
-  margin-top: 20px;
-  max-width: 480px;
-  font-size: clamp(1rem, 3.5vw, 1.25rem);
-  line-height: 1.55;
+  margin-top: 18px;
+  max-width: 460px;
+  font-size: clamp(0.98rem, 2.8vw, 1.16rem);
+  line-height: 1.48;
   font-weight: 500;
   color: var(--navy);
   opacity: 0.85;
 }
 
 .hero-actions {
-  display: grid;
-  gap: 12px;
-  margin-top: 28px;
-  max-width: 340px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  margin-top: 24px;
+  max-width: 460px;
+}
+
+.hero-actions .btn {
+  flex: 1 1 0;
+  min-width: 0;
+  padding-inline: 16px;
+  white-space: nowrap;
 }
 
 .hero-visual {
   position: relative;
+  z-index: 60;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -335,6 +353,7 @@ ul {
   z-index: 2;
   width: 100%;
   max-width: 560px;
+  aspect-ratio: 720 / 520;
 }
 
 .hero-person {
@@ -348,13 +367,13 @@ ul {
 .trust-card {
   position: absolute;
   z-index: 5;
-  bottom: 20px;
-  right: 0;
+  right: 10px;
+  bottom: 18px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: min(88%, 320px);
-  padding: 16px 18px;
+  gap: 10px;
+  width: min(72%, 250px);
+  padding: 12px 14px;
   border-radius: 16px;
   background: var(--navy);
   color: var(--white);
@@ -376,8 +395,8 @@ ul {
 
 .trust-card p {
   margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.4;
+  font-size: 0.78rem;
+  line-height: 1.32;
 }
 
 .trust-card strong {
@@ -385,7 +404,7 @@ ul {
 }
 
 .trust-icon {
-  font-size: 1.8rem;
+  font-size: 1.45rem;
   flex-shrink: 0;
 }
 
@@ -431,8 +450,24 @@ ul {
 
 /* ─── COURSES ─── */
 .courses {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(180deg, #fff 0%, var(--soft) 100%);
   border-top: 1px solid rgba(21, 29, 51, 0.05);
+}
+
+.courses::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 220px;
+  background: radial-gradient(circle at 20% 0%, rgba(255, 198, 41, 0.18), transparent 36%), radial-gradient(circle at 80% 12%, rgba(32, 32, 112, 0.10), transparent 34%);
+  pointer-events: none;
+}
+
+.courses .container {
+  position: relative;
+  z-index: 1;
 }
 
 .course-grid {
@@ -441,109 +476,183 @@ ul {
 }
 
 .course-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 28px 24px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--white);
-  box-shadow: var(--shadow);
-  transition: transform var(--transition), box-shadow var(--transition);
+  min-height: 100%;
+  padding: 30px 24px 24px;
+  border: 1px solid rgba(21, 29, 51, 0.08);
+  border-radius: 26px;
+  background: linear-gradient(160deg, #ffffff 0%, #fffaf0 100%);
+  box-shadow: 0 18px 42px rgba(21, 29, 51, 0.10);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.course-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 7px;
+  background: linear-gradient(90deg, var(--yellow), #d4940a);
+}
+
+.course-card::after {
+  content: "";
+  position: absolute;
+  right: -58px;
+  top: -58px;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: rgba(255, 198, 41, 0.14);
+}
+
+.course-card:nth-child(2)::before {
+  background: linear-gradient(90deg, var(--royal), #6262c7);
+}
+
+.course-card:nth-child(2)::after {
+  background: rgba(32, 32, 112, 0.10);
+}
+
+.course-card:nth-child(3)::before {
+  background: linear-gradient(90deg, var(--gold), var(--yellow));
 }
 
 .course-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  border-color: rgba(255, 198, 41, 0.35);
+  box-shadow: 0 28px 58px rgba(21, 29, 51, 0.16);
 }
 
 .card-icon {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  width: 60px;
-  height: 60px;
-  margin-bottom: 16px;
-  border-radius: 18px;
-  font-size: 1.8rem;
-  background: rgba(255, 198, 41, 0.18);
+  width: 64px;
+  height: 64px;
+  margin-bottom: 18px;
+  border-radius: 20px;
+  font-size: 1.9rem;
+  background: rgba(255, 198, 41, 0.20);
+  box-shadow: inset 0 0 0 1px rgba(255, 198, 41, 0.24), 0 10px 22px rgba(135, 107, 63, 0.12);
 }
 
 .card-icon.blue {
-  background: rgba(32, 32, 112, 0.08);
+  background: rgba(32, 32, 112, 0.09);
+  box-shadow: inset 0 0 0 1px rgba(32, 32, 112, 0.12), 0 10px 22px rgba(32, 32, 112, 0.10);
 }
 
 .card-icon.green {
-  background: rgba(22, 163, 74, 0.1);
+  background: rgba(255, 198, 41, 0.16);
+  box-shadow: inset 0 0 0 1px rgba(135, 107, 63, 0.12), 0 10px 22px rgba(135, 107, 63, 0.10);
+}
+
+.course-card h3,
+.course-card p,
+.course-card h4,
+.course-card ul,
+.price-row {
+  position: relative;
+  z-index: 1;
 }
 
 .course-card h3 {
-  font-size: 1.2rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.15rem, 2.6vw, 1.35rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
   margin-bottom: 8px;
 }
 
 .course-card>p {
   color: var(--navy);
-  opacity: 0.8;
+  opacity: 0.82;
   line-height: 1.5;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   font-size: 0.95rem;
 }
 
 .course-card h4 {
-  font-size: 0.85rem;
-  font-weight: 700;
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
   color: var(--gold);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 8px;
+  letter-spacing: 0.05em;
+  background: rgba(255, 198, 41, 0.14);
+  margin-bottom: 10px;
 }
 
 .course-card ul {
-  margin-left: 18px;
-  margin-bottom: 20px;
-  list-style: disc;
+  display: grid;
+  gap: 7px;
+  margin-left: 0;
+  margin-bottom: 22px;
+  list-style: none;
 }
 
 .course-card li {
+  position: relative;
+  padding-left: 22px;
   font-size: 0.9rem;
-  line-height: 1.6;
+  line-height: 1.45;
   color: var(--navy);
-  opacity: 0.8;
+  opacity: 0.82;
+}
+
+.course-card li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #d4940a;
+  font-weight: 900;
 }
 
 .price-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 10px;
   margin-top: auto;
-  padding-top: 20px;
-  border-top: 1px solid var(--line);
-  text-align: center;
+  padding: 12px;
+  border: 1px solid rgba(21, 29, 51, 0.06);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  text-align: left;
 }
 
 .price-row>div {
-  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 10px;
+  border-radius: 12px;
 }
 
 .price-row span {
   display: block;
-  margin-bottom: 4px;
   color: var(--gray);
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
 }
 
 .price-row strong {
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-size: 1.05rem;
+  font-weight: 900;
+  white-space: nowrap;
 }
 
 .highlight-price {
-  border-left: 1px solid var(--line);
   color: #d4940a;
+  background: rgba(255, 198, 41, 0.16);
 }
 
 .payment-note {
@@ -551,10 +660,10 @@ ul {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin-top: 24px;
-  color: var(--gray);
-  font-weight: 600;
-  font-size: 0.9rem;
+  margin-top: 26px;
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 0.95rem;
   text-align: center;
 }
 
@@ -951,7 +1060,10 @@ blockquote {
 }
 
 .footer-brand img {
-  width: 148px;
+  width: 164px;
+  padding: 6px 8px;
+  border-radius: 14px;
+  background: var(--white);
 }
 
 .footer-links,
@@ -1024,18 +1136,16 @@ blockquote {
   }
 
   .hero-grid {
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 40px;
+    grid-template-columns: minmax(300px, 0.86fr) minmax(360px, 1.14fr);
+    gap: 32px;
   }
 
   .hero-copy {
-    padding-top: 32px;
+    padding: 0;
   }
 
   .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: none;
+    max-width: 440px;
   }
 
   .hero-visual {
@@ -1045,6 +1155,7 @@ blockquote {
 
   .hero-image-wrapper {
     max-width: none;
+    aspect-ratio: auto;
   }
 
   .hero-person {
@@ -1054,13 +1165,13 @@ blockquote {
   }
 
   .trust-card {
-    width: 310px;
-    bottom: 40px;
-    right: 10px;
+    width: 240px;
+    bottom: 28px;
+    right: 12px;
   }
 
   .course-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 
   .stories-grid {
@@ -1183,26 +1294,22 @@ blockquote {
     display: inline-flex;
   }
 
-  .hero {
-    padding-top: 0;
-  }
-
   .hero h1 {
-    font-size: clamp(3.5rem, 4.8vw, 5rem);
+    font-size: clamp(3.35rem, 4.55vw, 4.7rem);
   }
 
   .hero-person {
     margin-top: -82px;
   }
+
+  .course-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (min-width: 1200px) {
   .hero-grid {
-    grid-template-columns: 480px 1fr;
-  }
-
-  .hero-copy {
-    padding-top: 48px;
+    grid-template-columns: 460px 1fr;
   }
 
   .hero-visual {
@@ -1212,6 +1319,24 @@ blockquote {
   .hero-person {
     margin-top: -88px;
     width: 740px;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-actions {
+    gap: 8px;
+  }
+
+  .hero-actions .btn {
+    min-height: 48px;
+    padding-inline: 10px;
+    font-size: 0.84rem;
+  }
+
+  .trust-card {
+    width: min(82%, 230px);
+    right: 8px;
+    bottom: 12px;
   }
 }
 
