@@ -261,7 +261,7 @@ ul {
 /* ─── HERO ─── */
 .hero {
   position: relative;
-  z-index: auto;
+  z-index: 60;
   padding: 24px 0 32px;
   overflow-x: clip;
   overflow-y: visible;
@@ -342,9 +342,9 @@ ul {
   position: relative;
   z-index: 60;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: center;
-  min-height: 320px;
+  min-height: 0;
   isolation: isolate;
 }
 
@@ -358,7 +358,7 @@ ul {
 
 .hero-person {
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 28px 28px 0 0;
   object-fit: cover;
   object-position: top center;
@@ -1132,7 +1132,7 @@ blockquote {
   }
 
   .hero {
-    padding: 0 0 56px;
+    padding: 0;
   }
 
   .hero-grid {
@@ -1298,8 +1298,8 @@ blockquote {
     font-size: clamp(3.35rem, 4.55vw, 4.7rem);
   }
 
-  .hero-person {
-    margin-top: -82px;
+  .course-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .course-grid {
@@ -1312,13 +1312,16 @@ blockquote {
     grid-template-columns: 460px 1fr;
   }
 
-  .hero-visual {
-    min-height: 540px;
+  .hero-actions .btn {
+    min-height: 48px;
+    padding-inline: 10px;
+    font-size: 0.84rem;
   }
 
-  .hero-person {
-    margin-top: -88px;
-    width: 740px;
+  .trust-card {
+    width: min(82%, 230px);
+    right: 8px;
+    bottom: 12px;
   }
 }
 
