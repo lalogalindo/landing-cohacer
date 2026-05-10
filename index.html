@@ -186,6 +186,37 @@
             </div>
           </div>
         </div>
+
+        <div class="container reels-container">
+          <div class="section-heading compact reels-heading fade-up">
+            <p class="section-kicker">Reels Cohacer</p>
+            <h3>Historias cortas para inspirarte</h3>
+            <p>Toca un video para verlo en formato vertical tipo stories.</p>
+          </div>
+
+          <div class="reels-gallery fade-up" aria-label="Galería de videos cortos Cohacer">
+            <button class="reel-thumb" type="button" data-reel-index="0" aria-label="Abrir reel 1">
+              <video src="/assets/v-1.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
+              <span class="reel-thumb-play" aria-hidden="true">▶</span>
+              <span class="reel-thumb-label">Reel 01</span>
+            </button>
+            <button class="reel-thumb" type="button" data-reel-index="1" aria-label="Abrir reel 2">
+              <video src="/assets/v-2.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
+              <span class="reel-thumb-play" aria-hidden="true">▶</span>
+              <span class="reel-thumb-label">Reel 02</span>
+            </button>
+            <button class="reel-thumb" type="button" data-reel-index="2" aria-label="Abrir reel 3">
+              <video src="/assets/v-3.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
+              <span class="reel-thumb-play" aria-hidden="true">▶</span>
+              <span class="reel-thumb-label">Reel 03</span>
+            </button>
+            <button class="reel-thumb" type="button" data-reel-index="3" aria-label="Abrir reel 4">
+              <video src="/assets/a-1.mp4" muted playsinline preload="metadata" aria-hidden="true"></video>
+              <span class="reel-thumb-play" aria-hidden="true">▶</span>
+              <span class="reel-thumb-label">Reel 04</span>
+            </button>
+          </div>
+        </div>
       </section>
 
       <!-- ═══ CÓMO FUNCIONA ═══ -->
@@ -286,6 +317,21 @@
         </div>
       </section>
     </main>
+
+    <div class="reels-modal" id="reels-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Visor de reels Cohacer">
+      <button class="reels-modal-backdrop" type="button" data-reels-close aria-label="Cerrar visor de reels"></button>
+      <div class="reels-modal-shell" role="document">
+        <button class="reels-close" type="button" data-reels-close aria-label="Cerrar visor">✕</button>
+        <button class="reels-nav reels-nav-prev" type="button" data-reels-prev aria-label="Video anterior">‹</button>
+        <div class="reels-viewer" data-reels-viewer>
+          <video class="reels-video" playsinline controls muted preload="metadata"></video>
+          <button class="reels-hit-zone reels-hit-left" type="button" data-reels-prev aria-label="Video anterior"></button>
+          <button class="reels-hit-zone reels-hit-right" type="button" data-reels-next aria-label="Siguiente video"></button>
+          <div class="reels-counter" aria-live="polite">1 / 4</div>
+        </div>
+        <button class="reels-nav reels-nav-next" type="button" data-reels-next aria-label="Siguiente video">›</button>
+      </div>
+    </div>
 
     <!-- ═══ FOOTER ═══ -->
     <footer class="site-footer">

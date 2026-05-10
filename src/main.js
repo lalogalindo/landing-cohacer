@@ -103,3 +103,161 @@ testimonialVideoButtons.forEach((button) => {
     });
   });
 });
+
+// ─── Local reels / stories modal ───
+const reelThumbs = document.querySelectorAll('.reel-thumb');
+const reelsModal = document.querySelector('#reels-modal');
+const reelsViewer = document.querySelector('[data-reels-viewer]');
+const reelsVideo = document.querySelector('.reels-video');
+const reelsCounter = document.querySelector('.reels-counter');
+const reelsCloseButtons = document.querySelectorAll('[data-reels-close]');
+const reelsPrevButtons = document.querySelectorAll('[data-reels-prev]');
+const reelsNextButtons = document.querySelectorAll('[data-reels-next]');
+
+const reels = Array.from(reelThumbs).map((thumb, index) => {
+  const video = thumb.querySelector('video');
+
+  return {
+    index,
+    src: video?.getAttribute('src') || '',
+    label: thumb.getAttribute('aria-label') || `Reel ${index + 1}`,
+  };
+});
+
+let activeReelIndex = 0;
+let previousBodyOverflow = '';
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
+function playActiveReel() {
+  if (!reelsVideo) return;
+
+  reelsVideo.currentTime = 0;
+  const playPromise = reelsVideo.play();
+
+  if (playPromise) {
+    playPromise.catch(() => {
+      // Some browsers can still block autoplay; controls remain visible for manual playback.
+    });
+  }
+}
+
+function updateReel(index, shouldAnimate = true) {
+  if (!reelsVideo || !reels.length) return;
+
+  const nextIndex = (index + reels.length) % reels.length;
+  const nextReel = reels[nextIndex];
+
+  activeReelIndex = nextIndex;
+  reelsVideo.pause();
+
+  if (shouldAnimate) {
+    reelsViewer?.classList.add('is-switching');
+  }
+
+  window.setTimeout(() => {
+    reelsVideo.src = nextReel.src;
+    reelsVideo.setAttribute('aria-label', nextReel.label);
+
+    if (reelsCounter) {
+      reelsCounter.textContent = `${activeReelIndex + 1} / ${reels.length}`;
+    }
+
+    reelsVideo.load();
+    playActiveReel();
+    reelsViewer?.classList.remove('is-switching');
+  }, shouldAnimate ? 180 : 0);
+}
+
+function openReels(index) {
+  if (!reelsModal || !reelsVideo || !reels.length) return;
+
+  previousBodyOverflow = document.body.style.overflow;
+  document.body.style.overflow = 'hidden';
+  document.body.classList.add('reels-lock');
+  reelsModal.classList.add('is-open');
+  reelsModal.setAttribute('aria-hidden', 'false');
+  updateReel(index, false);
+}
+
+function closeReels() {
+  if (!reelsModal || !reelsVideo) return;
+
+  reelsVideo.pause();
+  reelsVideo.removeAttribute('src');
+  reelsVideo.load();
+  reelsModal.classList.remove('is-open');
+  reelsModal.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('reels-lock');
+  document.body.style.overflow = previousBodyOverflow;
+}
+
+function showNextReel() {
+  updateReel(activeReelIndex + 1);
+}
+
+function showPreviousReel() {
+  updateReel(activeReelIndex - 1);
+}
+
+function isReelsOpen() {
+  return reelsModal?.classList.contains('is-open');
+}
+
+reelThumbs.forEach((thumb, index) => {
+  thumb.addEventListener('click', () => openReels(index));
+});
+
+reelsCloseButtons.forEach((button) => button.addEventListener('click', closeReels));
+reelsPrevButtons.forEach((button) => button.addEventListener('click', showPreviousReel));
+reelsNextButtons.forEach((button) => button.addEventListener('click', showNextReel));
+
+reelsViewer?.addEventListener('touchstart', (event) => {
+  const touch = event.changedTouches[0];
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+}, { passive: true });
+
+reelsViewer?.addEventListener('touchmove', (event) => {
+  const touch = event.changedTouches[0];
+  touchEndX = touch.clientX;
+  touchEndY = touch.clientY;
+}, { passive: true });
+
+reelsViewer?.addEventListener('touchend', (event) => {
+  const touch = event.changedTouches[0];
+  touchEndX = touch.clientX;
+  touchEndY = touch.clientY;
+
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+  const isHorizontalSwipe = Math.abs(deltaX) > 46 && Math.abs(deltaX) > Math.abs(deltaY) * 1.4;
+
+  if (!isHorizontalSwipe) return;
+
+  if (deltaX < 0) {
+    showNextReel();
+  } else {
+    showPreviousReel();
+  }
+}, { passive: true });
+
+window.addEventListener('keydown', (event) => {
+  if (!isReelsOpen()) return;
+
+  if (event.key === 'Escape') {
+    closeReels();
+  }
+
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    showPreviousReel();
+  }
+
+  if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    showNextReel();
+  }
+});
