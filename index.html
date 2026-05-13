@@ -146,18 +146,11 @@
             <div class="section-heading compact">
               <p class="section-kicker">Historias que inspiran</p>
               <h2 id="stories-title">Historias reales</h2>
-              <p>Testimonios en video de personas que dieron el siguiente paso.</p>
+              <p>Testimonios reales de personas que transformaron su vida.</p>
             </div>
-            <div class="video-card" aria-label="Testimonio en video destacado">
-              <iframe
-                class="testimonial-video-frame"
-                src="https://www.youtube-nocookie.com/embed/F7RQe4eeDIs?rel=0"
-                title="Testimonio destacado de COHACER"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-                loading="lazy"
-              ></iframe>
-              <span class="video-badge">Historia destacada</span>
+            
+            <div class="video-previews">
+              <!-- Dynamically populated by main.js -->
             </div>
           </div>
 
@@ -170,23 +163,22 @@
               <div><strong>+3,000</strong><span>historias acompañadas</span></div>
               <div><strong>92%</strong><span>recomienda el apoyo</span></div>
             </div>
-            <div class="mini-videos" aria-label="Más testimonios">
-              <button class="testimonial-video-button is-active" type="button" data-video-id="F7RQe4eeDIs" aria-label="Ver testimonio 1" aria-pressed="true">
-                <img src="https://img.youtube.com/vi/F7RQe4eeDIs/hqdefault.jpg" alt="Miniatura del testimonio 1" />
-              </button>
-              <button class="testimonial-video-button" type="button" data-video-id="5B8-TJ8vsKY" aria-label="Ver testimonio 2" aria-pressed="false">
-                <img src="https://img.youtube.com/vi/5B8-TJ8vsKY/hqdefault.jpg" alt="Miniatura del testimonio 2" />
-              </button>
-              <button class="testimonial-video-button" type="button" data-video-id="1mGo9KXT8Ps" aria-label="Ver testimonio 3" aria-pressed="false">
-                <img src="https://img.youtube.com/vi/1mGo9KXT8Ps/hqdefault.jpg" alt="Miniatura del testimonio 3" />
-              </button>
-              <button class="testimonial-video-button" type="button" data-video-id="3LtO3P7vRtU" aria-label="Ver testimonio 4" aria-pressed="false">
-                <img src="https://img.youtube.com/vi/3LtO3P7vRtU/hqdefault.jpg" alt="Miniatura del testimonio 4" />
-              </button>
-            </div>
           </div>
         </div>
       </section>
+
+      <!-- ═══ REELS MODAL ═══ -->
+      <div id="reels-modal" class="reels-modal">
+        <button class="reels-close" aria-label="Cerrar">✕</button>
+        <div class="swiper reels-swiper">
+          <div class="swiper-wrapper">
+            <!-- Dynamically populated by main.js -->
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
       <!-- ═══ CÓMO FUNCIONA ═══ -->
       <section class="section how" id="como-funciona" aria-labelledby="how-title">
