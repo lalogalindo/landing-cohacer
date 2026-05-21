@@ -1,3 +1,10 @@
+import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay, Mousewheel } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 // ─── Mobile Menu ───
 const header = document.querySelector('.site-header');
 const toggle = document.querySelector('.menu-toggle');
@@ -133,7 +140,7 @@ function renderReels() {
     previewCard.className = 'video-preview-card';
     previewCard.dataset.videoIndex = index;
     previewCard.innerHTML = `
-      <video src="${reel.videoSrc}" muted loop playsinline></video>
+      <video src="${reel.videoSrc}" muted loop playsinline preload="none"></video>
       <div class="play-overlay">
         <span class="play-icon">▶</span>
         <span class="play-label">Ver historia</span>
@@ -147,7 +154,7 @@ function renderReels() {
     slide.className = 'swiper-slide';
     slide.innerHTML = `
       <div class="reel-container">
-        <video class="reel-video" src="${reel.videoSrc}" playsinline loop></video>
+        <video class="reel-video" src="${reel.videoSrc}" playsinline loop preload="none"></video>
         <div class="reel-ui">
           <button class="mute-toggle" aria-label="Silenciar">🔊</button>
           <div class="reel-info">
@@ -172,6 +179,7 @@ function initSwiper() {
   if (swiper) swiper.destroy();
   
   swiper = new Swiper('.reels-swiper', {
+    modules: [Mousewheel, Pagination],
     direction: 'vertical',
     mousewheel: true,
     pagination: {
@@ -254,3 +262,117 @@ window.addEventListener('keydown', (e) => {
 renderReels();
 
 
+// ─── Licenciaturas Carousel ───
+const licenciaturasSwiper = new Swiper('.licenciaturas-swiper', {
+  modules: [Navigation, Pagination, Autoplay],
+  loop: true,
+  slidesPerView: 'auto',
+  spaceBetween: 20,
+  centeredSlides: false,
+  grabCursor: true,
+  autoplay: {
+    delay: 3500,
+    disableOnInteraction: false,
+    pauseOnMouseEnter: true,
+  },
+  navigation: {
+    prevEl: '.licenciaturas-prev',
+    nextEl: '.licenciaturas-next',
+  },
+  pagination: {
+    el: '.licenciaturas-pagination',
+    clickable: true,
+  },
+  breakpoints: {
+    640: {
+      spaceBetween: 24,
+    },
+    980: {
+      spaceBetween: 28,
+    },
+  },
+});
+
+
+// ─── Modal Acreditación ───
+const acredModal   = document.querySelector('#acred-modal');
+const openAcredBtn = document.querySelector('#open-acred-modal');
+const closeAcredBtn = document.querySelector('#close-acred-modal');
+const acredBackdrop = document.querySelector('.acred-modal-backdrop');
+
+function openAcredModal() {
+  acredModal?.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  closeAcredBtn?.focus();
+}
+
+function closeAcredModal() {
+  acredModal?.classList.remove('is-open');
+  document.body.style.overflow = '';
+  openAcredBtn?.focus();
+}
+
+openAcredBtn?.addEventListener('click', openAcredModal);
+closeAcredBtn?.addEventListener('click', closeAcredModal);
+acredBackdrop?.addEventListener('click', closeAcredModal);
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && acredModal?.classList.contains('is-open')) {
+    closeAcredModal();
+  }
+});
+
+
+// ─── Asesor por URL (/slug) ───
+async function loadAsesor() {
+  try {
+    const res = await fetch('/assets/asesores.json');
+    const data = await res.json();
+
+    // Get first path segment: "/" → "", "/lalo" → "lalo", "/lalo/otra" → "lalo"
+    const slug = window.location.pathname.replace(/^\//, '').split('/')[0].toLowerCase().trim();
+    const asesor = data[slug] || data['default'];
+
+    // Populate contact section
+    const nombreTitle  = document.querySelector('#contact-nombre-title');
+    const asesorName   = document.querySelector('#contact-asesor-name');
+    const cargoEl      = document.querySelector('#contact-cargo');
+    const waLink       = document.querySelector('#contact-whatsapp-link');
+    const waNum        = document.querySelector('#contact-whatsapp-num');
+    const phoneLink    = document.querySelector('#contact-phone-link');
+    const phoneNum     = document.querySelector('#contact-phone-num');
+    const horarioShort = document.querySelector('#contact-horario-short');
+    const horarioLabel = document.querySelector('#contact-horario-label');
+    const horarioDetail= document.querySelector('#contact-horario-detalle');
+
+    if (nombreTitle) {
+      nombreTitle.textContent = slug && data[slug]
+        ? `habla con ${asesor.nombre}`
+        : 'estamos para ayudarte';
+    }
+    if (asesorName)   asesorName.textContent  = asesor.nombre;
+    if (cargoEl)      cargoEl.textContent      = asesor.cargo;
+    if (waLink)       waLink.href              = `https://wa.me/${asesor.whatsapp}`;
+    if (waNum)        waNum.textContent        = asesor.whatsappDisplay;
+    if (phoneLink)    phoneLink.href           = `tel:${asesor.telefono}`;
+    if (phoneNum)     phoneNum.textContent     = asesor.telefonoDisplay;
+    if (horarioShort) horarioShort.textContent = asesor.horario;
+    if (horarioLabel) horarioLabel.textContent = asesor.horario.split('·')[0].trim();
+    if (horarioDetail)horarioDetail.textContent= asesor.horarioDetalle;
+
+    // Update Header CTA text
+    const headerCta = document.querySelector('#header-cta-fixed');
+    if (headerCta) {
+      if (slug && data[slug]) {
+        headerCta.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg> Habla con el asesor ${asesor.nombre.split(' ')[0]}`;
+      } else {
+        headerCta.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg> Hablar con asesor`;
+      }
+    }
+
+  } catch (err) {
+    console.warn('No se pudo cargar asesores.json:', err);
+  }
+}
+
+loadAsesor();
