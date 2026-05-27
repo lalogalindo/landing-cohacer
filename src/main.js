@@ -90,176 +90,375 @@ const observer = new IntersectionObserver(
 );
 fadeEls.forEach((el) => observer.observe(el));
 
+// ─── YouTube Videos Data ───
+const VIDEOS_DATA = [
+  // Promocionales
+  {
+    id: 'mRc6chDkq4Y',
+    title: 'Promocional COHACER 1',
+    category: 'promocional',
+    badge: 'Promocional',
+    isShort: false,
+  },
+  {
+    id: 'CCyjSsoPHQY',
+    title: 'Promocional COHACER 2',
+    category: 'promocional',
+    badge: 'Promocional',
+    isShort: false,
+  },
+  {
+    id: 'MjoQgonW1aU',
+    title: 'Promocional COHACER 3',
+    category: 'promocional',
+    badge: 'Promocional',
+    isShort: true,
+  },
+  {
+    id: '6hybykGYvsA',
+    title: 'Promocional COHACER 4',
+    category: 'promocional',
+    badge: 'Promocional',
+    isShort: true,
+  },
 
-// ─── Reels Data (Scalable) ───
-const REELS_DATA = [
+  // Testimoniales
   {
-    id: 1,
-    videoSrc: '/assets/vid1.mp4',
-    title: 'Historia Real 1',
-    description: 'Logros extraordinarios con apoyo cercano.',
-    badge: 'Historia 1'
+    id: '1pyhbLC1sYw',
+    title: 'Testimonial COHACER 1',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: false,
   },
   {
-    id: 2,
-    videoSrc: '/assets/vid2.mp4',
-    title: 'Historia Real 2',
-    description: 'Un paso adelante hacia el futuro.',
-    badge: 'Historia 2'
+    id: '0XzYWEJcxfw',
+    title: 'Testimonial COHACER 2',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
   },
-  // To add more videos, just add objects here:
-  // {
-  //   id: 3,
-  //   videoSrc: '/assets/vid3.mp4',
-  //   title: 'Historia Real 3',
-  //   description: 'Descripción del video.',
-  //   badge: 'Nuevo'
-  // }
+  {
+    id: 'bwru58dzMB8',
+    title: 'Testimonial COHACER 3',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+  {
+    id: '9oQavi7FixE',
+    title: 'Testimonial COHACER 4',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+  {
+    id: 'TCiTx02VQCE',
+    title: 'Testimonial COHACER 5',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+  {
+    id: '_wj1FyMHTQw',
+    title: 'Testimonial COHACER 6',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+  {
+    id: '3b2NjVp9Hwg',
+    title: 'Testimonial COHACER 7',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+  {
+    id: '3Eza62IAECQ',
+    title: 'Testimonial COHACER 8',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+  {
+    id: '279eXDh6eQM',
+    title: 'Testimonial COHACER 9',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+  {
+    id: 'vOeIPpFLTPA',
+    title: 'Testimonial COHACER 10',
+    category: 'testimonial',
+    badge: 'Testimonial',
+    isShort: true,
+  },
+
+  // Maestría
+  {
+    id: 'UfxYtF6adnk',
+    title: 'Maestría COHACER',
+    category: 'maestria',
+    badge: 'Maestría',
+    isShort: false,
+  },
 ];
 
-// ─── Reels Modal & Swiper Logic ───
+// ─── Video Carousel & Reels Modal ───
 const reelsModal = document.querySelector('#reels-modal');
 const reelsClose = document.querySelector('.reels-close');
-const previewsContainer = document.querySelector('.video-previews');
-const swiperWrapper = document.querySelector('.reels-swiper .swiper-wrapper');
+const previewsContainer = document.querySelector('.videos-swiper .video-previews');
+const reelsSwiperWrapper = document.querySelector('.reels-swiper .swiper-wrapper');
+const categoryTabs = document.querySelectorAll('.video-category-tab');
+const videosPrevButton = document.querySelector('.videos-prev');
+const videosNextButton = document.querySelector('.videos-next');
 
-let swiper;
-let reelVideos = [];
-let muteToggles = [];
+let reelsSwiper;
+let videosSwiper;
+let activeCategory = 'todos';
+let activeIframe = null;
 
-function renderReels() {
-  if (!previewsContainer || !swiperWrapper) return;
+function getYouTubeThumbnail(videoId) {
+  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+}
 
-  // Clear existing content
+function getFilteredVideos() {
+  if (activeCategory === 'todos') return VIDEOS_DATA;
+
+  return VIDEOS_DATA.filter((video) => video.category === activeCategory);
+}
+
+function ensureVideosFontAwesomeArrows() {
+  if (videosPrevButton) {
+    videosPrevButton.innerHTML = '<i class="fa-solid fa-chevron-left" aria-hidden="true"></i>';
+    videosPrevButton.setAttribute('aria-label', 'Video anterior');
+  }
+
+  if (videosNextButton) {
+    videosNextButton.innerHTML = '<i class="fa-solid fa-chevron-right" aria-hidden="true"></i>';
+    videosNextButton.setAttribute('aria-label', 'Video siguiente');
+  }
+}
+
+function renderPreviews() {
+  if (!previewsContainer) return;
+
   previewsContainer.innerHTML = '';
-  swiperWrapper.innerHTML = '';
 
-  REELS_DATA.forEach((reel, index) => {
-    // 1. Render Preview Card
-    const previewCard = document.createElement('div');
-    previewCard.className = 'video-preview-card';
-    previewCard.dataset.videoIndex = index;
-    previewCard.innerHTML = `
-      <video src="${reel.videoSrc}" muted loop playsinline preload="none"></video>
+  const filteredVideos = getFilteredVideos();
+
+  filteredVideos.forEach((video) => {
+    const globalIndex = VIDEOS_DATA.indexOf(video);
+    const card = document.createElement('div');
+
+    card.className = `swiper-slide video-preview-card ${video.isShort ? 'is-short' : 'is-landscape'}`;
+    card.dataset.videoIndex = String(globalIndex);
+
+    card.innerHTML = `
+      <img src="${getYouTubeThumbnail(video.id)}" alt="${video.title}" loading="lazy" />
       <div class="play-overlay">
-        <span class="play-icon">▶</span>
-        <span class="play-label">Ver historia</span>
+        <span class="play-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+            <path d="M8 5v14l11-7z"></path>
+          </svg>
+        </span>
       </div>
-      <span class="video-badge">${reel.badge}</span>
+      <span class="video-badge">${video.badge}</span>
+      <span class="video-title-overlay">${video.title}</span>
     `;
-    previewsContainer.appendChild(previewCard);
 
-    // 2. Render Swiper Slide
+    previewsContainer.appendChild(card);
+  });
+
+  setupPreviewListeners();
+}
+
+function renderReelsSlides() {
+  if (!reelsSwiperWrapper) return;
+
+  reelsSwiperWrapper.innerHTML = '';
+
+  VIDEOS_DATA.forEach((video) => {
     const slide = document.createElement('div');
+
     slide.className = 'swiper-slide';
+    slide.dataset.videoId = video.id;
+    slide.dataset.isShort = String(video.isShort);
+
     slide.innerHTML = `
-      <div class="reel-container">
-        <video class="reel-video" src="${reel.videoSrc}" playsinline loop preload="none"></video>
+      <div class="reel-container ${video.isShort ? 'reel-short' : 'reel-landscape'}">
+        <div class="reel-iframe-wrapper" data-video-id="${video.id}"></div>
         <div class="reel-ui">
-          <button class="mute-toggle" aria-label="Silenciar">🔊</button>
           <div class="reel-info">
-            <h3>${reel.title}</h3>
-            <p>${reel.description}</p>
+            <h3>${video.title}</h3>
           </div>
         </div>
       </div>
     `;
-    swiperWrapper.appendChild(slide);
-  });
 
-  // Re-collect elements
-  reelVideos = document.querySelectorAll('.reel-video');
-  muteToggles = document.querySelectorAll('.mute-toggle');
-  
-  initSwiper();
-  setupEventListeners();
+    reelsSwiperWrapper.appendChild(slide);
+  });
 }
 
-function initSwiper() {
-  if (swiper) swiper.destroy();
-  
-  swiper = new Swiper('.reels-swiper', {
+function initReelsSwiper() {
+  if (!document.querySelector('.reels-swiper')) return;
+
+  if (reelsSwiper) {
+    reelsSwiper.destroy(true, true);
+  }
+
+  reelsSwiper = new Swiper('.reels-swiper', {
     modules: [Mousewheel, Pagination],
     direction: 'vertical',
     mousewheel: true,
     pagination: {
-      el: '.swiper-pagination',
+      el: '.reels-modal .swiper-pagination',
       clickable: true,
     },
     on: {
-      slideChange: function () {
-        pauseAllVideos();
-        playCurrentVideo(this.activeIndex);
+      slideChange() {
+        loadIframeForSlide(this.activeIndex);
       },
     },
   });
 }
 
-function pauseAllVideos() {
-  reelVideos.forEach((video) => {
-    video.pause();
-    video.currentTime = 0;
+function removeActiveIframes() {
+  document.querySelectorAll('.reel-iframe-wrapper iframe').forEach((iframe) => {
+    iframe.remove();
   });
+
+  activeIframe = null;
 }
 
-function playCurrentVideo(index) {
-  const video = reelVideos[index];
-  if (video) {
-    video.play().catch(err => console.log("Auto-play blocked:", err));
-  }
+function loadIframeForSlide(index) {
+  removeActiveIframes();
+
+  if (!reelsSwiperWrapper) return;
+
+  const slide = reelsSwiperWrapper.children[index];
+  if (!slide) return;
+
+  const wrapper = slide.querySelector('.reel-iframe-wrapper');
+  if (!wrapper) return;
+
+  const videoId = wrapper.dataset.videoId;
+  if (!videoId) return;
+
+  const iframe = document.createElement('iframe');
+
+  iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
+  iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+  iframe.allowFullscreen = true;
+  iframe.setAttribute('frameborder', '0');
+
+  wrapper.appendChild(iframe);
+  activeIframe = iframe;
 }
 
 function openReels(index) {
-  reelsModal?.classList.add('is-open');
+  if (!reelsModal) return;
+
+  reelsModal.classList.add('is-open');
   document.body.style.overflow = 'hidden';
-  swiper.slideTo(index, 0);
-  playCurrentVideo(index);
+
+  if (!reelsSwiper) {
+    initReelsSwiper();
+  }
+
+  if (reelsSwiper) {
+    reelsSwiper.slideTo(index, 0);
+  }
+
+  loadIframeForSlide(index);
 }
 
 function closeReels() {
-  reelsModal?.classList.remove('is-open');
+  if (!reelsModal) return;
+
+  reelsModal.classList.remove('is-open');
   document.body.style.overflow = '';
-  pauseAllVideos();
+
+  removeActiveIframes();
 }
 
-function setupEventListeners() {
-  // Opening modal
+function setupPreviewListeners() {
   document.querySelectorAll('.video-preview-card').forEach((preview) => {
-    preview.addEventListener('click', () => {
-      const index = parseInt(preview.dataset.videoIndex);
+    preview.onclick = () => {
+      const index = Number.parseInt(preview.dataset.videoIndex || '0', 10);
       openReels(index);
-    });
-
-    // Hover effect
-    const v = preview.querySelector('video');
-    preview.addEventListener('mouseenter', () => v.play());
-    preview.addEventListener('mouseleave', () => {
-      v.pause();
-      v.currentTime = 0;
-    });
-  });
-
-  // Mute/Unmute Logic
-  muteToggles.forEach((toggle) => {
-    toggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isMuted = !reelVideos[0].muted;
-      reelVideos.forEach(v => v.muted = isMuted);
-      muteToggles.forEach(t => t.textContent = isMuted ? '🔇' : '🔊');
-    });
+    };
   });
 }
+
+function initVideosSwiper() {
+  if (!document.querySelector('.videos-swiper')) return;
+
+  ensureVideosFontAwesomeArrows();
+
+  if (videosSwiper) {
+    videosSwiper.destroy(true, true);
+  }
+
+  videosSwiper = new Swiper('.videos-swiper', {
+    modules: [Navigation, Mousewheel],
+    slidesPerView: 'auto',
+    spaceBetween: 14,
+    grabCursor: true,
+    watchOverflow: true,
+    observer: true,
+    observeParents: true,
+    mousewheel: {
+      forceToAxis: true,
+      releaseOnEdges: true,
+    },
+    navigation: {
+      prevEl: '.videos-prev',
+      nextEl: '.videos-next',
+    },
+  });
+}
+
+categoryTabs.forEach((tab) => {
+  tab.addEventListener('click', () => {
+    categoryTabs.forEach((currentTab) => {
+      currentTab.classList.remove('active');
+      currentTab.setAttribute('aria-selected', 'false');
+    });
+
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+
+    activeCategory = tab.dataset.category || 'todos';
+
+    renderPreviews();
+
+    if (videosSwiper) {
+      videosSwiper.update();
+      videosSwiper.slideTo(0);
+    }
+  });
+});
 
 reelsClose?.addEventListener('click', closeReels);
 
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && reelsModal?.classList.contains('is-open')) {
+reelsModal?.addEventListener('click', (event) => {
+  if (event.target === reelsModal) {
+    closeReels();
+  }
+});
+
+window.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && reelsModal?.classList.contains('is-open')) {
     closeReels();
   }
 });
 
 // Initial Render
-renderReels();
+renderReelsSlides();
+initReelsSwiper();
+renderPreviews();
+initVideosSwiper();
 
 
 // ─── Licenciaturas Carousel ───
@@ -295,7 +494,7 @@ const licenciaturasSwiper = new Swiper('.licenciaturas-swiper', {
 
 
 // ─── Modal Acreditación ───
-const acredModal   = document.querySelector('#acred-modal');
+const acredModal = document.querySelector('#acred-modal');
 const openAcredBtn = document.querySelector('#open-acred-modal');
 const closeAcredBtn = document.querySelector('#close-acred-modal');
 const acredBackdrop = document.querySelector('.acred-modal-backdrop');
@@ -334,31 +533,31 @@ async function loadAsesor() {
     const asesor = data[slug] || data['default'];
 
     // Populate contact section
-    const nombreTitle  = document.querySelector('#contact-nombre-title');
-    const asesorName   = document.querySelector('#contact-asesor-name');
-    const cargoEl      = document.querySelector('#contact-cargo');
-    const waLink       = document.querySelector('#contact-whatsapp-link');
-    const waNum        = document.querySelector('#contact-whatsapp-num');
-    const phoneLink    = document.querySelector('#contact-phone-link');
-    const phoneNum     = document.querySelector('#contact-phone-num');
+    const nombreTitle = document.querySelector('#contact-nombre-title');
+    const asesorName = document.querySelector('#contact-asesor-name');
+    const cargoEl = document.querySelector('#contact-cargo');
+    const waLink = document.querySelector('#contact-whatsapp-link');
+    const waNum = document.querySelector('#contact-whatsapp-num');
+    const phoneLink = document.querySelector('#contact-phone-link');
+    const phoneNum = document.querySelector('#contact-phone-num');
     const horarioShort = document.querySelector('#contact-horario-short');
     const horarioLabel = document.querySelector('#contact-horario-label');
-    const horarioDetail= document.querySelector('#contact-horario-detalle');
+    const horarioDetail = document.querySelector('#contact-horario-detalle');
 
     if (nombreTitle) {
       nombreTitle.textContent = slug && data[slug]
         ? `habla con ${asesor.nombre}`
         : 'estamos para ayudarte';
     }
-    if (asesorName)   asesorName.textContent  = asesor.nombre;
-    if (cargoEl)      cargoEl.textContent      = asesor.cargo;
-    if (waLink)       waLink.href              = `https://wa.me/${asesor.whatsapp}`;
-    if (waNum)        waNum.textContent        = asesor.whatsappDisplay;
-    if (phoneLink)    phoneLink.href           = `tel:${asesor.telefono}`;
-    if (phoneNum)     phoneNum.textContent     = asesor.telefonoDisplay;
+    if (asesorName) asesorName.textContent = asesor.nombre;
+    if (cargoEl) cargoEl.textContent = asesor.cargo;
+    if (waLink) waLink.href = `https://wa.me/${asesor.whatsapp}`;
+    if (waNum) waNum.textContent = asesor.whatsappDisplay;
+    if (phoneLink) phoneLink.href = `tel:${asesor.telefono}`;
+    if (phoneNum) phoneNum.textContent = asesor.telefonoDisplay;
     if (horarioShort) horarioShort.textContent = asesor.horario;
     if (horarioLabel) horarioLabel.textContent = asesor.horario.split('·')[0].trim();
-    if (horarioDetail)horarioDetail.textContent= asesor.horarioDetalle;
+    if (horarioDetail) horarioDetail.textContent = asesor.horarioDetalle;
 
     // Update Header CTA text
     const headerCta = document.querySelector('#header-cta-fixed');
