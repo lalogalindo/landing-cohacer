@@ -1,0 +1,37 @@
+export const ASESORES = {
+  default: {
+    fotografia: 'https://i.pravatar.cc/160',
+    nombre: 'COHACER',
+    whatsapp: '55 1234 5678',
+    telefono: '55 1234 5678',
+    horario: 'Lun – Vie · 9:00 – 18:00',
+  },
+  lalo: {
+    fotografia: 'https://i.pravatar.cc/160',
+    nombre: 'Lalo Galindo',
+    whatsapp: '55 9876 5401',
+    telefono: '55 4412 3309',
+    horario: 'Lun – Vie · 8:00 – 17:00',
+  },
+  manu: {
+    fotografia: 'https://i.pravatar.cc/160',
+    nombre: 'Manu Reyes',
+    whatsapp: '55 3321 4780',
+    telefono: '55 3321 4780',
+    horario: 'Lun – Sáb · 9:00 – 15:00',
+  },
+  diana: {
+    fotografia: 'https://i.pravatar.cc/160',
+    nombre: 'Diana Morales',
+    whatsapp: '55 1122 3344',
+    telefono: '55 7890 1234',
+    horario: 'Mar – Sáb · 10:00 – 19:00',
+  },
+  carlos: {
+    fotografia: 'https://i.pravatar.cc/160',
+    nombre: 'Carlos Mendoza',
+    whatsapp: '55 6677 8899',
+    telefono: '55 3344 5566',
+    horario: 'Lun – Vie · 11:00 – 20:00',
+  },
+};

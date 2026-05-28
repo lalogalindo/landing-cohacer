@@ -1,23 +1,19 @@
 import { $, $$ } from '../utils/dom.js';
 import { getFirstName, getPhoneHref, getWhatsAppHref } from '../utils/phone.js';
+import { ASESORES } from '../data/asesores-data.js';
 
 /**
  * initAsesores
  *
  * Propósito:
- * - Cargar asesores desde JSON.
+ * - Cargar asesores desde un módulo local empaquetado por Vite.
+ * - Evitar depender de archivos JSON públicos en producción.
  * - Renderizar carrusel general o card individual según slug.
  */
-export async function initAsesores() {
-  try {
-    const res = await fetch('/assets/asesores.json');
-    const data = await res.json();
-    const slug = getCurrentSlug();
+export function initAsesores() {
+  const slug = getCurrentSlug();
 
-    renderAsesores(data, slug);
-  } catch (err) {
-    console.warn('No se pudo cargar asesores.json:', err);
-  }
+  renderAsesores(ASESORES, slug);
 }
 
 /**

@@ -1,22 +1,4 @@
-import { $ } from '../utils/dom.js';
-
-/**
- * initCompaniesMarquee
- *
- * Propósito:
- * - Cargar empresas desde JSON.
- * - Renderizar filas de logos clickeables con animación marquee.
- */
-export async function initCompaniesMarquee() {
-  try {
-    const res = await fetch('/assets/companies.json');
-    const content = await res.json();
-
-    renderCompaniesMarquee(content);
-  } catch (err) {
-    console.warn('No se pudo cargar companies.json:', err);
-  }
-}
+import { COMPANIES_CONTENT } from '../data/companies-data.js';
 
 /**
  * chunkBy
@@ -29,7 +11,7 @@ export async function initCompaniesMarquee() {
  * - perRow: Máximo de elementos por fila.
  *
  * Regresa:
- * - Arreglo de filas.
+ * - Arreglo dividido en filas.
  */
 function chunkBy(items, perRow) {
   const safePerRow = Math.max(1, perRow);
@@ -46,10 +28,10 @@ function chunkBy(items, perRow) {
  * duplicateRow
  *
  * Propósito:
- * - Duplicar una fila para crear loop continuo.
+ * - Duplicar una fila para crear un loop continuo de marquee.
  *
  * Parámetros:
- * - row: Fila original.
+ * - row: Fila original de empresas.
  *
  * Regresa:
  * - Fila duplicada.
@@ -62,13 +44,13 @@ function duplicateRow(row) {
  * getVisibleClass
  *
  * Propósito:
- * - Obtener la clase de viewport según el número máximo visible.
+ * - Obtener la clase de ancho del viewport según el número máximo visible.
  *
  * Parámetros:
  * - visibleCount: Cantidad máxima de logos visibles.
  *
  * Regresa:
- * - Clase CSS para controlar el ancho del viewport.
+ * - Clase CSS correspondiente.
  */
 function getVisibleClass(visibleCount) {
   if (visibleCount === 2) return 'companies-visible-2';
@@ -81,17 +63,15 @@ function getVisibleClass(visibleCount) {
  * createCompanyLink
  *
  * Propósito:
- * - Crear un anchor clickeable para una empresa.
+ * - Crear un enlace clickeable para una empresa.
  *
  * Parámetros:
  * - company: Empresa con name, url y src.
- * - rowIndex: Índice de la fila.
- * - itemIndex: Índice del elemento dentro de la fila.
  *
  * Regresa:
  * - Elemento anchor con imagen.
  */
-function createCompanyLink(company, rowIndex, itemIndex) {
+function createCompanyLink(company) {
   const anchor = document.createElement('a');
 
   anchor.className = 'company-logo-link';
@@ -99,8 +79,7 @@ function createCompanyLink(company, rowIndex, itemIndex) {
   anchor.target = '_blank';
   anchor.rel = 'noopener noreferrer';
   anchor.setAttribute('aria-label', company.name);
-  anchor.dataset.rowIndex = String(rowIndex);
-  anchor.dataset.itemIndex = String(itemIndex);
+
   anchor.innerHTML = `
     <img
       src="${company.src}"
@@ -120,8 +99,8 @@ function createCompanyLink(company, rowIndex, itemIndex) {
  *
  * Parámetros:
  * - row: Empresas de la fila.
- * - rowIndex: Índice de fila para alternar dirección.
- * - visibleCount: Cantidad máxima visible.
+ * - rowIndex: Índice de la fila.
+ * - visibleCount: Cantidad máxima de logos visibles.
  *
  * Regresa:
  * - Elemento HTML de la fila marquee.
@@ -132,6 +111,7 @@ function createMarqueeRow(row, rowIndex, visibleCount) {
   const blurRight = document.createElement('div');
   const inner = document.createElement('div');
   const track = document.createElement('div');
+
   const directionClass = rowIndex % 2 === 1
     ? 'animate-marquee-right'
     : 'animate-marquee-left';
@@ -142,8 +122,8 @@ function createMarqueeRow(row, rowIndex, visibleCount) {
   inner.className = 'companies-marquee-inner';
   track.className = `companies-marquee-track ${directionClass}`;
 
-  duplicateRow(row).forEach((company, itemIndex) => {
-    track.appendChild(createCompanyLink(company, rowIndex, itemIndex));
+  duplicateRow(row).forEach((company) => {
+    track.appendChild(createCompanyLink(company));
   });
 
   inner.appendChild(track);
@@ -161,12 +141,15 @@ function createMarqueeRow(row, rowIndex, visibleCount) {
  * - Pintar el título, subtítulo y filas de empresas.
  *
  * Parámetros:
- * - content: Contenido de empresas cargado desde JSON.
+ * - content: Contenido local de empresas.
  */
 function renderCompaniesMarquee(content) {
-  const title = $('#companies-title');
-  const subtitle = $('#companies-subtitle');
-  const marquee = $('#companies-marquee');
+  const title = document.querySelector('#companies-title');
+  const subtitle = document.querySelector('#companies-subtitle');
+  const marquee = document.querySelector('#companies-marquee');
+
+  if (!marquee) return;
+
   const {
     sectionTitle,
     sectionSubtitle,
@@ -175,14 +158,40 @@ function renderCompaniesMarquee(content) {
     companies = [],
   } = content;
 
-  if (!marquee) return;
+  if (title) {
+    title.textContent = sectionTitle;
+  }
 
-  if (title) title.textContent = sectionTitle;
-  if (subtitle) subtitle.textContent = sectionSubtitle;
+  if (subtitle) {
+    subtitle.textContent = sectionSubtitle;
+  }
 
   marquee.innerHTML = '';
 
-  chunkBy(companies, maxPerRow).forEach((row, rowIndex) => {
+  const rows = chunkBy(companies, maxPerRow);
+
+  rows.forEach((row, rowIndex) => {
     marquee.appendChild(createMarqueeRow(row, rowIndex, visibleCount));
   });
+}
+
+/**
+ * initCompaniesMarquee
+ *
+ * Propósito:
+ * - Inicializar el marquee de empresas desde datos locales empaquetados por Vite.
+ * - Evitar depender de companies.json en producción.
+ */
+export function initCompaniesMarquee() {
+  renderCompaniesMarquee(COMPANIES_CONTENT);
+}
+
+/**
+ * loadCompaniesMarquee
+ *
+ * Propósito:
+ * - Mantener compatibilidad si main.js todavía importa este nombre.
+ */
+export function loadCompaniesMarquee() {
+  initCompaniesMarquee();
 }
