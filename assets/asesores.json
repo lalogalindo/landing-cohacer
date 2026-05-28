@@ -1,52 +1,37 @@
 {
   "default": {
+    "fotografia": "https://i.pravatar.cc/160?u=a042581f4e29026703d",
     "nombre": "COHACER",
-    "cargo": "Equipo de Atención",
-    "whatsapp": "525512345678",
-    "whatsappDisplay": "55 1234 5678",
-    "telefono": "+52 55 1234 5678",
-    "telefonoDisplay": "55 1234 5678",
-    "horario": "Lun – Vie · 9:00 – 18:00",
-    "horarioDetalle": "9:00 – 18:00 h"
+    "whatsapp": "55 1234 5678",
+    "telefono": "55 1234 5678",
+    "horario": "Lun – Vie · 9:00 – 18:00"
   },
   "lalo": {
+    "fotografia": "https://i.pravatar.cc/160?u=a042581f4e29026702d",
     "nombre": "Lalo Galindo",
-    "cargo": "Asesor Educativo",
-    "whatsapp": "525598765401",
-    "whatsappDisplay": "55 9876 5401",
-    "telefono": "+52 55 4412 3309",
-    "telefonoDisplay": "55 4412 3309",
-    "horario": "Lun – Vie · 8:00 – 17:00",
-    "horarioDetalle": "8:00 – 17:00 h"
+    "whatsapp": "55 9876 5401",
+    "telefono": "55 4412 3309",
+    "horario": "Lun – Vie · 8:00 – 17:00"
   },
   "manu": {
+    "fotografia": "https://i.pravatar.cc/160?u=a042581f4e29026701d",
     "nombre": "Manu Reyes",
-    "cargo": "Coordinadora de Programas",
-    "whatsapp": "525533214780",
-    "whatsappDisplay": "55 3321 4780",
-    "telefono": "+52 55 6678 9012",
-    "telefonoDisplay": "55 6678 9012",
-    "horario": "Lun – Sáb · 9:00 – 15:00",
-    "horarioDetalle": "9:00 – 15:00 h"
+    "whatsapp": "55 3321 4780",
+    "telefono": "55 3321 4780",
+    "horario": "Lun – Sáb · 9:00 – 15:00"
   },
   "diana": {
+    "fotografia": "https://i.pravatar.cc/160?u=a042581f4e29026700d",
     "nombre": "Diana Morales",
-    "cargo": "Asesora de Licenciaturas",
-    "whatsapp": "525511223344",
-    "whatsappDisplay": "55 1122 3344",
-    "telefono": "+52 55 7890 1234",
-    "telefonoDisplay": "55 7890 1234",
-    "horario": "Mar – Sáb · 10:00 – 19:00",
-    "horarioDetalle": "10:00 – 19:00 h"
+    "whatsapp": "55 1122 3344",
+    "telefono": "55 7890 1234",
+    "horario": "Mar – Sáb · 10:00 – 19:00"
   },
   "carlos": {
+    "fotografia": "https://i.pravatar.cc/160?u=a042581f4e29026709d",
     "nombre": "Carlos Mendoza",
-    "cargo": "Asesor de Posgrado",
-    "whatsapp": "525566778899",
-    "whatsappDisplay": "55 6677 8899",
-    "telefono": "+52 55 3344 5566",
-    "telefonoDisplay": "55 3344 5566",
-    "horario": "Lun – Vie · 11:00 – 20:00",
-    "horarioDetalle": "11:00 – 20:00 h"
+    "whatsapp": "55 6677 8899",
+    "telefono": "55 3344 5566",
+    "horario": "Lun – Vie · 11:00 – 20:00"
   }
 }

@@ -498,7 +498,16 @@ const acredModal = document.querySelector('#acred-modal');
 const openAcredBtn = document.querySelector('#open-acred-modal');
 const closeAcredBtn = document.querySelector('#close-acred-modal');
 const acredBackdrop = document.querySelector('.acred-modal-backdrop');
+const centroEvaluadorNavLink = document.querySelector('#centro-evaluador-nav-link');
+const centroEvaluadorSection = document.querySelector('#centro-evaluador');
 
+/**
+ * openAcredModal
+ *
+ * Propósito:
+ * - Abrir la modal de acreditación oficial.
+ * - Bloquear el scroll del documento mientras la modal está activa.
+ */
 function openAcredModal() {
   acredModal?.classList.add('is-open');
   document.body.style.overflow = 'hidden';
@@ -515,6 +524,34 @@ openAcredBtn?.addEventListener('click', openAcredModal);
 closeAcredBtn?.addEventListener('click', closeAcredModal);
 acredBackdrop?.addEventListener('click', closeAcredModal);
 
+/**
+ * openCentroEvaluadorFromNav
+ *
+ * Propósito:
+ * - Llevar al usuario a la sección Centro Evaluador.
+ * - Abrir automáticamente la modal de acreditación después del scroll.
+ *
+ * Parámetros:
+ * - event: Evento del enlace del menú.
+ */
+function openCentroEvaluadorFromNav(event) {
+  event.preventDefault();
+
+  closeMenu();
+
+  centroEvaluadorSection?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  });
+
+  window.setTimeout(() => {
+    openAcredModal();
+  }, 650);
+}
+
+centroEvaluadorNavLink?.addEventListener('click', openCentroEvaluadorFromNav);
+
+
 window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && acredModal?.classList.contains('is-open')) {
     closeAcredModal();
@@ -522,53 +559,215 @@ window.addEventListener('keydown', (e) => {
 });
 
 
-// ─── Asesor por URL (/slug) ───
+// ─── Asesores por URL (/slug) ───
+
+/**
+ * normalizePhoneForLink
+ *
+ * Propósito:
+ * - Limpiar un número telefónico visible para usarlo en enlaces.
+ *
+ * Parámetros:
+ * - phone: Número telefónico tal como viene del JSON.
+ *
+ * Regresa:
+ * - Número telefónico sin espacios ni caracteres visuales.
+ */
+function normalizePhoneForLink(phone) {
+  return phone.replace(/\D/g, '');
+}
+
+/**
+ * getWhatsAppHref
+ *
+ * Propósito:
+ * - Construir una liga válida de WhatsApp desde el número visible.
+ *
+ * Parámetros:
+ * - phone: Número de WhatsApp tal como viene del JSON.
+ *
+ * Regresa:
+ * - URL de WhatsApp lista para usarse en href.
+ */
+function getWhatsAppHref(phone) {
+  const cleanPhone = normalizePhoneForLink(phone);
+  const phoneWithCountryCode = cleanPhone.startsWith('52') ? cleanPhone : `52${cleanPhone}`;
+
+  return `https://wa.me/${phoneWithCountryCode}`;
+}
+
+/**
+ * getPhoneHref
+ *
+ * Propósito:
+ * - Construir una liga telefónica para abrir la app de llamadas en móvil.
+ *
+ * Parámetros:
+ * - phone: Número telefónico tal como viene del JSON.
+ *
+ * Regresa:
+ * - URL tel lista para usarse en href.
+ */
+function getPhoneHref(phone) {
+  const cleanPhone = normalizePhoneForLink(phone);
+  const phoneWithCountryCode = cleanPhone.startsWith('52') ? cleanPhone : `52${cleanPhone}`;
+
+  return `tel:+${phoneWithCountryCode}`;
+}
+
+/**
+ * getFirstName
+ *
+ * Propósito:
+ * - Obtener el primer nombre del asesor para textos cortos de CTA.
+ *
+ * Parámetros:
+ * - fullName: Nombre completo del asesor.
+ *
+ * Regresa:
+ * - Primer nombre disponible.
+ */
+function getFirstName(fullName) {
+  return fullName.trim().split(' ')[0];
+}
+
+/**
+ * createAsesorCard
+ *
+ * Propósito:
+ * - Crear una card de asesor con fotografía, nombre, WhatsApp, teléfono y horario.
+ *
+ * Parámetros:
+ * - asesor: Información del asesor proveniente del JSON.
+ * - isSingle: Indica si la card se mostrará sola por slug.
+ *
+ * Regresa:
+ * - Elemento HTML de la card del asesor.
+ */
+function createAsesorCard(asesor, isSingle = false) {
+  const card = document.createElement('article');
+
+  card.className = `asesor-card ${isSingle ? 'is-single' : ''}`;
+
+  card.innerHTML = `
+    <img class="asesor-photo" src="${asesor.fotografia}" alt="${asesor.nombre}" loading="lazy" />
+
+    <div class="asesor-info">
+      <h3 class="asesor-name">${asesor.nombre}</h3>
+
+      <a class="asesor-link asesor-whatsapp" href="${getWhatsAppHref(asesor.whatsapp)}" target="_blank" rel="noopener">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+        <span>${asesor.whatsapp}</span>
+      </a>
+
+      <a class="asesor-link asesor-phone" href="${getPhoneHref(asesor.telefono)}">
+        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+        <span>${asesor.telefono}</span>
+      </a>
+
+      <p class="asesor-schedule">
+        <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+        <span>${asesor.horario}</span>
+      </p>
+    </div>
+  `;
+
+  return card;
+}
+
+/**
+ * updateContactButtons
+ *
+ * Propósito:
+ * - Cambiar los botones principales de contacto cuando existe un asesor por slug.
+ *
+ * Parámetros:
+ * - asesor: Información del asesor activo.
+ * - hasActiveAsesor: Indica si el slug corresponde a un asesor real.
+ */
+function updateContactButtons(asesor, hasActiveAsesor) {
+  const contactButtons = document.querySelectorAll('a.btn[href="#contacto"], #header-cta-fixed');
+
+  contactButtons.forEach((button) => {
+    if (!hasActiveAsesor) return;
+
+    const icon = button.querySelector('svg');
+    const label = `Contacta a ${getFirstName(asesor.nombre)}`;
+
+    button.textContent = '';
+
+    if (icon) {
+      button.appendChild(icon);
+    }
+
+    button.append(` ${label}`);
+  });
+}
+
+/**
+ * renderAsesores
+ *
+ * Propósito:
+ * - Renderizar todos los asesores en modo marquesina cuando no hay slug.
+ * - Renderizar una sola card en layout cómodo cuando existe un slug válido.
+ *
+ * Parámetros:
+ * - data: Objeto completo de asesores proveniente del JSON.
+ * - slug: Primer segmento de la URL.
+ */
+function renderAsesores(data, slug) {
+  const carousel = document.querySelector('#asesores-carousel');
+  const track = document.querySelector('#asesores-track');
+  const nombreTitle = document.querySelector('#contact-nombre-title');
+
+  if (!carousel || !track) return;
+
+  const hasActiveAsesor = Boolean(slug && data[slug]);
+  const asesores = hasActiveAsesor
+    ? [data[slug]]
+    : Object.entries(data)
+        .filter(([key]) => key !== 'default')
+        .map(([, asesor]) => asesor);
+
+  track.innerHTML = '';
+  carousel.classList.toggle('is-single', hasActiveAsesor);
+  carousel.classList.toggle('is-marquee', !hasActiveAsesor);
+
+  if (nombreTitle) {
+    nombreTitle.textContent = hasActiveAsesor
+      ? `habla con ${data[slug].nombre}`
+      : 'estamos para ayudarte';
+  }
+
+  if (hasActiveAsesor) {
+    track.appendChild(createAsesorCard(data[slug], true));
+    updateContactButtons(data[slug], true);
+    return;
+  }
+
+  const duplicatedAsesores = [...asesores, ...asesores];
+
+  duplicatedAsesores.forEach((asesor) => {
+    track.appendChild(createAsesorCard(asesor));
+  });
+}
+
+/**
+ * loadAsesor
+ *
+ * Propósito:
+ * - Cargar asesores desde el JSON.
+ * - Detectar si la URL tiene slug.
+ * - Renderizar carrusel general o card individual.
+ */
 async function loadAsesor() {
   try {
     const res = await fetch('/assets/asesores.json');
     const data = await res.json();
 
-    // Get first path segment: "/" → "", "/lalo" → "lalo", "/lalo/otra" → "lalo"
     const slug = window.location.pathname.replace(/^\//, '').split('/')[0].toLowerCase().trim();
-    const asesor = data[slug] || data['default'];
 
-    // Populate contact section
-    const nombreTitle = document.querySelector('#contact-nombre-title');
-    const asesorName = document.querySelector('#contact-asesor-name');
-    const cargoEl = document.querySelector('#contact-cargo');
-    const waLink = document.querySelector('#contact-whatsapp-link');
-    const waNum = document.querySelector('#contact-whatsapp-num');
-    const phoneLink = document.querySelector('#contact-phone-link');
-    const phoneNum = document.querySelector('#contact-phone-num');
-    const horarioShort = document.querySelector('#contact-horario-short');
-    const horarioLabel = document.querySelector('#contact-horario-label');
-    const horarioDetail = document.querySelector('#contact-horario-detalle');
-
-    if (nombreTitle) {
-      nombreTitle.textContent = slug && data[slug]
-        ? `habla con ${asesor.nombre}`
-        : 'estamos para ayudarte';
-    }
-    if (asesorName) asesorName.textContent = asesor.nombre;
-    if (cargoEl) cargoEl.textContent = asesor.cargo;
-    if (waLink) waLink.href = `https://wa.me/${asesor.whatsapp}`;
-    if (waNum) waNum.textContent = asesor.whatsappDisplay;
-    if (phoneLink) phoneLink.href = `tel:${asesor.telefono}`;
-    if (phoneNum) phoneNum.textContent = asesor.telefonoDisplay;
-    if (horarioShort) horarioShort.textContent = asesor.horario;
-    if (horarioLabel) horarioLabel.textContent = asesor.horario.split('·')[0].trim();
-    if (horarioDetail) horarioDetail.textContent = asesor.horarioDetalle;
-
-    // Update Header CTA text
-    const headerCta = document.querySelector('#header-cta-fixed');
-    if (headerCta) {
-      if (slug && data[slug]) {
-        headerCta.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg> Habla con el asesor ${asesor.nombre.split(' ')[0]}`;
-      } else {
-        headerCta.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg> Hablar con asesor`;
-      }
-    }
-
+    renderAsesores(data, slug);
   } catch (err) {
     console.warn('No se pudo cargar asesores.json:', err);
   }
