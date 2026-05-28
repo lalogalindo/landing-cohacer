@@ -653,7 +653,7 @@ function createAsesorCard(asesor, isSingle = false) {
     <img class="asesor-photo" src="${asesor.fotografia}" alt="${asesor.nombre}" loading="lazy" />
 
     <div class="asesor-info">
-      <h3 class="asesor-name">${asesor.nombre}</h3>
+      <h3 class="asesor-name">${asesor.nombre.split(' ').join('<br />')}</h3>
 
       <a class="asesor-link asesor-whatsapp" href="${getWhatsAppHref(asesor.whatsapp)}" target="_blank" rel="noopener">
         <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>

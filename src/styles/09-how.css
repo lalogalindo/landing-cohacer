@@ -1,0 +1,148 @@
+/* ─── HOW IT WORKS ─── */
+
+.how {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fff8ed 0%, var(--white) 72%);
+}
+
+.how::before {
+  content: "";
+  position: absolute;
+  left: -110px;
+  top: 90px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 198, 41, 0.26), transparent 66%);
+}
+
+.how .container {
+  position: relative;
+  z-index: 1;
+}
+
+.steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  padding: 8px;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: inset 0 0 0 1px rgba(21, 29, 51, 0.06);
+}
+
+.step-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 230px;
+  padding: 30px 22px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.74);
+  border-radius: 24px;
+  background: linear-gradient(160deg, #ffffff 0%, #fff7e4 100%);
+  box-shadow: 0 20px 44px rgba(21, 29, 51, 0.10);
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    border-color var(--transition);
+}
+
+.step-card::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -46px;
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  background: rgba(255, 198, 41, 0.20);
+}
+
+.step-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 198, 41, 0.36);
+  box-shadow: 0 28px 58px rgba(21, 29, 51, 0.16);
+}
+
+.step-icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(255, 198, 41, 0.32);
+  border-radius: 18px;
+  background: rgba(255, 198, 41, 0.18);
+  font-size: 1.45rem;
+}
+
+.step-number {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--royal);
+  font-weight: 800;
+  font-size: 0.85rem;
+}
+
+.step-card:nth-child(even) .step-number {
+  background: #d4940a;
+}
+
+.step-card h3 {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 8px;
+  font-size: 1.08rem;
+  font-weight: 800;
+}
+
+.step-card p {
+  position: relative;
+  z-index: 1;
+  color: var(--navy);
+  opacity: 0.75;
+  font-size: 0.94rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 720px) {
+  .steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .steps::before {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 78px;
+    height: 3px;
+    border-radius: 99px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(32, 32, 112, 0.18),
+      rgba(255, 198, 41, 0.55),
+      transparent
+    );
+  }
+}
+
+@media (max-width: 719px) {
+  .step-card {
+    min-height: auto;
+  }
+}
