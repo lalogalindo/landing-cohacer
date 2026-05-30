@@ -75,9 +75,9 @@ function createCompanyLink(company) {
   const anchor = document.createElement('a');
 
   anchor.className = 'company-logo-link';
-  anchor.href = company.url;
-  anchor.target = '_blank';
-  anchor.rel = 'noopener noreferrer';
+  anchor.href = "javascript:void(0)";
+  //anchor.target = '_blank';
+  //anchor.rel = 'noopener noreferrer';
   anchor.setAttribute('aria-label', company.name);
 
   anchor.innerHTML = `
