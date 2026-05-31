@@ -34,4 +34,25 @@ export const ASESORES = {
     telefono: '55 3344 5566',
     horario: 'Lun – Vie · 11:00 – 20:00',
   },
+    sofia: {
+    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026777d',
+    nombre: 'Sofía Herrera',
+    whatsapp: '55 2468 1357',
+    telefono: '55 2468 1357',
+    horario: 'Lun – Vie · 9:00 – 18:00',
+  },
+  raul: {
+    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026788d',
+    nombre: 'Raúl Ortega',
+    whatsapp: '55 8642 9753',
+    telefono: '55 8642 9753',
+    horario: 'Lun – Sáb · 10:00 – 16:00',
+  },
+  valeria: {
+    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026799d',
+    nombre: 'Valeria Castillo',
+    whatsapp: '55 5731 9024',
+    telefono: '55 5731 9024',
+    horario: 'Mar – Sáb · 11:00 – 19:00',
+  },
 };
