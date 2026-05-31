@@ -1,3 +1,4 @@
+// /src/scripts/modules/companies-marquee.js
 import { COMPANIES_CONTENT } from '../data/companies-data.js';
 
 /**

@@ -1,3 +1,4 @@
+// /src/scripts/data/companies-data.js
 export const COMPANIES_CONTENT = {
   sectionTitle: 'Empresas que confían en nosotros',
   sectionSubtitle: 'Profesionales de empresas líderes han confiado en nuestro proceso.',
