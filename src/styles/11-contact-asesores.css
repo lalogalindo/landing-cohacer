@@ -346,3 +346,23 @@
     font-size: 1rem;
   }
 }
+#asesores-carousel.is-static {
+  overflow: visible;
+}
+
+#asesores-carousel.is-static #asesores-track {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  transform: none !important;
+}
+
+#asesores-carousel.is-static .asesores-nav-button,
+#asesores-carousel.is-static .asesores-dots {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  #asesores-carousel.is-static #asesores-track {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,58 +1,150 @@
+// src/scripts/data/asesores-data.js
+
+const HORARIO_GENERAL = 'Lun – Vie · 9:00 – 20:00';
+
 export const ASESORES = {
-  default: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026703d',
-    nombre: 'COHACER',
-    whatsapp: '55 1234 5678',
-    telefono: '55 1234 5678',
-    horario: 'Lun – Vie · 9:00 – 18:00',
+  aalonso: {
+    nombre: 'Ana Laura Alonso',
+    fotografia: '/assets/asesor/aalonso.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '55 5987 0538' },
+      { tipo: 'email', valor: 'analauraalonso@cohacer.com' },
+    ],
   },
-  lalo: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026702d',
-    nombre: 'Lalo Galindo',
-    whatsapp: '55 9876 5401',
-    telefono: '55 4412 3309',
-    horario: 'Lun – Vie · 8:00 – 17:00',
+  gramirez: {
+    nombre: 'Grecia Ramírez Ortega',
+    fotografia: '/assets/asesor/gramirez.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1503 9473' },
+      { tipo: 'email', valor: 'grecia.ramirez@cohacer.com' },
+    ],
   },
-  manu: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026741d',
-    nombre: 'Manu Reyes',
-    whatsapp: '55 3321 4780',
-    telefono: '55 3321 4780',
-    horario: 'Lun – Sáb · 9:00 – 15:00',
+  jmoreno: {
+    nombre: 'Juan Carlos Moreno',
+    fotografia: '/assets/asesor/jmoreno.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '55 3928 4603' },
+      { tipo: 'email', valor: 'juancarlosmoreno@cohacer.com' },
+    ],
   },
-  diana: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026700d',
-    nombre: 'Diana Morales',
-    whatsapp: '55 1122 3344',
-    telefono: '55 7890 1234',
-    horario: 'Mar – Sáb · 10:00 – 19:00',
+  scamargo: {
+    nombre: 'Socorro Camargo Rojas',
+    fotografia: '/assets/asesor/scamargo.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '222 522 3250' },
+      { tipo: 'email', valor: 'socorrocamargo@cohacer.com' },
+    ],
   },
-  carlos: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026709d',
-    nombre: 'Carlos Mendoza',
-    whatsapp: '55 6677 8899',
-    telefono: '55 3344 5566',
-    horario: 'Lun – Vie · 11:00 – 20:00',
+  jvarela: {
+    nombre: 'Josué Varela',
+    fotografia: '/assets/asesor/jvarela.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '55 2702 5579' },
+      { tipo: 'email', valor: 'josuevarela@cohacer.com' },
+    ],
   },
-    sofia: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026777d',
-    nombre: 'Sofía Herrera',
-    whatsapp: '55 2468 1357',
-    telefono: '55 2468 1357',
-    horario: 'Lun – Vie · 9:00 – 18:00',
+  acamargo: {
+    nombre: 'Adriana Camargo Rojas',
+    fotografia: '/assets/asesor/acamargo.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '55 6079 4761' },
+      { tipo: 'email', valor: 'adrianacamargo@cohacer.com' },
+    ],
   },
-  raul: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026788d',
-    nombre: 'Raúl Ortega',
-    whatsapp: '55 8642 9753',
-    telefono: '55 8642 9753',
-    horario: 'Lun – Sáb · 10:00 – 16:00',
+  mzamora: {
+    nombre: 'Mariana Zamora Ocampo',
+    fotografia: '/assets/asesor/mzamora.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1491 5256' },
+      { tipo: 'email', valor: 'marianazamora@cohacer.com' },
+    ],
   },
-  valeria: {
-    fotografia: 'https://i.pravatar.cc/460?u=a042581f4e29026799d',
-    nombre: 'Valeria Castillo',
-    whatsapp: '55 5731 9024',
-    telefono: '55 5731 9024',
-    horario: 'Mar – Sáb · 11:00 – 19:00',
+  tdelgado: {
+    nombre: 'Tania Delgado Donlucas',
+    fotografia: '/assets/asesor/tdelgado.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 2418 7300' },
+      { tipo: 'email', valor: 'taniadelgado@cohacer.com' },
+    ],
+  },
+  agonzalez: {
+    nombre: 'Ana Gonzalez Corona',
+    fotografia: '/assets/asesor/agonzalez.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1007 8117' },
+      { tipo: 'email', valor: 'anagonzalez@cohacer.com' },
+    ],
+  },
+  aflores: {
+    nombre: 'Alberto Flores López',
+    fotografia: '/assets/asesor/aflores.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1891 0210' },
+      { tipo: 'email', valor: 'albertoflores@cohacer.com' },
+    ],
+  },
+  jdiaz: {
+    nombre: 'Jeymi Arizait Diaz Gongora',
+    fotografia: '/assets/asesor/jdiaz.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1008 4161' },
+      { tipo: 'email', valor: 'jeymidiaz@cohacer.com' },
+    ],
+  },
+  mmarin: {
+    nombre: 'Maria Magdalena Marin Leal',
+    fotografia: '/assets/asesor/mmarin.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '55 7947 4149' },
+      { tipo: 'email', valor: 'mariamarin@cohacer.com' },
+    ],
+  },
+  jalmaguer: {
+    nombre: 'Jorge Abraham Almaguer Correa',
+    fotografia: '/assets/asesor/jalmaguer.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1004 3510' },
+      { tipo: 'email', valor: 'jorgealmaguer@cohacer.com' },
+    ],
+  },
+  kramirez: {
+    nombre: 'Kimberly Ramirez Barrientos',
+    fotografia: '/assets/asesor/kramirez.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'email', valor: 'kimberlyramirez@cohacer.com' },
+      { tipo: 'email', valor: 'jeymidiaz@cohacer.com' },
+    ],
+  },
+  nperez: {
+    nombre: 'Nancy Anahy Perez de la Rosa',
+    fotografia: '/assets/asesor/nperez.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1007 8114' },
+      { tipo: 'email', valor: 'nancyperez@cohacer.com' },
+    ],
+  },
+  lhernandez: {
+    nombre: 'Lorelay Hernandez Arroyo',
+    fotografia: '/assets/asesor/lhernandez.png',
+    horario: HORARIO_GENERAL,
+    campos: [
+      { tipo: 'telefono', valor: '56 1525 9938' },
+      { tipo: 'email', valor: 'lorelayhernandez@cohacer.com' },
+    ],
   },
 };
