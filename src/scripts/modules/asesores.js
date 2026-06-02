@@ -216,7 +216,7 @@ function createCampoMarkup(campo) {
  * createAsesorCard
  *
  * Propósito:
- * - Crear una card de asesor con nombre, campo1 y campo2.
+ * - Crear una card de asesor con nombre, campo1, campo2 y horario.
  *
  * Parámetros:
  * - asesor: Información del asesor.
@@ -235,6 +235,17 @@ function createAsesorCard(asesor, isSingle = false) {
       <h3 class="asesor-name">${formatNameByWords(asesor.nombre)}</h3>
 
       ${campos.map((campo) => createCampoMarkup(campo)).join('')}
+
+      ${
+        asesor.horario
+          ? `
+            <p class="asesor-schedule">
+              <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+              <span>${escapeHtml(asesor.horario)}</span>
+            </p>
+          `
+          : ''
+      }
     </div>
 
     <img class="asesor-photo" src="${asesor.fotografia}" alt="${escapeHtml(asesor.nombre)}" loading="lazy" />
