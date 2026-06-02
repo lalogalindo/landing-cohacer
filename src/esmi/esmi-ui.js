@@ -8,6 +8,9 @@ const FREQUENT_QUESTIONS = [
   '¿Hay becas disponibles?',
 ];
 
+const MIN_REPLY_DELAY_MS = 750;
+const MAX_REPLY_DELAY_MS = 1400;
+
 let esmiUiInstance = null;
 
 /**
@@ -84,6 +87,86 @@ function createCtaElement(cta) {
 }
 
 /**
+ * Calcula una pausa breve antes de responder para que el chat se sienta conversacional.
+ * @param {string} answer Texto de respuesta que Esmi está por mostrar.
+ * @returns {number} Duración de espera en milisegundos dentro del rango permitido.
+ */
+function getReplyDelay(answer) {
+  const readingDelay = String(answer || '').length * 9;
+  return Math.min(MAX_REPLY_DELAY_MS, Math.max(MIN_REPLY_DELAY_MS, readingDelay));
+}
+
+/**
+ * Crea la burbuja visual de escritura con tres puntos animados.
+ * @returns {HTMLDivElement} Elemento de mensaje temporal que representa a Esmi escribiendo.
+ */
+function createTypingIndicator() {
+  const message = createElement('div', {
+    className: 'esmi-message esmi-message--bot esmi-message--typing',
+    attributes: { 'aria-label': 'Esmi está escribiendo' },
+  });
+  const bubble = createElement('div', { className: 'esmi-message__bubble esmi-typing' });
+
+  Array.from({ length: 3 }).forEach(() => {
+    bubble.append(createElement('span', { className: 'esmi-typing__dot' }));
+  });
+
+  message.append(bubble);
+  return message;
+}
+
+/**
+ * Muestra el indicador de tres puntos y mantiene visible la parte más reciente del chat.
+ * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
+ * @returns {HTMLDivElement} Indicador temporal para retirarlo cuando llegue la respuesta.
+ */
+function appendTypingIndicator(messagesElement) {
+  const typingIndicator = createTypingIndicator();
+
+  messagesElement.append(typingIndicator);
+  scrollMessagesToBottom(messagesElement);
+
+  return typingIndicator;
+}
+
+/**
+ * Reproduce un sonido corto de notificación cuando Esmi entrega un mensaje.
+ * @param {object} state Estado interno usado para reutilizar el AudioContext permitido por el navegador.
+ */
+function playNotificationSound(state) {
+  const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+
+  if (!AudioContextConstructor) {
+    return;
+  }
+
+  try {
+    if (!state.audioContext) {
+      state.audioContext = new AudioContextConstructor();
+    }
+
+    const audioContext = state.audioContext;
+    const oscillator = audioContext.createOscillator();
+    const gain = audioContext.createGain();
+    const startTime = audioContext.currentTime;
+
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(880, startTime);
+    oscillator.frequency.setValueAtTime(1175, startTime + 0.08);
+    gain.gain.setValueAtTime(0.0001, startTime);
+    gain.gain.exponentialRampToValueAtTime(0.08, startTime + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.22);
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+    oscillator.start(startTime);
+    oscillator.stop(startTime + 0.24);
+  } catch {
+    state.audioContext = null;
+  }
+}
+
+/**
  * Agrega un mensaje al historial del chat y mantiene visible el contenido reciente.
  * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
  * @param {'bot' | 'user'} author Autor visual del mensaje.
@@ -150,7 +233,7 @@ export function createEsmiUi({ engine }) {
     return esmiUiInstance;
   }
 
-  const state = { hasGreeting: false, isOpen: false };
+  const state = { hasGreeting: false, isOpen: false, audioContext: null };
   const root = createElement('div', { className: 'esmi-root' });
   const launcher = createElement('button', {
     className: 'esmi-launcher',
@@ -238,7 +321,13 @@ export function createEsmiUi({ engine }) {
     appendMessage(messages, 'user', cleanQuestion);
 
     const result = engine.ask(cleanQuestion);
-    appendMessage(messages, 'bot', result.answer, result.cta);
+    const typingIndicator = appendTypingIndicator(messages);
+
+    window.setTimeout(() => {
+      typingIndicator.remove();
+      appendMessage(messages, 'bot', result.answer, result.cta);
+      playNotificationSound(state);
+    }, getReplyDelay(result.answer));
   }
 
   headerCopy.append(title, subtitle);
