@@ -5,6 +5,19 @@ import { getFirstName, getPhoneHref, getWhatsAppHref } from '../utils/phone.js';
 import { ASESORES } from '../data/asesores-data.js';
 
 const DEFAULT_VISIBLE_ASESORES_LIMIT = 3;
+const DEFAULT_CTA_PHONE = '56 1526 4223';
+
+const PRIMARY_CONTACT_CTA_SELECTORS = [
+  '[data-asesor-cta="primary"]',
+  'a.btn[href="#contacto"]',
+  '#header-cta-fixed',
+];
+
+const WHATSAPP_CONTACT_CTA_SELECTORS = [
+  '[data-asesor-cta="whatsapp"]',
+  'a[href*="wa.me"]',
+  'a[href*="api.whatsapp.com"]',
+];
 
 /**
  * initAsesores
@@ -270,29 +283,186 @@ function clearAsesoresControls(carousel) {
 }
 
 /**
+ * getUniqueElements
+ *
+ * Propósito:
+ * - Obtener elementos únicos a partir de una lista de selectores.
+ * - Evitar actualizar dos veces el mismo botón cuando coincide con varios selectores.
+ *
+ * Parámetros:
+ * - selectors: Lista de selectores CSS.
+ *
+ * Regresa:
+ * - Lista de elementos HTML únicos.
+ */
+function getUniqueElements(selectors) {
+  return selectors
+    .flatMap((selector) => Array.from($$(selector)))
+    .filter((element, index, elements) => elements.indexOf(element) === index);
+}
+
+/**
+ * isInsideAsesorCard
+ *
+ * Propósito:
+ * - Validar si un elemento pertenece a una card de asesor.
+ * - Evitar modificar teléfonos, correos o links internos de las cards.
+ *
+ * Parámetros:
+ * - element: Elemento HTML a validar.
+ *
+ * Regresa:
+ * - Booleano que indica si el elemento está dentro de una card.
+ */
+function isInsideAsesorCard(element) {
+  return Boolean(element.closest('.asesor-card'));
+}
+
+/**
+ * getPrimaryContactButtons
+ *
+ * Propósito:
+ * - Obtener los botones CTA principales.
+ * - Estos botones muestran textos como "Contacta a tu asesor" o "Contacta a Ana".
+ *
+ * Regresa:
+ * - Lista de botones CTA principales.
+ */
+function getPrimaryContactButtons() {
+  return getUniqueElements(PRIMARY_CONTACT_CTA_SELECTORS).filter((button) => {
+    return !isInsideAsesorCard(button);
+  });
+}
+
+/**
+ * getWhatsAppContactButtons
+ *
+ * Propósito:
+ * - Obtener los botones CTA específicos de WhatsApp.
+ * - Excluir botones principales que ya fueron marcados como CTA primario.
+ *
+ * Regresa:
+ * - Lista de botones CTA de WhatsApp.
+ */
+function getWhatsAppContactButtons() {
+  return getUniqueElements(WHATSAPP_CONTACT_CTA_SELECTORS).filter((button) => {
+    const isPrimaryCta = button.dataset.asesorCta === 'primary';
+
+    return !isPrimaryCta && !isInsideAsesorCard(button);
+  });
+}
+
+/**
+ * getPrimaryContactPhone
+ *
+ * Propósito:
+ * - Obtener el primer teléfono disponible del asesor activo.
+ * - Mantener separado el teléfono de CTA del contenido visible de las cards.
+ *
+ * Parámetros:
+ * - asesor: Información del asesor activo.
+ *
+ * Regresa:
+ * - Teléfono principal del asesor o teléfono general de CTA.
+ */
+function getPrimaryContactPhone(asesor) {
+  const phoneField = asesor?.campos?.find((campo) => {
+    const value = String(campo?.valor || '');
+    const type = String(campo?.tipo || '');
+
+    return type === 'telefono' || type === 'whatsapp' || value.replace(/\D/g, '').length >= 10;
+  });
+
+  return phoneField?.valor || DEFAULT_CTA_PHONE;
+}
+
+/**
+ * getPrimaryContactLabel
+ *
+ * Propósito:
+ * - Definir el texto del botón CTA principal.
+ *
+ * Parámetros:
+ * - asesor: Información del asesor activo.
+ * - hasActiveAsesor: Indica si el slug corresponde a un asesor real.
+ *
+ * Regresa:
+ * - Texto visible para el CTA principal.
+ */
+function getPrimaryContactLabel(asesor, hasActiveAsesor) {
+  if (hasActiveAsesor) {
+    return `Contacta a ${getFirstName(asesor.nombre)}`;
+  }
+
+  return 'Contacta a tu asesor';
+}
+
+/**
+ * setButtonContent
+ *
+ * Propósito:
+ * - Reescribir el contenido visible de un botón.
+ * - Opcionalmente agregar un ícono antes del texto.
+ *
+ * Parámetros:
+ * - button: Botón que se va a actualizar.
+ * - label: Texto visible del botón.
+ * - iconClass: Clases del ícono opcional.
+ */
+function setButtonContent(button, label, iconClass = '') {
+  button.textContent = '';
+
+  if (iconClass) {
+    const icon = document.createElement('i');
+
+    icon.className = iconClass;
+    icon.setAttribute('aria-hidden', 'true');
+
+    button.appendChild(icon);
+    button.append(' ');
+  }
+
+  button.append(label);
+}
+
+/**
  * updateContactButtons
  *
  * Propósito:
- * - Cambiar los botones principales de contacto cuando existe un asesor por slug.
+ * - Cambiar los botones principales de contacto.
+ * - Mantener textos distintos para el CTA izquierdo y el CTA de WhatsApp.
+ * - Usar el teléfono del asesor cuando hay slug válido.
+ * - Usar el teléfono general cuando no hay slug o el slug no existe.
+ * - No modificar links dentro de las cards.
  *
  * Parámetros:
  * - asesor: Información del asesor activo.
  * - hasActiveAsesor: Indica si el slug corresponde a un asesor real.
  */
 function updateContactButtons(asesor, hasActiveAsesor) {
-  if (!hasActiveAsesor) return;
+  const phone = hasActiveAsesor ? getPrimaryContactPhone(asesor) : DEFAULT_CTA_PHONE;
+  const whatsappHref = getWhatsAppHref(phone);
+  const primaryLabel = getPrimaryContactLabel(asesor, hasActiveAsesor);
+  const primaryButtons = getPrimaryContactButtons();
 
-  const contactButtons = $$('a.btn[href="#contacto"], #header-cta-fixed');
-  const label = `Contacta a ${getFirstName(asesor.nombre)}`;
+  primaryButtons.forEach((button) => {
+    button.dataset.asesorCta = 'primary';
 
-  contactButtons.forEach((button) => {
-    const icon = button.querySelector('svg');
+    setButtonContent(button, primaryLabel);
 
-    button.textContent = '';
+    button.setAttribute('href', whatsappHref);
+    button.setAttribute('target', '_blank');
+    button.setAttribute('rel', 'noopener noreferrer');
+  });
 
-    if (icon) button.appendChild(icon);
+  getWhatsAppContactButtons().forEach((button) => {
+    button.dataset.asesorCta = 'whatsapp';
 
-    button.append(` ${label}`);
+    setButtonContent(button, 'Escribir por WhatsApp', 'fa-brands fa-whatsapp');
+
+    button.setAttribute('href', whatsappHref);
+    button.setAttribute('target', '_blank');
+    button.setAttribute('rel', 'noopener noreferrer');
   });
 }
 
@@ -334,7 +504,5 @@ function renderAsesores(data, slug) {
     track.appendChild(createAsesorCard(asesor, hasActiveAsesor));
   });
 
-  if (hasActiveAsesor) {
-    updateContactButtons(data[slug], true);
-  }
+  updateContactButtons(hasActiveAsesor ? data[slug] : null, hasActiveAsesor);
 }

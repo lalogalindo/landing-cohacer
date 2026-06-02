@@ -1,6 +1,6 @@
 // src/scripts/data/asesores-data.js
 
-const HORARIO_GENERAL = 'Lun – Vie · 9:00 – 20:00';
+const HORARIO_GENERAL = null;
 
 export const ASESORES = {
   aalonso: {
