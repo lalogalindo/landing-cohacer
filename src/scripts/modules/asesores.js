@@ -505,4 +505,50 @@ function renderAsesores(data, slug) {
   });
 
   updateContactButtons(hasActiveAsesor ? data[slug] : null, hasActiveAsesor);
+  renderAdvisorVisitInfo(hasActiveAsesor);
+}
+
+const DEFAULT_VISIT_INFO = {
+  title: "Visítenos en:",
+  place: "WTC-CDMX",
+  address: "Piso 36 Oficina 9 Montecito 38, Col. Nápoles C.P. 03810",
+  phone: "Tel: 55 8661 7065",
+};
+
+const SLUG_VISIT_INFO = {
+  title: "Visítenos en:",
+  place: "WTC-CDMX",
+  address: "Piso 36 Oficina 9 Montecito 38, Col. Nápoles C.P. 03810",
+};
+
+/**
+ * Obtiene la información de visita que debe mostrarse según el contexto actual.
+ *
+ * @param {boolean} hasSlug Indica si la página se está mostrando con un slug de asesor.
+ * @returns {{ title: string, place: string, address: string, phone?: string }} Información de dirección para renderizar.
+ */
+function getVisitInfo(hasSlug) {
+  return hasSlug ? SLUG_VISIT_INFO : DEFAULT_VISIT_INFO;
+}
+
+/**
+ * Renderiza el bloque de dirección debajo de los asesores o debajo del asesor activo.
+ *
+ * @param {boolean} hasSlug Indica si existe un slug activo en la URL.
+ */
+function renderAdvisorVisitInfo(hasSlug) {
+  const visitInfoElement = document.getElementById("advisorVisitInfo");
+
+  if (!visitInfoElement) {
+    return;
+  }
+
+  const visitInfo = getVisitInfo(hasSlug);
+
+  visitInfoElement.innerHTML = `
+    <p class="advisor-visit-label">${visitInfo.title}</p>
+    <p class="advisor-visit-place">${visitInfo.place}</p>
+    <p class="advisor-visit-address">${visitInfo.address}</p>
+    ${visitInfo.phone ? `<p class="advisor-visit-phone">${visitInfo.phone}</p>` : ""}
+  `;
 }

@@ -19,6 +19,10 @@
   <link rel="apple-touch-icon" href="/assets/logoIcon.ico" />
 
   <link rel="stylesheet" href="/src/styles.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
 </head>
 
 <body>
@@ -491,33 +495,57 @@
         <div class="asesores-carousel fade-up" id="asesores-carousel" aria-label="Asesores COHACER">
           <div class="asesores-track" id="asesores-track"></div>
         </div>
+
+        <div id="advisorVisitInfo" class="advisor-visit-info" aria-label="Dirección de visita"></div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="footer-brand" href="#inicio" aria-label="COHACER inicio">
-        <img src="/assets/logoHome.png" alt="COHACER" width="212" height="65" loading="lazy" />
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <a class="footer-brand" href="#inicio" aria-label="COHACER inicio">
+      <img src="/assets/logoHome.png" alt="COHACER" width="212" height="65" loading="lazy">
+    </a>
+
+    <nav class="footer-links" aria-label="Enlaces de pie de página">
+      <a href="#programas">Licenciaturas</a>
+      <a href="#maestria">Maestría</a>
+      <a href="#centro-evaluador">Centro Evaluador</a>
+      <a href="#historias">Historias</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <nav class="footer-social" aria-label="Redes sociales">
+      <a href="https://www.facebook.com/cohacer.unidho" target="_blank" rel="noopener noreferrer" aria-label="Facebook de COHACER">
+        <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
       </a>
 
-      <nav class="footer-links" aria-label="Enlaces de pie de página">
-        <a href="#programas">Licenciaturas</a>
-        <a href="#maestria">Maestría</a>
-        <a href="#centro-evaluador">Centro Evaluador</a>
-        <a href="#historias">Historias</a>
-        <a href="#como-funciona">Cómo funciona</a>
-        <a href="#contacto">Contacto</a>
-      </nav>
+      <a href="https://www.instagram.com/cohacer_unidho/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de COHACER">
+        <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+      </a>
 
-      <div class="legal-links">
-        <a href="#">Aviso de privacidad</a>
-        <a href="#">Términos y condiciones</a>
-      </div>
+      <a href="https://www.tiktok.com/@cohacer" target="_blank" rel="noopener noreferrer" aria-label="TikTok de COHACER">
+        <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+      </a>
 
-      <p class="copyright">© 2025 Cohacer. Todos los derechos reservados.</p>
+      <a href="https://www.linkedin.com/company/unidho/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn de UNIDHO">
+        <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+      </a>
+
+      <a href="https://www.youtube.com/@cohacer.unidho" target="_blank" rel="noopener noreferrer" aria-label="YouTube de COHACER">
+        <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+      </a>
+    </nav>
+
+    <div class="legal-links">
+      <a href="/aviso-privacidad.html">Aviso de privacidad</a>
+      <!-- <a href="#">Términos y condiciones</a> -->
     </div>
-  </footer>
+
+    <p class="copyright">© 2025 Cohacer. Todos los derechos reservados.</p>
+  </div>
+</footer>
 
   <script type="module" src="/src/main.js"></script>
 </body>
