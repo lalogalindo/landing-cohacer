@@ -1,7 +1,12 @@
 {
+  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/((?!assets/).*)",
+      "source": "/aviso-privacidad",
+      "destination": "/aviso-privacidad.html"
+    },
+    {
+      "source": "/((?!assets/|aviso-privacidad(?:\\.html)?$).*)",
       "destination": "/index.html"
     }
   ]

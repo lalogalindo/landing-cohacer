@@ -33,17 +33,37 @@ export function initAsesores() {
   renderAsesores(ASESORES, slug);
 }
 
+const RESERVED_ROUTES = [
+  '',
+  'aviso-privacidad',
+  'aviso-privacidad.html',
+  'terminos-condiciones',
+  'terminos-condiciones.html',
+];
+
 /**
  * getCurrentSlug
  *
  * Propósito:
  * - Obtener el primer segmento de la URL actual.
+ * - Evitar que rutas legales o rutas reservadas se interpreten como slugs de asesor.
  *
  * Regresa:
  * - Slug limpio en minúsculas.
+ * - Cadena vacía cuando la ruta no corresponde a un asesor.
  */
 function getCurrentSlug() {
-  return window.location.pathname.replace(/^\//, '').split('/')[0].toLowerCase().trim();
+  const slug = window.location.pathname
+    .replace(/^\//, '')
+    .split('/')[0]
+    .toLowerCase()
+    .trim();
+
+  if (RESERVED_ROUTES.includes(slug)) {
+    return '';
+  }
+
+  return slug;
 }
 
 /**
