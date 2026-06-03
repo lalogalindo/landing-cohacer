@@ -1,12 +1,15 @@
 {
-  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/aviso-privacidad",
       "destination": "/aviso-privacidad.html"
     },
     {
-      "source": "/((?!assets/|aviso-privacidad(?:\\.html)?$).*)",
+      "source": "/:slug",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/",
       "destination": "/index.html"
     }
   ]
