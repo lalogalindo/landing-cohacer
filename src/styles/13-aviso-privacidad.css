@@ -1,3 +1,5 @@
+/* src/styles/13-aviso-privacidad.css */
+
 /* ─── AVISO DE PRIVACIDAD ─── */
 .privacy-page {
   min-height: 100vh;
@@ -29,9 +31,9 @@
 }
 
 .privacy-logo img {
+  display: block;
   width: 150px;
   height: auto;
-  display: block;
 }
 
 .privacy-eyebrow {
@@ -63,7 +65,9 @@
   width: fit-content;
   color: var(--yellow);
   font-weight: 800;
-  transition: color var(--transition), transform var(--transition);
+  transition:
+    color var(--transition),
+    transform var(--transition);
 }
 
 .privacy-back-link:hover {
@@ -84,16 +88,22 @@
   box-shadow: 0 24px 70px rgba(8, 27, 58, 0.12);
 }
 
-.privacy-card h2 {
+.privacy-card > p:first-child {
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(8, 27, 58, 0.1);
+}
+
+.privacy-section {
+  scroll-margin-top: 96px;
+}
+
+.privacy-section h2 {
   margin: 36px 0 12px;
   color: var(--navy);
   font-size: clamp(1.25rem, 3vw, 1.75rem);
   line-height: 1.15;
   letter-spacing: -0.025em;
-}
-
-.privacy-card h2:first-of-type {
-  margin-top: 8px;
 }
 
 .privacy-card p {
@@ -103,7 +113,7 @@
   line-height: 1.8;
 }
 
-.privacy-card ul {
+.privacy-list {
   display: grid;
   gap: 10px;
   margin: 0 0 20px;
@@ -112,7 +122,7 @@
   line-height: 1.7;
 }
 
-.privacy-card li::marker {
+.privacy-list li::marker {
   color: var(--yellow);
 }
 
@@ -122,16 +132,14 @@
   text-decoration: underline;
   text-decoration-color: rgba(8, 27, 58, 0.25);
   text-underline-offset: 4px;
-  transition: color var(--transition), text-decoration-color var(--transition);
+  transition:
+    color var(--transition),
+    text-decoration-color var(--transition);
 }
 
 .privacy-card a:hover {
   color: var(--yellow);
   text-decoration-color: var(--yellow);
-}
-
-.privacy-list-columns {
-  grid-template-columns: 1fr;
 }
 
 .privacy-updated {

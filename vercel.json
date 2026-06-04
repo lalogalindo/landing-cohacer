@@ -2,14 +2,14 @@
   "rewrites": [
     {
       "source": "/aviso-privacidad",
-      "destination": "/aviso-privacidad.html"
+      "destination": "/aviso-privacidad/index.html"
+    },
+    {
+      "source": "/aviso-privacidad.html",
+      "destination": "/aviso-privacidad/index.html"
     },
     {
       "source": "/:slug",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/",
       "destination": "/index.html"
     }
   ]
