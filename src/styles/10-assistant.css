@@ -1,0 +1,110 @@
+.assistant {
+  padding-top: 24px;
+}
+
+.assistant-card {
+  position: relative;
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  overflow: hidden;
+  padding: 32px 28px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, var(--royal) 0%, #181860 100%);
+  color: var(--white);
+  box-shadow: 0 20px 48px rgba(32, 32, 112, 0.2);
+}
+
+.assistant-card::before,
+.assistant-card::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.assistant-card::before {
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 198, 41, 0.12);
+}
+
+.assistant-card::after {
+  left: -40px;
+  bottom: -60px;
+  width: 160px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.on-dark {
+  color: var(--yellow);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.assistant-copy,
+.assistant-bot {
+  position: relative;
+  z-index: 1;
+}
+
+.assistant h2 {
+  margin: 0 0 4px;
+  font-size: clamp(1.8rem, 6vw, 2.8rem);
+  letter-spacing: -0.03em;
+  font-weight: 900;
+}
+
+.assistant-copy > p {
+  margin: 8px 0 0;
+  opacity: 0.9;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.quick-buttons {
+  display: grid;
+  gap: 10px;
+  margin: 24px 0;
+}
+
+.quick-buttons button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: left;
+  transition:
+    background var(--transition),
+    transform var(--transition);
+}
+
+.quick-buttons button:hover {
+  background: var(--white);
+  transform: translateY(-1px);
+}
+
+.assistant-bot {
+  width: min(350px, 80%);
+  justify-self: center;
+  align-self: end;
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.24));
+}
+
+@media (min-width: 720px) {
+  .assistant-card {
+    grid-template-columns: 1fr 240px;
+    padding: 40px 44px;
+  }
+
+  .quick-buttons {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 560px;
+  }
+}

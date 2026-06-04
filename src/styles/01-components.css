@@ -1,0 +1,150 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 28px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    transform var(--transition),
+    box-shadow var(--transition),
+    background var(--transition),
+    border-color var(--transition);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  color: var(--white);
+  background: var(--navy);
+  box-shadow: 0 8px 24px rgba(21, 29, 51, 0.2);
+}
+
+.btn-primary:hover {
+  background: var(--royal);
+  box-shadow: 0 12px 32px rgba(32, 32, 112, 0.25);
+}
+
+.btn-secondary {
+  color: var(--navy);
+  background: var(--white);
+  border-color: rgba(21, 29, 51, 0.15);
+  box-shadow: 0 4px 16px rgba(21, 29, 51, 0.08);
+}
+
+.btn-secondary:hover {
+  border-color: var(--royal);
+}
+
+.btn-light {
+  color: var(--navy);
+  background: var(--white);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  font-weight: 800;
+}
+
+.btn-light:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+.whatsapp-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+
+.whatsapp-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.section {
+  padding: 64px 0;
+}
+
+.section-heading {
+  margin-bottom: 36px;
+}
+
+.section-heading.centered {
+  text-align: center;
+}
+
+.section-heading.compact {
+  margin-bottom: 16px;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+}
+
+.section-heading p {
+  margin-top: 6px;
+  color: var(--gray);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: #d4940a;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.heading-line {
+  display: block;
+  width: 48px;
+  height: 4px;
+  margin: 14px auto 0;
+  border-radius: 99px;
+  background: var(--yellow);
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}

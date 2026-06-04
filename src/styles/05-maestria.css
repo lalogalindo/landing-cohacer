@@ -1,0 +1,320 @@
+/* ─── MAESTRÍA ─── */
+.maestria {
+  position: relative;
+  overflow: hidden;
+  background: var(--soft);
+  padding: 72px 0;
+}
+
+.maestria-inner {
+  position: relative;
+  border-radius: 36px;
+  background: linear-gradient(135deg, #0d1220 0%, #151d33 45%, #1a1860 100%);
+  padding: clamp(36px, 6vw, 68px) clamp(28px, 5vw, 64px);
+  overflow: hidden;
+  box-shadow: 0 40px 100px rgba(21, 29, 51, 0.32), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* Decorative glow blobs */
+.maestria-inner::before {
+  content: "";
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 198, 41, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.maestria-inner::after {
+  content: "";
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(98, 98, 199, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Eyebrow badge */
+.maestria-eyebrow {
+  margin-bottom: 24px;
+}
+
+.maestria-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: rgba(255, 198, 41, 0.14);
+  border: 1px solid rgba(255, 198, 41, 0.35);
+  color: var(--yellow);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Headline */
+.maestria-headline {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 44px;
+  max-width: 720px;
+}
+
+.maestria-headline h2 {
+  font-size: clamp(2rem, 5.5vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  font-weight: 900;
+  color: var(--white);
+}
+
+.maestria-headline h2 span {
+  background: linear-gradient(90deg, #ffc629, #e8a918);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.maestria-objetivo {
+  margin-top: 16px;
+  font-size: clamp(0.96rem, 2.2vw, 1.1rem);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 600px;
+  font-weight: 400;
+}
+
+/* Stats row */
+.maestria-stats {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 48px;
+  padding: 28px 32px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(8px);
+}
+
+.maestria-stat {
+  flex: 1 1 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--yellow);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.maestria-stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.12);
+  flex-shrink: 0;
+}
+
+/* Body grid */
+.maestria-body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  margin-bottom: 44px;
+}
+
+/* Pillars */
+.pillars-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 18px;
+}
+
+.pillars-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pillars-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.35;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.pillars-list li:hover {
+  background: rgba(255, 198, 41, 0.08);
+  border-color: rgba(255, 198, 41, 0.22);
+}
+
+.pillar-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+/* Highlight cards */
+.maestria-highlights {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.maestria-highlight-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 22px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.maestria-highlight-card:hover {
+  background: rgba(255, 198, 41, 0.06);
+  border-color: rgba(255, 198, 41, 0.18);
+}
+
+.highlight-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.maestria-highlight-card p {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+}
+
+.maestria-highlight-card p strong {
+  color: var(--white);
+  font-weight: 700;
+}
+
+/* CTA */
+.maestria-cta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.maestria-btn {
+  background: var(--yellow);
+  color: var(--navy);
+  font-weight: 800;
+  box-shadow: 0 12px 36px rgba(255, 198, 41, 0.38);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.maestria-btn:hover {
+  background: #e8a918;
+  box-shadow: 0 18px 48px rgba(255, 198, 41, 0.48);
+  transform: translateY(-3px);
+}
+
+.maestria-req {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 500;
+  max-width: 420px;
+  line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (min-width: 768px) {
+  .maestria-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .maestria-highlights {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 980px) {
+  .pillars-list {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .maestria-highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .maestria-cta {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .maestria-req {
+    margin: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .maestria-stats {
+    padding: 20px 16px;
+    gap: 0;
+  }
+
+  .maestria-stat {
+    flex: 1 1 80px;
+    padding: 6px 10px;
+  }
+
+  .maestria-stat-divider {
+    height: 32px;
+  }
+
+  .pillars-list {
+    grid-template-columns: 1fr;
+  }
+}
