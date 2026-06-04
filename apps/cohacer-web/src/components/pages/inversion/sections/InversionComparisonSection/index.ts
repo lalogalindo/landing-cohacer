@@ -1,1 +1,0 @@
-export { InversionComparisonSection } from "./InversionComparisonSection";

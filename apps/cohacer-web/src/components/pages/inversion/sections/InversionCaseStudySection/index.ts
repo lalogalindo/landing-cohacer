@@ -1,1 +1,0 @@
-export { InversionCaseStudy } from "./InversionCaseStudy";

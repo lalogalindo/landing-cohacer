@@ -1,8 +1,0 @@
-// src/content/data/index.ts
-
-export * from "./homePage";
-export * from "./validezPage";
-export * from "./inversionPage";
-export * from "./beneficiosPage";
-export * from "./programasPage";
-export * from "./contactoPage";
