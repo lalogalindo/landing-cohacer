@@ -1,7 +1,7 @@
 // src/scripts/modules/asesores.js
 
 import { $, $$ } from '../utils/dom.js';
-import { getFirstName, getPhoneHref, getWhatsAppHref } from '../utils/phone.js';
+import { getFirstName, getWhatsAppHref } from '../utils/phone.js';
 import { ASESORES } from '../data/asesores-data.js';
 
 const DEFAULT_VISIBLE_ASESORES_LIMIT = 3;
@@ -159,7 +159,7 @@ function getCampoType(campo) {
 
   if (campo?.tipo) return campo.tipo;
   if (value.includes('@')) return 'email';
-  if (value.replace(/\D/g, '').length >= 10) return 'telefono';
+  if (value.replace(/\D/g, '').length >= 10) return 'whatsapp';
 
   return 'texto';
 }
@@ -169,6 +169,7 @@ function getCampoType(campo) {
  *
  * Propósito:
  * - Elegir el ícono según el tipo/contenido del campo.
+ * - Mostrar WhatsApp para campos de teléfono porque el contacto debe abrir WhatsApp.
  *
  * Parámetros:
  * - campo: Campo dinámico del asesor.
@@ -180,8 +181,7 @@ function getCampoIconClass(campo) {
   const type = getCampoType(campo);
 
   if (type === 'email') return 'fa-regular fa-envelope';
-  if (type === 'whatsapp') return 'fa-brands fa-whatsapp';
-  if (type === 'telefono') return 'fa-solid fa-phone';
+  if (type === 'whatsapp' || type === 'telefono') return 'fa-brands fa-whatsapp';
 
   return 'fa-regular fa-circle-dot';
 }
@@ -191,6 +191,7 @@ function getCampoIconClass(campo) {
  *
  * Propósito:
  * - Crear el href correcto según el tipo de campo.
+ * - Enviar los teléfonos a WhatsApp en lugar de llamada telefónica.
  *
  * Parámetros:
  * - campo: Campo dinámico del asesor.
@@ -203,8 +204,7 @@ function getCampoHref(campo) {
   const value = String(campo?.valor || '').trim();
 
   if (type === 'email') return `mailto:${value}`;
-  if (type === 'whatsapp') return getWhatsAppHref(value);
-  if (type === 'telefono') return getPhoneHref(value);
+  if (type === 'whatsapp' || type === 'telefono') return getWhatsAppHref(value);
 
   return '';
 }
@@ -214,6 +214,7 @@ function getCampoHref(campo) {
  *
  * Propósito:
  * - Crear el HTML para un campo dinámico.
+ * - Abrir WhatsApp en nueva pestaña cuando el campo sea teléfono o WhatsApp.
  *
  * Parámetros:
  * - campo: Campo dinámico del asesor.
@@ -226,11 +227,13 @@ function createCampoMarkup(campo) {
   const href = getCampoHref(campo);
   const value = escapeHtml(campo?.valor);
   const iconClass = getCampoIconClass(campo);
-  const targetAttrs = type === 'whatsapp' ? ' target="_blank" rel="noopener noreferrer"' : '';
+  const isWhatsAppContact = type === 'whatsapp' || type === 'telefono';
+  const targetAttrs = isWhatsAppContact ? ' target="_blank" rel="noopener noreferrer"' : '';
+  const whatsappClass = isWhatsAppContact ? ' asesor-field-whatsapp' : '';
 
   if (!href) {
     return `
-      <p class="asesor-link asesor-field asesor-field-${type}">
+      <p class="asesor-link asesor-field asesor-field-${type}${whatsappClass}">
         <i class="${iconClass}" aria-hidden="true"></i>
         <span>${value}</span>
       </p>
@@ -238,7 +241,7 @@ function createCampoMarkup(campo) {
   }
 
   return `
-    <a class="asesor-link asesor-field asesor-field-${type}" href="${href}"${targetAttrs}>
+    <a class="asesor-link asesor-field asesor-field-${type}${whatsappClass}" href="${href}"${targetAttrs}>
       <i class="${iconClass}" aria-hidden="true"></i>
       <span>${value}</span>
     </a>
@@ -343,7 +346,7 @@ function isInsideAsesorCard(element) {
  *
  * Propósito:
  * - Obtener los botones CTA principales.
- * - Estos botones muestran textos como "Contacta a tu asesor" o "Contacta a Ana".
+ * - Estos botones muestran textos como "Contacta a tu asesor" o "Contacta a Esmi".
  *
  * Regresa:
  * - Lista de botones CTA principales.
@@ -414,7 +417,7 @@ function getPrimaryContactLabel(asesor, hasActiveAsesor) {
     return `Contacta a ${getFirstName(asesor.nombre)}`;
   }
 
-  return 'Contacta a tu asesor';
+  return 'Contacta a Esmi';
 }
 
 /**
@@ -529,35 +532,45 @@ function renderAsesores(data, slug) {
 }
 
 const DEFAULT_VISIT_INFO = {
-  title: "Visítenos en:",
-  place: "WTC-CDMX",
-  address: "Piso 36 Oficina 9 Montecito 38, Col. Nápoles C.P. 03810",
-  phone: "Tel: 55 8661 7065",
+  title: 'Visítenos en:',
+  place: 'WTC-CDMX',
+  address: 'Piso 36 Oficina 9 Montecito 38, Col. Nápoles C.P. 03810',
+  phone: 'Tel: 55 8661 7065',
 };
 
 const SLUG_VISIT_INFO = {
-  title: "Visítenos en:",
-  place: "WTC-CDMX",
-  address: "Piso 36 Oficina 9 Montecito 38, Col. Nápoles C.P. 03810",
+  title: 'Visítenos en:',
+  place: 'WTC-CDMX',
+  address: 'Piso 36 Oficina 9 Montecito 38, Col. Nápoles C.P. 03810',
 };
 
 /**
- * Obtiene la información de visita que debe mostrarse según el contexto actual.
+ * getVisitInfo
  *
- * @param {boolean} hasSlug Indica si la página se está mostrando con un slug de asesor.
- * @returns {{ title: string, place: string, address: string, phone?: string }} Información de dirección para renderizar.
+ * Propósito:
+ * - Obtener la información de visita que debe mostrarse según el contexto actual.
+ *
+ * Parámetros:
+ * - hasSlug: Indica si la página se está mostrando con un slug de asesor.
+ *
+ * Regresa:
+ * - Información de dirección para renderizar.
  */
 function getVisitInfo(hasSlug) {
   return hasSlug ? SLUG_VISIT_INFO : DEFAULT_VISIT_INFO;
 }
 
 /**
- * Renderiza el bloque de dirección debajo de los asesores o debajo del asesor activo.
+ * renderAdvisorVisitInfo
  *
- * @param {boolean} hasSlug Indica si existe un slug activo en la URL.
+ * Propósito:
+ * - Renderizar el bloque de dirección debajo de los asesores o debajo del asesor activo.
+ *
+ * Parámetros:
+ * - hasSlug: Indica si existe un slug activo en la URL.
  */
 function renderAdvisorVisitInfo(hasSlug) {
-  const visitInfoElement = document.getElementById("advisorVisitInfo");
+  const visitInfoElement = document.getElementById('advisorVisitInfo');
 
   if (!visitInfoElement) {
     return;
@@ -569,6 +582,6 @@ function renderAdvisorVisitInfo(hasSlug) {
     <p class="advisor-visit-label">${visitInfo.title}</p>
     <p class="advisor-visit-place">${visitInfo.place}</p>
     <p class="advisor-visit-address">${visitInfo.address}</p>
-    ${visitInfo.phone ? `<p class="advisor-visit-phone">${visitInfo.phone}</p>` : ""}
+    ${visitInfo.phone ? `<p class="advisor-visit-phone">${visitInfo.phone}</p>` : ''}
   `;
 }
