@@ -102,3 +102,33 @@
     text-align: center;
   }
 }
+@media (min-width: 720px) {
+  .footer-inner {
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    text-align: left;
+  }
+
+  .footer-brand {
+    justify-self: start;
+  }
+
+  .footer-links {
+    justify-content: center;
+  }
+
+  .footer-social {
+    justify-content: flex-end;
+  }
+
+  .legal-links {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+
+  .copyright {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    text-align: center;
+  }
+}

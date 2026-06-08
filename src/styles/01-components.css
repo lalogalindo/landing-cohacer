@@ -148,3 +148,14 @@
     transform: translateY(-6px);
   }
 }
+.btn .fa-whatsapp {
+  color: #16a34a;
+}
+
+.btn-primary .fa-whatsapp {
+  color: #25d366;
+}
+
+.asesor-field-whatsapp i {
+  color: #16a34a;
+}
