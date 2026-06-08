@@ -13,6 +13,7 @@ import { initLicenciaturasCarousel } from './scripts/modules/licenciaturas-carou
 import { initAcreditacionModal } from './scripts/modules/acreditacion-modal.js';
 import { initAsesores } from './scripts/modules/asesores.js';
 import { initCompaniesMarquee } from './scripts/modules/companies-marquee.js';
+import { initEsmiAssistant } from './esmi/index.js';
 
 const swiperModules = {
   Navigation,
@@ -30,3 +31,4 @@ initLicenciaturasCarousel({ Swiper, modules: swiperModules });
 initAcreditacionModal({ closeMenu: menuApi.closeMenu });
 initAsesores();
 initCompaniesMarquee();
+initEsmiAssistant();
