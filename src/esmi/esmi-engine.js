@@ -2,13 +2,8 @@
 
 import Fuse from 'fuse.js';
 
-const FALLBACK_CTA = {
-  label: 'Contactar a Ana',
-  href: 'https://wa.me/520000000000?text=Hola%20Ana%2C%20quiero%20resolver%20una%20duda%20sobre%20COHACER.',
-};
-
 const FALLBACK_ANSWER =
-  'No quiero darte información incorrecta. Te recomiendo contactar a Ana para que revise tu caso y te dé una respuesta precisa.';
+  'No quiero darte información incorrecta. ¿Puedes contarme si tu duda es sobre inscripción, costos, requisitos, becas o validez oficial?';
 
 /**
  * Normaliza una cadena para comparar preguntas sin acentos, signos ni diferencias de mayúsculas.
@@ -128,7 +123,7 @@ function getConfidence(score) {
 
 /**
  * Crea un resultado fallback cuando la pregunta no coincide con la base local.
- * @returns {{matched: boolean, confidence: 'low', item: null, answer: string, cta: object}} Respuesta segura sin inventar información.
+ * @returns {{matched: boolean, confidence: 'low', item: null, answer: string, cta: null}} Respuesta segura sin inventar información.
  */
 function createFallbackResult() {
   return {
@@ -136,7 +131,7 @@ function createFallbackResult() {
     confidence: 'low',
     item: null,
     answer: FALLBACK_ANSWER,
-    cta: FALLBACK_CTA,
+    cta: null,
   };
 }
 
@@ -163,7 +158,7 @@ export function createEsmiEngine(knowledge) {
     /**
      * Interpreta una pregunta libre del usuario y devuelve la mejor respuesta local disponible.
      * @param {string} question Pregunta escrita o seleccionada por el usuario.
-     * @returns {{matched: boolean, confidence: 'high' | 'medium' | 'low', item: object | null, answer: string, cta: object}} Resultado con respuesta, CTA y confianza.
+     * @returns {{matched: boolean, confidence: 'high' | 'medium' | 'low', item: object | null, answer: string, cta: object | null}} Resultado con respuesta, CTA y confianza.
      */
     ask(question) {
       const normalizedQuestion = normalizeText(question);

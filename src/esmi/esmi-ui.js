@@ -226,11 +226,28 @@ function ensureGreeting(messagesElement, state) {
 }
 
 /**
+ * Restaura mensajes persistidos por el orquestador sin duplicar el saludo inicial.
+ * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
+ * @param {Array<object>} history Historial persistente de la conversación.
+ * @param {object} state Estado interno de la interfaz de Esmi.
+ */
+function restoreHistory(messagesElement, history, state) {
+  if (!Array.isArray(history) || !history.length) {
+    return;
+  }
+
+  history.forEach((message) => {
+    appendMessage(messagesElement, message.author, message.text, message.cta);
+  });
+  state.hasGreeting = true;
+}
+
+/**
  * Inicializa la interfaz flotante de Esmi y expone métodos para abrirla o enviar preguntas.
- * @param {{engine: {ask: function(string): object}}} options Dependencias necesarias para responder preguntas.
+ * @param {{assistant: {reply: function(string): object, getHistory: function(): Array<object>}}} options Dependencias necesarias para responder preguntas.
  * @returns {{open: function(): void, close: function(): void, ask: function(string): void}} API pública del chat flotante.
  */
-export function createEsmiUi({ engine }) {
+export function createEsmiUi({ assistant }) {
   if (esmiUiInstance) {
     return esmiUiInstance;
   }
@@ -322,7 +339,7 @@ export function createEsmiUi({ engine }) {
     open();
     appendMessage(messages, 'user', cleanQuestion);
 
-    const result = engine.ask(cleanQuestion);
+    const result = assistant.reply(cleanQuestion);
     const typingIndicator = appendTypingIndicator(messages);
 
     window.setTimeout(() => {
@@ -331,6 +348,8 @@ export function createEsmiUi({ engine }) {
       playNotificationSound(state);
     }, getReplyDelay(result.answer));
   }
+
+  restoreHistory(messages, assistant.getHistory(), state);
 
   headerCopy.append(title, subtitle);
   header.append(headerCopy, closeButton);
