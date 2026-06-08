@@ -2,6 +2,8 @@
 
 import { createEsmiEngine } from './esmi-engine.js';
 import { ESMI_KNOWLEDGE } from './esmi-knowledge.js';
+import { createEsmiOrchestrator } from './esmi-orchestrator.js';
+import { resolveActiveAdvisor } from './esmi-whatsapp.js';
 import { createEsmiUi } from './esmi-ui.js';
 
 let esmiAssistantInstance = null;
@@ -59,8 +61,8 @@ function bindOpenTriggers(ui) {
 }
 
 /**
- * Inicializa Esmi una sola vez, crea motor local, monta UI y conecta la sección existente.
- * @returns {{engine: object, ui: object} | null} Instancia del asesor o null si no hay document disponible.
+ * Inicializa Esmi una sola vez, crea motor local, orquestador, monta UI y conecta la sección existente.
+ * @returns {{engine: object, advisor: object, assistant: object, ui: object} | null} Instancia del asesor o null si no hay document disponible.
  */
 export function initEsmiAssistant() {
   if (esmiAssistantInstance) {
@@ -72,11 +74,13 @@ export function initEsmiAssistant() {
   }
 
   const engine = createEsmiEngine(ESMI_KNOWLEDGE);
-  const ui = createEsmiUi({ engine });
+  const advisor = resolveActiveAdvisor();
+  const assistant = createEsmiOrchestrator({ engine, advisor });
+  const ui = createEsmiUi({ assistant });
 
   bindQuestionTriggers(ui);
   bindOpenTriggers(ui);
 
-  esmiAssistantInstance = { engine, ui };
+  esmiAssistantInstance = { engine, advisor, assistant, ui };
   return esmiAssistantInstance;
 }
