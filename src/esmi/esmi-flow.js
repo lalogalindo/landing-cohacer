@@ -72,7 +72,7 @@ export function decideEsmiFlow({ question, context, searchResult, advisor }) {
     return { type: 'answer', clearPendingClarification: true };
   }
 
-  if (!searchResult.matched && isGenericQuestion(question, context)) {
+  if (isGenericQuestion(question, context)) {
     return {
       type: 'clarify',
       pendingClarification: 'topic',
