@@ -1,3 +1,5 @@
+// src/esmi/esmi-ui.js
+
 const INITIAL_GREETING =
   'Hola, soy Esmi. Puedo ayudarte con inscripción, costos, requisitos, becas, validez oficial y contacto con un asesor.';
 

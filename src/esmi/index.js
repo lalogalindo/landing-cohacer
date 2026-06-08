@@ -1,3 +1,5 @@
+// src/esmi/index.js
+
 import { createEsmiEngine } from './esmi-engine.js';
 import { ESMI_KNOWLEDGE } from './esmi-knowledge.js';
 import { createEsmiUi } from './esmi-ui.js';

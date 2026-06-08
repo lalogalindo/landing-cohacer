@@ -1,3 +1,5 @@
+// src/esmi/esmi-knowledge.js
+
 const WHATSAPP_ANA_PLACEHOLDER = 'https://wa.me/520000000000';
 
 /**
