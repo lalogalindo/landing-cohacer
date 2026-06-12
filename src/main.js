@@ -11,8 +11,10 @@ import { initFadeUp } from './scripts/modules/fade-up.js';
 import { initVideos } from './scripts/modules/videos.js';
 import { initLicenciaturasCarousel } from './scripts/modules/licenciaturas-carousel.js';
 import { initAcreditacionModal } from './scripts/modules/acreditacion-modal.js';
+import { initLicenciaturaPdfModal } from './scripts/modules/licenciatura-pdf-modal.js';
 import { initAsesores } from './scripts/modules/asesores.js';
 import { initCompaniesMarquee } from './scripts/modules/companies-marquee.js';
+import { initEsmiAssistant } from './esmi/index.js';
 
 const swiperModules = {
   Navigation,
@@ -27,6 +29,8 @@ initScrollState();
 initFadeUp();
 initVideos({ Swiper, modules: swiperModules });
 initLicenciaturasCarousel({ Swiper, modules: swiperModules });
+initLicenciaturaPdfModal();
 initAcreditacionModal({ closeMenu: menuApi.closeMenu });
 initAsesores();
 initCompaniesMarquee();
+initEsmiAssistant();

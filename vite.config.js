@@ -17,6 +17,7 @@ export default defineConfig({
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
         privacy: resolve(import.meta.dirname, 'aviso-privacidad/index.html'),
+        terms: resolve(import.meta.dirname, 'terminos-condiciones/index.html'),
       },
     },
   },

@@ -1,0 +1,289 @@
+/* src/esmi/esmi.css */
+
+.esmi-root {
+  --esmi-navy: #12153d;
+  --esmi-purple: #30266f;
+  --esmi-yellow: #ffd23f;
+  --esmi-cream: #fff8df;
+  --esmi-white: #ffffff;
+  --esmi-text: #22233b;
+  --esmi-muted: #747895;
+  --esmi-shadow: 0 24px 70px rgba(8, 12, 40, 0.32);
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  font-family: inherit;
+  pointer-events: none;
+  position: fixed;
+  right: max(1.25rem, env(safe-area-inset-right));
+  z-index: 9999;
+}
+
+.esmi-launcher,
+.esmi-panel {
+  pointer-events: auto;
+}
+
+.esmi-launcher {
+  align-items: center;
+  background: linear-gradient(135deg, var(--esmi-yellow), #ffe88a);
+  border: 0;
+  border-radius: 999px;
+  box-shadow: 0 16px 34px rgba(18, 21, 61, 0.26);
+  color: var(--esmi-navy);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 800;
+  gap: 0.35rem;
+  justify-content: center;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.15rem;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.esmi-launcher:hover,
+.esmi-launcher:focus-visible {
+  box-shadow: 0 18px 42px rgba(18, 21, 61, 0.34);
+  transform: translateY(-2px);
+}
+
+.esmi-panel {
+  background: var(--esmi-white);
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 1.5rem;
+  bottom: calc(100% + 0.85rem);
+  box-shadow: var(--esmi-shadow);
+  display: flex;
+  flex-direction: column;
+  max-height: min(42rem, calc(100vh - 7rem));
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  transform: translateY(0.75rem) scale(0.98);
+  transform-origin: bottom right;
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  visibility: hidden;
+  width: min(24rem, calc(100vw - 2.5rem));
+}
+
+.esmi-root--open .esmi-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+}
+
+.esmi-root--open .esmi-launcher {
+  display: none;
+}
+
+.esmi-header {
+  align-items: center;
+  background: linear-gradient(135deg, var(--esmi-navy), var(--esmi-purple));
+  color: var(--esmi-white);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.esmi-header__copy {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.esmi-title {
+  color: var(--esmi-white);
+  font-size: 1.1rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin: 0;
+}
+
+.esmi-subtitle {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.78rem;
+}
+
+.esmi-close {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: var(--esmi-white);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.55rem 0.8rem;
+}
+
+.esmi-messages {
+  background: linear-gradient(180deg, #f8f7ff, #ffffff);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.65rem;
+  min-height: 13rem;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.esmi-message {
+  display: flex;
+}
+
+.esmi-message--user {
+  justify-content: flex-end;
+}
+
+.esmi-message__bubble {
+  border-radius: 1rem;
+  color: var(--esmi-text);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  max-width: 88%;
+  padding: 0.8rem 0.9rem;
+}
+
+.esmi-message--bot .esmi-message__bubble {
+  background: var(--esmi-cream);
+  border-bottom-left-radius: 0.3rem;
+}
+
+.esmi-message--user .esmi-message__bubble {
+  background: var(--esmi-purple);
+  border-bottom-right-radius: 0.3rem;
+  color: var(--esmi-white);
+}
+
+.esmi-cta {
+  align-items: center;
+  background: var(--esmi-yellow);
+  border-radius: 999px;
+  color: var(--esmi-navy);
+  display: inline-flex;
+  font-size: 0.82rem;
+  font-weight: 900;
+  justify-content: center;
+  margin-top: 0.75rem;
+  padding: 0.55rem 0.8rem;
+  text-decoration: none;
+}
+
+.esmi-chips {
+  background: var(--esmi-white);
+  border-top: 1px solid rgba(18, 21, 61, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem 0;
+}
+
+.esmi-chip {
+  background: #f3f0ff;
+  border: 1px solid rgba(48, 38, 111, 0.14);
+  border-radius: 999px;
+  color: var(--esmi-purple);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  padding: 0.5rem 0.7rem;
+}
+
+.esmi-form {
+  align-items: center;
+  background: var(--esmi-white);
+  display: flex;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem 1rem;
+}
+
+.esmi-input {
+  background: #f8f8fc;
+  border: 1px solid rgba(18, 21, 61, 0.14);
+  border-radius: 999px;
+  color: var(--esmi-text);
+  flex: 1;
+  font: inherit;
+  min-width: 0;
+  padding: 0.78rem 0.9rem;
+}
+
+.esmi-input:focus {
+  border-color: var(--esmi-purple);
+  box-shadow: 0 0 0 3px rgba(255, 210, 63, 0.35);
+  outline: 0;
+}
+
+.esmi-send {
+  background: var(--esmi-yellow);
+  border: 0;
+  border-radius: 999px;
+  color: var(--esmi-navy);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  padding: 0.78rem 0.95rem;
+}
+
+@media (max-width: 640px) {
+  .esmi-root {
+    bottom: max(0.75rem, env(safe-area-inset-bottom));
+    left: max(0.75rem, env(safe-area-inset-left));
+    right: max(0.75rem, env(safe-area-inset-right));
+  }
+
+  .esmi-launcher {
+    margin-left: auto;
+  }
+
+  .esmi-panel {
+    bottom: 0;
+    max-height: min(88vh, 44rem);
+    right: 0;
+    width: 100%;
+  }
+
+  .esmi-messages {
+    min-height: 14rem;
+  }
+}
+
+.esmi-message--typing .esmi-message__bubble {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.3rem;
+  min-width: 3.1rem;
+}
+
+.esmi-typing__dot {
+  animation: esmi-typing-pulse 1s ease-in-out infinite;
+  background: var(--esmi-purple);
+  border-radius: 999px;
+  display: inline-block;
+  height: 0.42rem;
+  opacity: 0.35;
+  width: 0.42rem;
+}
+
+.esmi-typing__dot:nth-child(2) {
+  animation-delay: 140ms;
+}
+
+.esmi-typing__dot:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+@keyframes esmi-typing-pulse {
+  0%,
+  80%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-0.18rem);
+  }
+}
