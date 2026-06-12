@@ -21,7 +21,7 @@
 }
 
 .brand img {
-  width: 150px;
+  width: 80px;
 }
 
 .main-nav {
@@ -208,11 +208,11 @@
 }
 
 .brand img {
-  width: 132px;
+  width: 80px;
 }
 
 @media (min-width: 980px) {
   .brand img {
-    width: 150px;
+    width: 80px;
   }
 }

@@ -254,7 +254,7 @@
 }
 
 .course-card-clickable .card-req-badge::after {
-  content: " · Ver PDF";
+  content: "";
 }
 
 .course-pdf-modal {

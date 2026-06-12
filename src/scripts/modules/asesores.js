@@ -417,7 +417,7 @@ function getPrimaryContactLabel(asesor, hasActiveAsesor) {
     return `Contacta a ${getFirstName(asesor.nombre)}`;
   }
 
-  return 'Contacta a Esmi';
+  return 'Contáctanos';
 }
 
 /**
