@@ -33,4 +33,4 @@ initLicenciaturaPdfModal();
 initAcreditacionModal({ closeMenu: menuApi.closeMenu });
 initAsesores();
 initCompaniesMarquee();
-initEsmiAssistant();
+// initEsmiAssistant();
