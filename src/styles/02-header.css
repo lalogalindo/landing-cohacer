@@ -206,3 +206,13 @@
     font-size: 0.88rem;
   }
 }
+
+.brand img {
+  width: 132px;
+}
+
+@media (min-width: 980px) {
+  .brand img {
+    width: 150px;
+  }
+}

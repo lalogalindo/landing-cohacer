@@ -318,3 +318,21 @@
     grid-template-columns: 1fr;
   }
 }
+
+.maestria-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.maestria-info-btn {
+  border-color: rgba(255, 198, 41, 0.45);
+  color: var(--yellow);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.maestria-info-btn:hover {
+  color: var(--navy);
+  background: var(--yellow);
+  transform: translateY(-3px);
+}
