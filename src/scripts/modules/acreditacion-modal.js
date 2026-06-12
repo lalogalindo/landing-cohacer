@@ -18,6 +18,10 @@ export function initAcreditacionModal(options = {}) {
   const acredBackdrop = $('.acred-modal-backdrop');
   const centroEvaluadorNavLink = $('#centro-evaluador-nav-link');
   const centroEvaluadorSection = $('#centro-evaluador');
+  const titulacionModal = $('#titulacion-modal');
+  const openTitulacionBtn = $('#open-titulacion-modal');
+  const closeTitulacionBtn = $('#close-titulacion-modal');
+  const titulacionBackdrop = $('.titulacion-modal-backdrop');
 
   /**
    * openAcredModal
@@ -45,6 +49,18 @@ export function initAcreditacionModal(options = {}) {
     openAcredBtn?.focus();
   }
 
+  function openTitulacionModal() {
+    titulacionModal?.classList.add('is-open');
+    setBodyLocked(true);
+    closeTitulacionBtn?.focus();
+  }
+
+  function closeTitulacionModal() {
+    titulacionModal?.classList.remove('is-open');
+    setBodyLocked(false);
+    openTitulacionBtn?.focus();
+  }
+
   /**
    * openCentroEvaluadorFromNav
    *
@@ -70,9 +86,14 @@ export function initAcreditacionModal(options = {}) {
   openAcredBtn?.addEventListener('click', openAcredModal);
   closeAcredBtn?.addEventListener('click', closeAcredModal);
   acredBackdrop?.addEventListener('click', closeAcredModal);
+  openTitulacionBtn?.addEventListener('click', openTitulacionModal);
+  closeTitulacionBtn?.addEventListener('click', closeTitulacionModal);
+  titulacionBackdrop?.addEventListener('click', closeTitulacionModal);
   centroEvaluadorNavLink?.addEventListener('click', openCentroEvaluadorFromNav);
 
   window.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && acredModal?.classList.contains('is-open')) closeAcredModal();
+    if (event.key !== 'Escape') return;
+    if (acredModal?.classList.contains('is-open')) closeAcredModal();
+    if (titulacionModal?.classList.contains('is-open')) closeTitulacionModal();
   });
 }

@@ -21,7 +21,7 @@
 }
 
 .brand img {
-  width: 150px;
+  width: 80px;
 }
 
 .main-nav {
@@ -204,5 +204,15 @@
     z-index: 300;
     padding: 10px 22px;
     font-size: 0.88rem;
+  }
+}
+
+.brand img {
+  width: 80px;
+}
+
+@media (min-width: 980px) {
+  .brand img {
+    width: 80px;
   }
 }

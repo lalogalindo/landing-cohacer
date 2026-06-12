@@ -242,3 +242,106 @@
     width: 280px;
   }
 }
+
+.course-card-clickable {
+  cursor: pointer;
+  outline: none;
+}
+
+.course-card-clickable:focus-visible {
+  box-shadow: 0 20px 48px rgba(21, 29, 51, 0.14), 0 0 0 4px rgba(255, 198, 41, 0.45);
+  transform: translateY(-4px);
+}
+
+.course-card-clickable .card-req-badge::after {
+  content: "";
+}
+
+.course-pdf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 910;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+}
+
+.course-pdf-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.course-pdf-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 12, 22, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.course-pdf-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: min(100%, 980px);
+  height: min(92vh, 820px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #f8fafc;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+  transform: scale(0.94) translateY(16px);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.course-pdf-modal.is-open .course-pdf-content {
+  transform: scale(1) translateY(0);
+}
+
+.course-pdf-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(21, 29, 51, 0.1);
+  color: var(--navy);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.course-pdf-header {
+  padding: 24px 72px 18px 28px;
+  border-bottom: 1px solid rgba(21, 29, 51, 0.1);
+  background: var(--white);
+}
+
+.course-pdf-eyebrow {
+  margin: 0 0 4px;
+  color: var(--gold);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.course-pdf-header h2 {
+  margin: 0;
+  color: var(--navy);
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  letter-spacing: -0.03em;
+}
+
+.course-pdf-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #eef2f7;
+}

@@ -439,3 +439,67 @@
   }
 }
 #centro-evaluador { scroll-margin-top: 96px; }
+
+.acred-cta-card {
+  display: flex;
+  flex: 1 1 360px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px;
+  border: 1px solid rgba(255, 198, 41, 0.16);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.titulacion-doc {
+  padding: clamp(28px, 5vw, 52px);
+  color: var(--navy);
+}
+
+.titulacion-eyebrow {
+  margin: 0 0 10px;
+  color: var(--gold);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.titulacion-doc h2 {
+  margin: 0 0 20px;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.titulacion-doc h3 {
+  margin: 28px 0 10px;
+  font-size: 1.18rem;
+  color: var(--royal);
+}
+
+.titulacion-doc p,
+.titulacion-doc li {
+  color: rgba(21, 29, 51, 0.78);
+  font-size: 0.98rem;
+  line-height: 1.75;
+}
+
+.titulacion-doc ul {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding-left: 20px;
+}
+
+.titulacion-doc li::marker {
+  color: var(--yellow);
+}
+
+@media (max-width: 720px) {
+  .acred-cta-card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
