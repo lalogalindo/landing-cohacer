@@ -114,8 +114,8 @@ function getTermScore(normalizedQuestion, chunk) {
 function expandQuestionTerms(normalizedQuestion) {
   const additions = [];
 
-  if (/\b(inscripcion|inscribo|inscribirme|registrarme|registro|iniciar|inicio|empezar|entrar)\b/.test(normalizedQuestion)) {
-    additions.push('proceso acuerdo 286 requisitos documentos candidato');
+  if (/\b(inscripcion|inscribo|inscribirme|registrarme|registro|iniciar|inicio|empezar|entrar|trabajo|trabajando|laboro|experiencia)\b/.test(normalizedQuestion)) {
+    additions.push('proceso acuerdo 286 experiencia laboral requisitos candidato titularme');
   }
 
   if (/\b(necesito|requerimiento|requerimientos|requisito|requisitos|documento|documentos|papeles)\b/.test(normalizedQuestion)) {
@@ -148,7 +148,7 @@ function getPreferredFiles(normalizedQuestion) {
     return ['03-valor-acreditacion-requisitos.md'];
   }
 
-  if (/\b(inscripcion|inscribo|inscribirme|registrarme|registro|iniciar|inicio|empezar|entrar)\b/.test(normalizedQuestion)) {
+  if (/\b(inscripcion|inscribo|inscribirme|registrarme|registro|iniciar|inicio|empezar|entrar|trabajo|trabajando|laboro|experiencia)\b/.test(normalizedQuestion)) {
     return ['02-acuerdo-286-proceso.md', '03-valor-acreditacion-requisitos.md', '06-tiempos-validez.md'];
   }
 

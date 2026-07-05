@@ -7,12 +7,10 @@ required = [
     root / "index.html",
     root / "src" / "styles.css",
     root / "src" / "main.js",
-    root / "assets" / "cohacer-logo.svg",
-    root / "assets" / "cohacer-logo-light.svg",
     root / "assets" / "logoHome.png",
     root / "assets" / "hero-person.svg",
     root / "assets" / "testimonial-main.svg",
-    root / "assets" / "assistant-bot.svg",
+    root / "assets" / "esmi.png",
     root / "vite.config.js",
 ]
 missing = [str(path.relative_to(root)) for path in required if not path.exists()]
@@ -63,7 +61,8 @@ if parser.sections != expected:
     print("Unexpected section order:", parser.sections)
     sys.exit(1)
 
-css = (root / "src" / "styles.css").read_text()
+css_files = [root / "src" / "styles.css", *(root / "src" / "styles").glob("*.css")]
+css = "\n".join(path.read_text() for path in css_files if path.exists())
 for color in ["#ffc629", "#151d33", "#876b3f", "#e52320", "#202070", "#8c8880", "#ffffff"]:
     if color not in css:
         print(f"Missing official color {color}")

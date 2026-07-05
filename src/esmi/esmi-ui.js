@@ -8,9 +8,10 @@ const FREQUENT_QUESTIONS = [
   '¿Cuánto cuesta?',
   '¿Qué necesito para empezar?',
   '¿Tiene validez oficial?',
+  'Ya trabajo, ¿puedo titularme?',
 ];
 
-const REPLY_SEGMENT_DELAY_MS = 1400;
+const REPLY_SEGMENT_DELAY_MS = 2300;
 const MAX_MESSAGE_CHARS = 250;
 
 let esmiUiInstance = null;
@@ -273,7 +274,7 @@ function appendMessage(messagesElement, author, text, cta) {
 /**
  * Construye los chips de preguntas frecuentes y conecta su envío al chat.
  * @param {function(string): void} onQuestionSelected Función llamada cuando se elige una pregunta.
- * @returns {HTMLDivElement} Contenedor con máximo cuatro chips frecuentes.
+ * @returns {HTMLDivElement} Contenedor con chips frecuentes alineados a la base Markdown.
  */
 function createChips(onQuestionSelected) {
   const chips = createElement('div', {
@@ -281,7 +282,7 @@ function createChips(onQuestionSelected) {
     attributes: { 'aria-label': 'Preguntas frecuentes para Esmi' },
   });
 
-  FREQUENT_QUESTIONS.slice(0, 4).forEach((question) => {
+  FREQUENT_QUESTIONS.forEach((question) => {
     const chip = createElement('button', {
       className: 'esmi-chip',
       text: question,

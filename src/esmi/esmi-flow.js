@@ -2,7 +2,7 @@
 
 const ADVISOR_PATTERN = /\b(asesor|asesora|humano|persona|whatsapp|tel[eé]fono|telefono|llamada|contacto|hablar con alguien|hablar con un asesor)\b/i;
 const GENERIC_INFO_PATTERN = /\b(info|informaci[oó]n|quiero saber|me interesa|dudas|ayuda|orientaci[oó]n)\b/i;
-const TOPIC_PATTERN = /\b(inscripci[oó]n|inscripcion|inscribo|inscribirme|registro|registrarme|iniciar|inicio|empezar|requisito|requisitos|requerimiento|requerimientos|documento|documentos|necesito|costo|costos|cuesta|precio|validez|acuerdo 286|carrera|licenciatura)\b/i;
+const TOPIC_PATTERN = /\b(inscripci[oó]n|inscripcion|inscribo|inscribirme|registro|registrarme|iniciar|inicio|empezar|requisito|requisitos|requerimiento|requerimientos|documento|documentos|necesito|costo|costos|cuesta|precio|validez|acuerdo 286|carrera|licenciatura|trabajo|laboro|experiencia|trabajando)\b/i;
 
 const CLARIFICATION_QUESTIONS = [
   'Soy una IA entrenada para orientar sobre COHACER. Puedo ayudarte con inscripción, costos, requisitos, carreras o validez oficial. ¿Cuál tema quieres revisar?',
