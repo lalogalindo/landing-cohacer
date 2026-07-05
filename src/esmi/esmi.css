@@ -142,6 +142,7 @@
   line-height: 1.45;
   max-width: 88%;
   padding: 0.8rem 0.9rem;
+  white-space: pre-line;
 }
 
 .esmi-message--bot .esmi-message__bubble {
@@ -176,6 +177,10 @@
   flex-wrap: wrap;
   gap: 0.5rem;
   padding: 0.85rem 1rem 0;
+}
+
+.esmi-chips--hidden {
+  display: none;
 }
 
 .esmi-chip {

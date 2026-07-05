@@ -1,6 +1,5 @@
 // src/esmi/esmi-context.js
 
-const STORAGE_KEY = 'cohacer.esmi.context.v1';
 const MAX_HISTORY_ITEMS = 30;
 
 const INTEREST_PATTERNS = [
@@ -11,12 +10,12 @@ const INTEREST_PATTERNS = [
 ];
 
 const WORK_AREA_PATTERNS = [
-  /(?:trabajo|trabajo en|laboro en|me dedico a|soy|área|area|sector)\s+(?:de|en|como)?\s*([a-záéíóúñ\s]{3,45})/i,
-  /(?:mi área es|mi area es|mi sector es)\s+([a-záéíóúñ\s]{3,45})/i,
+  /(?:trabajo|trabajo en|laboro en|me dedico a|área|area|sector)\s+(?:de|en|como)?\s*([a-záéíóúñ\s]{2,45})/i,
+  /(?:mi área es|mi area es|mi sector es)\s+([a-záéíóúñ\s]{2,45})/i,
 ];
 
 /**
- * Crea la estructura base del contexto persistente de Esmi.
+ * Crea la estructura base del contexto en memoria de Esmi.
  * @returns {object} Contexto vacío con historial y campos conversacionales.
  */
 function createDefaultContext() {
@@ -28,39 +27,10 @@ function createDefaultContext() {
     interests: [],
     lastTopicId: '',
     pendingClarification: null,
+    clarificationCount: 0,
     history: [],
     updatedAt: new Date().toISOString(),
   };
-}
-
-/**
- * Lee texto desde localStorage sin romper el chat cuando el navegador lo bloquea.
- * @param {Storage | null} storage Adaptador de almacenamiento disponible en el navegador.
- * @param {string} key Llave que se desea consultar.
- * @returns {string | null} Valor serializado o null si no existe.
- */
-function safeGetItem(storage, key) {
-  try {
-    return storage ? storage.getItem(key) : null;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Guarda texto en localStorage tolerando navegadores con almacenamiento deshabilitado.
- * @param {Storage | null} storage Adaptador de almacenamiento disponible en el navegador.
- * @param {string} key Llave que se desea actualizar.
- * @param {string} value Valor serializado que se persistirá.
- */
-function safeSetItem(storage, key, value) {
-  try {
-    if (storage) {
-      storage.setItem(key, value);
-    }
-  } catch {
-    // El chat continúa en memoria si localStorage no está disponible.
-  }
 }
 
 /**
@@ -76,6 +46,42 @@ function cleanCapturedText(value) {
     .slice(0, 60);
 }
 
+
+/**
+ * Divide una respuesta libre por comas para detectar datos enviados en una sola línea.
+ * @param {string} text Mensaje escrito por la persona usuaria.
+ * @returns {Array<string>} Partes limpias separadas por coma.
+ */
+function getCommaSeparatedParts(text) {
+  return String(text || '')
+    .split(',')
+    .map((part) => cleanCapturedText(part))
+    .filter(Boolean);
+}
+
+/**
+ * Revisa si una parte separada por comas parece nombre de persona.
+ * @param {string} value Fragmento candidato del mensaje.
+ * @returns {boolean} Verdadero si el fragmento parece nombre y no dato operativo.
+ */
+function looksLikeName(value) {
+  return /^[a-záéíóúñ]+(?:\s+[a-záéíóúñ]+){0,3}$/i.test(value)
+    && !/\b(trabajo|laboro|experiencia|años|anos|tel|whatsapp|titulaci[oó]n|costos?|requisitos?)\b/i.test(value);
+}
+
+/**
+ * Revisa si una parte separada por comas puede ser área laboral.
+ * @param {string} value Fragmento candidato del mensaje.
+ * @returns {boolean} Verdadero si el fragmento parece área o sector laboral.
+ */
+function looksLikeWorkArea(value) {
+  const cleanValue = String(value || '').trim();
+
+  return /^[a-záéíóúñ\s]{2,45}$/i.test(cleanValue)
+    && (cleanValue.length <= 3 || !looksLikeName(cleanValue))
+    && !/\b(años|anos|tel|whatsapp|titulaci[oó]n|costos?|requisitos?)\b/i.test(cleanValue);
+}
+
 /**
  * Detecta un posible nombre cuando la persona lo comparte de forma conversacional.
  * @param {string} text Mensaje escrito por la persona usuaria.
@@ -83,7 +89,13 @@ function cleanCapturedText(value) {
  */
 function extractName(text) {
   const match = String(text).match(/(?:me llamo|mi nombre es|soy)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+){0,3})/i);
-  return match ? cleanCapturedText(match[1]) : '';
+
+  if (match) {
+    return cleanCapturedText(match[1]);
+  }
+
+  const [firstPart] = getCommaSeparatedParts(text);
+  return firstPart && looksLikeName(firstPart) ? firstPart : '';
 }
 
 /**
@@ -114,12 +126,14 @@ function extractExperienceYears(text) {
 function extractWorkArea(text) {
   const matchedPattern = WORK_AREA_PATTERNS.find((pattern) => pattern.test(text));
 
-  if (!matchedPattern) {
-    return '';
+  if (matchedPattern) {
+    const [, area] = String(text).match(matchedPattern) || [];
+    return cleanCapturedText(area);
   }
 
-  const [, area] = String(text).match(matchedPattern) || [];
-  return cleanCapturedText(area);
+  const parts = getCommaSeparatedParts(text);
+  const workArea = parts.find((part, index) => index > 0 && looksLikeWorkArea(part));
+  return workArea || '';
 }
 
 /**
@@ -144,28 +158,17 @@ function mergeInterests(current = [], next = []) {
 }
 
 /**
- * Crea el administrador de contexto persistente de Esmi basado en localStorage.
- * @returns {object} API para consultar, actualizar y registrar conversación.
+ * Crea el administrador de contexto en memoria de Esmi.
+ * @returns {object} API para consultar, actualizar y registrar conversación durante la sesión actual.
  */
 export function createEsmiContext() {
-  const storage = typeof window !== 'undefined' ? window.localStorage : null;
-  const storedContext = safeGetItem(storage, STORAGE_KEY);
   let context = createDefaultContext();
 
-  if (storedContext) {
-    try {
-      context = { ...context, ...JSON.parse(storedContext) };
-    } catch {
-      context = createDefaultContext();
-    }
-  }
-
   /**
-   * Persiste el contexto actual en localStorage y actualiza su fecha interna.
+   * Actualiza la fecha interna del contexto sin escribir en almacenamiento permanente.
    */
-  function persist() {
+  function touch() {
     context.updatedAt = new Date().toISOString();
-    safeSetItem(storage, STORAGE_KEY, JSON.stringify(context));
   }
 
   return {
@@ -178,13 +181,13 @@ export function createEsmiContext() {
     },
 
     /**
-     * Actualiza campos puntuales del contexto y los persiste.
+     * Actualiza campos puntuales del contexto en memoria.
      * @param {object} patch Campos que deben sobrescribirse en el contexto.
      * @returns {object} Contexto actualizado.
      */
     update(patch) {
       context = { ...context, ...patch };
-      persist();
+      touch();
       return this.get();
     },
 
@@ -215,7 +218,7 @@ export function createEsmiContext() {
     },
 
     /**
-     * Agrega un mensaje al historial persistente de conversación.
+     * Agrega un mensaje al historial temporal de conversación.
      * @param {'bot' | 'user'} author Autor del mensaje en el chat.
      * @param {string} text Texto enviado o respondido.
      * @param {{label: string, href: string}=} cta CTA opcional asociado al mensaje.
@@ -226,17 +229,17 @@ export function createEsmiContext() {
         ...context.history,
         { author, text, cta: cta || null, createdAt: new Date().toISOString() },
       ].slice(-MAX_HISTORY_ITEMS);
-      persist();
+      touch();
       return this.get();
     },
 
     /**
-     * Limpia el historial y los datos del contexto persistente.
-     * @returns {object} Contexto vacío recién persistido.
+     * Limpia el historial y los datos del contexto en memoria.
+     * @returns {object} Contexto vacío recién creado en memoria.
      */
     reset() {
       context = createDefaultContext();
-      persist();
+      touch();
       return this.get();
     },
   };

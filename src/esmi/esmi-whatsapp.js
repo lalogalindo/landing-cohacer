@@ -101,7 +101,7 @@ function formatContextValue(value, fallback = 'No indicado') {
 
 /**
  * Construye un resumen breve del contexto acumulado para continuar por WhatsApp.
- * @param {object} context Contexto persistente de la conversación actual.
+ * @param {object} context Contexto temporal de la conversación actual.
  * @returns {string} Resumen seguro con solo datos aportados por la persona usuaria.
  */
 export function buildWhatsappContextSummary(context = {}) {
@@ -120,7 +120,7 @@ export function buildWhatsappContextSummary(context = {}) {
 
 /**
  * Genera el mensaje inicial que se enviará al asesor de COHACER por WhatsApp.
- * @param {object} context Contexto persistente recolectado por Esmi.
+ * @param {object} context Contexto temporal recolectado por Esmi.
  * @param {object} advisor Asesor activo o fallback institucional.
  * @returns {string} Mensaje listo para codificarse en una URL de WhatsApp.
  */
@@ -139,7 +139,7 @@ export function buildWhatsappMessage(context = {}, advisor = resolveActiveAdviso
 
 /**
  * Crea un enlace de WhatsApp con el resumen contextual de la conversación.
- * @param {object} context Contexto persistente recolectado por Esmi.
+ * @param {object} context Contexto temporal recolectado por Esmi.
  * @param {object} advisor Asesor activo o fallback institucional.
  * @returns {string} URL de WhatsApp con mensaje codificado.
  */
