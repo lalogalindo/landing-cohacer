@@ -11,7 +11,7 @@ import { createWhatsappUrl, resolveActiveAdvisor } from './esmi-whatsapp.js';
 
 /**
  * Actualiza el contexto según la decisión conversacional tomada por el flujo.
- * @param {object} contextStore Administrador persistente del contexto de Esmi.
+ * @param {object} contextStore Administrador temporal del contexto de Esmi.
  * @param {object} flowDecision Decisión calculada por esmi-flow.
  * @param {object} searchResult Resultado del buscador local de conocimiento.
  * @returns {object} Contexto vigente después de guardar estado pendiente o tema actual.
@@ -33,7 +33,7 @@ function updateContextFromFlow(contextStore, flowDecision, searchResult) {
 /**
  * Crea el coordinador principal de Esmi para unir motor, contexto, flujo y respuestas.
  * @param {{engine: {ask: function(string): object}, advisor?: object}} options Dependencias del asistente local.
- * @returns {object} API conversacional con respuesta persistente e historial.
+ * @returns {object} API conversacional con contexto en memoria e historial temporal.
  */
 export function createEsmiOrchestrator({ engine, advisor = resolveActiveAdvisor() }) {
   const contextStore = createEsmiContext();
@@ -73,8 +73,8 @@ export function createEsmiOrchestrator({ engine, advisor = resolveActiveAdvisor(
     },
 
     /**
-     * Devuelve el historial persistente para reconstruir el chat tras recargar la página.
-     * @returns {Array<object>} Mensajes persistidos de la conversación.
+     * Devuelve el historial temporal disponible durante la sesión actual.
+     * @returns {Array<object>} Mensajes temporales de la conversación actual.
      */
     getHistory() {
       return contextStore.get().history;
@@ -82,7 +82,7 @@ export function createEsmiOrchestrator({ engine, advisor = resolveActiveAdvisor(
 
     /**
      * Devuelve el contexto conversacional actual para depuración o integraciones futuras.
-     * @returns {object} Contexto persistente de Esmi.
+     * @returns {object} Contexto temporal de Esmi.
      */
     getContext() {
       return contextStore.get();

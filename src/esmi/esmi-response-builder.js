@@ -45,7 +45,7 @@ function getAdvisorDisplayName(advisor) {
 
 /**
  * Arma una respuesta con CTA de WhatsApp y resumen contextual de la conversación.
- * @param {string} href Enlace de WhatsApp generado desde el contexto persistente.
+ * @param {string} href Enlace de WhatsApp generado desde el contexto temporal.
  * @param {object} advisor Asesor activo detectado por slug o fallback institucional.
  * @param {string} reason Motivo conversacional para enviar a WhatsApp.
  * @returns {{answer: string, cta: {label: string, href: string}}} Respuesta lista para renderizarse.

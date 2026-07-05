@@ -1,6 +1,5 @@
 // src/esmi/esmi-context.js
 
-const STORAGE_KEY = 'cohacer.esmi.context.v1';
 const MAX_HISTORY_ITEMS = 30;
 
 const INTEREST_PATTERNS = [
@@ -16,7 +15,7 @@ const WORK_AREA_PATTERNS = [
 ];
 
 /**
- * Crea la estructura base del contexto persistente de Esmi.
+ * Crea la estructura base del contexto en memoria de Esmi.
  * @returns {object} Contexto vacío con historial y campos conversacionales.
  */
 function createDefaultContext() {
@@ -31,36 +30,6 @@ function createDefaultContext() {
     history: [],
     updatedAt: new Date().toISOString(),
   };
-}
-
-/**
- * Lee texto desde localStorage sin romper el chat cuando el navegador lo bloquea.
- * @param {Storage | null} storage Adaptador de almacenamiento disponible en el navegador.
- * @param {string} key Llave que se desea consultar.
- * @returns {string | null} Valor serializado o null si no existe.
- */
-function safeGetItem(storage, key) {
-  try {
-    return storage ? storage.getItem(key) : null;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * Guarda texto en localStorage tolerando navegadores con almacenamiento deshabilitado.
- * @param {Storage | null} storage Adaptador de almacenamiento disponible en el navegador.
- * @param {string} key Llave que se desea actualizar.
- * @param {string} value Valor serializado que se persistirá.
- */
-function safeSetItem(storage, key, value) {
-  try {
-    if (storage) {
-      storage.setItem(key, value);
-    }
-  } catch {
-    // El chat continúa en memoria si localStorage no está disponible.
-  }
 }
 
 /**
@@ -144,28 +113,17 @@ function mergeInterests(current = [], next = []) {
 }
 
 /**
- * Crea el administrador de contexto persistente de Esmi basado en localStorage.
- * @returns {object} API para consultar, actualizar y registrar conversación.
+ * Crea el administrador de contexto en memoria de Esmi.
+ * @returns {object} API para consultar, actualizar y registrar conversación durante la sesión actual.
  */
 export function createEsmiContext() {
-  const storage = typeof window !== 'undefined' ? window.localStorage : null;
-  const storedContext = safeGetItem(storage, STORAGE_KEY);
   let context = createDefaultContext();
 
-  if (storedContext) {
-    try {
-      context = { ...context, ...JSON.parse(storedContext) };
-    } catch {
-      context = createDefaultContext();
-    }
-  }
-
   /**
-   * Persiste el contexto actual en localStorage y actualiza su fecha interna.
+   * Actualiza la fecha interna del contexto sin escribir en almacenamiento permanente.
    */
-  function persist() {
+  function touch() {
     context.updatedAt = new Date().toISOString();
-    safeSetItem(storage, STORAGE_KEY, JSON.stringify(context));
   }
 
   return {
@@ -178,13 +136,13 @@ export function createEsmiContext() {
     },
 
     /**
-     * Actualiza campos puntuales del contexto y los persiste.
+     * Actualiza campos puntuales del contexto en memoria.
      * @param {object} patch Campos que deben sobrescribirse en el contexto.
      * @returns {object} Contexto actualizado.
      */
     update(patch) {
       context = { ...context, ...patch };
-      persist();
+      touch();
       return this.get();
     },
 
@@ -215,7 +173,7 @@ export function createEsmiContext() {
     },
 
     /**
-     * Agrega un mensaje al historial persistente de conversación.
+     * Agrega un mensaje al historial temporal de conversación.
      * @param {'bot' | 'user'} author Autor del mensaje en el chat.
      * @param {string} text Texto enviado o respondido.
      * @param {{label: string, href: string}=} cta CTA opcional asociado al mensaje.
@@ -226,17 +184,17 @@ export function createEsmiContext() {
         ...context.history,
         { author, text, cta: cta || null, createdAt: new Date().toISOString() },
       ].slice(-MAX_HISTORY_ITEMS);
-      persist();
+      touch();
       return this.get();
     },
 
     /**
-     * Limpia el historial y los datos del contexto persistente.
-     * @returns {object} Contexto vacío recién persistido.
+     * Limpia el historial y los datos del contexto en memoria.
+     * @returns {object} Contexto vacío recién creado en memoria.
      */
     reset() {
       context = createDefaultContext();
-      persist();
+      touch();
       return this.get();
     },
   };

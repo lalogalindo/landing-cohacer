@@ -285,9 +285,9 @@ function ensureGreeting(messagesElement, state) {
 }
 
 /**
- * Restaura mensajes persistidos por el orquestador sin duplicar el saludo inicial.
+ * Restaura mensajes temporales del orquestador sin duplicar el saludo inicial.
  * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
- * @param {Array<object>} history Historial persistente de la conversación.
+ * @param {Array<object>} history Historial temporal de la conversación.
  * @param {object} state Estado interno de la interfaz de Esmi.
  */
 function restoreHistory(messagesElement, history, state) {
