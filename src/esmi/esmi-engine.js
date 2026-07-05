@@ -58,7 +58,7 @@ function chunkMarkdownDocument(document) {
       sectionIndex,
       blockIndex,
       text: `${heading} ${block}`.replace(/\s+/g, ' ').trim(),
-      sourceText: block.replace(/\s+/g, ' ').trim(),
+      sourceText: block.replace(/[ \t]+/g, ' ').trim(),
       normalizedText: normalizeText(`${heading} ${block}`),
     }));
   });
@@ -118,6 +118,10 @@ function expandQuestionTerms(normalizedQuestion) {
     additions.push('proceso acuerdo 286 experiencia laboral requisitos candidato titularme');
   }
 
+  if (/\b(pagar|pagos|clabe|cuenta|banco|banca|transferencia|deposito|dep[oó]sito|datos bancarios)\b/.test(normalizedQuestion)) {
+    additions.push('datos cuentas bancarias institucionales pago transferencia clabe cuenta rfc bbva');
+  }
+
   if (/\b(necesito|requerimiento|requerimientos|requisito|requisitos|documento|documentos|papeles)\b/.test(normalizedQuestion)) {
     additions.push('requisitos formales documentacion obligatoria edad experiencia bachillerato');
   }
@@ -140,7 +144,7 @@ function isUnconfirmedScholarshipQuestion(normalizedQuestion) {
  * @returns {Array<string>} Nombres de archivos que deben recibir prioridad de búsqueda.
  */
 function getPreferredFiles(normalizedQuestion) {
-  if (/\b(costo|cuesta|precio|pago|mensualidad|plan|clabe|cuenta|rfc|deposito)\b/.test(normalizedQuestion)) {
+  if (/\b(costo|cuesta|precio|pago|pagar|pagos|mensualidad|plan|clabe|cuenta|rfc|deposito|dep[oó]sito|banco|banca|transferencia|datos bancarios)\b/.test(normalizedQuestion)) {
     return ['07-costos-y-cuentas.md'];
   }
 
@@ -244,11 +248,35 @@ function getDisclaimer(seed) {
  * @returns {string} Respuesta legible para mostrar en el chat.
  */
 function formatAnswer(text) {
-  return String(text || '')
+  const cleanText = String(text || '')
     .replace(/^#{1,6}\s+/gm, '')
-    .replace(/\*\*/g, '')
-    .replace(/\s+/g, ' ')
-    .trim();
+    .replace(/\*\*/g, '');
+  const formattedLines = cleanText
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .flatMap((line) => {
+      if (!line.includes('|')) {
+        return line.replace(/\s+/g, ' ');
+      }
+
+      const cells = line
+        .split('|')
+        .map((cell) => cell.trim())
+        .filter(Boolean);
+
+      if (!cells.length || cells.every((cell) => /^-+$/.test(cell))) {
+        return [];
+      }
+
+      if (cells.length === 2) {
+        return `• ${cells[0]}: ${cells[1]}`;
+      }
+
+      return `• ${cells[0]}: ${cells.slice(1).join('. ')}`;
+    });
+
+  return formattedLines.join('\n').trim();
 }
 
 /**
@@ -289,11 +317,12 @@ function getExpandedChunkText(chunk, chunks) {
   const nextChunk = followingChunks[0];
 
   if (nextChunk && !chunk.sourceText.includes('|') && nextChunk.sourceText.includes('|')) {
-    return `${chunk.sourceText} ${nextChunk.sourceText}`;
+    return `${chunk.sourceText}
+${nextChunk.sourceText}`;
   }
 
   if (followingChunks.length && shouldExpandNarrativeChunk(chunk)) {
-    return [chunk, ...followingChunks].map((candidate) => candidate.sourceText).join(' ');
+    return [chunk, ...followingChunks].map((candidate) => candidate.sourceText).join('\n');
   }
 
   return chunk.sourceText;

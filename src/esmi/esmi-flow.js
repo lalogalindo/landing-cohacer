@@ -22,6 +22,16 @@ export function isAdvisorRequest(question) {
   return ADVISOR_PATTERN.test(String(question || ''));
 }
 
+
+/**
+ * Detecta cuando la persona no quiere compartir más datos para WhatsApp.
+ * @param {string} question Mensaje escrito por la persona usuaria.
+ * @returns {boolean} Verdadero cuando se debe continuar con la información disponible.
+ */
+function isWhatsappIntakeRefusal(question) {
+  return /\b(no quiero|no deseo|no puedo|prefiero no|no tengo|no lo s[eé]|no se|omitir|saltar|continuar|as[ií] est[aá] bien)\b/i.test(String(question || ''));
+}
+
 /**
  * Decide si la pregunta es genérica y necesita una aclaración antes de buscar respuesta.
  * @param {string} question Mensaje escrito por la persona usuaria.
@@ -104,8 +114,12 @@ function hasCompleteWhatsappContext(context) {
  */
 export function decideEsmiFlow({ question, context, searchResult, advisor }) {
   if (context.pendingClarification === 'whatsapp-intake') {
-    if (hasCompleteWhatsappContext(context)) {
+    if (hasCompleteWhatsappContext(context) || isWhatsappIntakeRefusal(question)) {
       return { type: 'whatsapp' };
+    }
+
+    if (!isAdvisorRequest(question) && searchResult.matched && searchResult.confidence !== 'low') {
+      return { type: 'answer', clearPendingClarification: true };
     }
 
     return {
