@@ -252,23 +252,51 @@ function formatAnswer(text) {
 }
 
 /**
- * Agrega el fragmento consecutivo del mismo archivo cuando completa una tabla o dato sensible.
+ * Obtiene los fragmentos consecutivos del mismo archivo y sección.
  * @param {object} chunk Fragmento principal seleccionado por el índice.
  * @param {Array<object>} chunks Todos los fragmentos indexados en memoria.
- * @returns {string} Texto principal enriquecido con el siguiente bloque relacionado si existe.
+ * @param {number} limit Cantidad máxima de fragmentos adicionales.
+ * @returns {Array<object>} Fragmentos consecutivos encontrados.
+ */
+function getFollowingChunks(chunk, chunks, limit = 4) {
+  return chunks
+    .filter((candidate) => {
+      return candidate.filename === chunk.filename
+        && candidate.sectionIndex === chunk.sectionIndex
+        && candidate.blockIndex > chunk.blockIndex
+        && candidate.blockIndex <= chunk.blockIndex + limit;
+    })
+    .sort((left, right) => left.blockIndex - right.blockIndex);
+}
+
+/**
+ * Detecta fragmentos introductorios que necesitan el contenido siguiente para responder completo.
+ * @param {object} chunk Fragmento principal seleccionado por el índice.
+ * @returns {boolean} Verdadero cuando el fragmento por sí solo se siente incompleto.
+ */
+function shouldExpandNarrativeChunk(chunk) {
+  return /[?¿:]\s*$/.test(chunk.sourceText) || chunk.sourceText.length < 120;
+}
+
+/**
+ * Agrega fragmentos consecutivos del mismo archivo cuando completan una tabla o una idea introductoria.
+ * @param {object} chunk Fragmento principal seleccionado por el índice.
+ * @param {Array<object>} chunks Todos los fragmentos indexados en memoria.
+ * @returns {string} Texto principal enriquecido con bloques relacionados si existen.
  */
 function getExpandedChunkText(chunk, chunks) {
-  const nextChunk = chunks.find((candidate) => {
-    return candidate.filename === chunk.filename
-      && candidate.sectionIndex === chunk.sectionIndex
-      && candidate.blockIndex === chunk.blockIndex + 1;
-  });
+  const followingChunks = getFollowingChunks(chunk, chunks);
+  const nextChunk = followingChunks[0];
 
-  if (!nextChunk || chunk.sourceText.includes('|') || !nextChunk.sourceText.includes('|')) {
-    return chunk.sourceText;
+  if (nextChunk && !chunk.sourceText.includes('|') && nextChunk.sourceText.includes('|')) {
+    return `${chunk.sourceText} ${nextChunk.sourceText}`;
   }
 
-  return `${chunk.sourceText} ${nextChunk.sourceText}`;
+  if (followingChunks.length && shouldExpandNarrativeChunk(chunk)) {
+    return [chunk, ...followingChunks].map((candidate) => candidate.sourceText).join(' ');
+  }
+
+  return chunk.sourceText;
 }
 
 /**

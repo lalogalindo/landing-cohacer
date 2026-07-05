@@ -5,13 +5,13 @@ const INITIAL_GREETING =
 
 const FREQUENT_QUESTIONS = [
   '¿Cómo me inscribo?',
-  '¿Cuánto cuesta?',
-  '¿Qué necesito para empezar?',
   '¿Tiene validez oficial?',
   'Ya trabajo, ¿puedo titularme?',
 ];
 
 const REPLY_SEGMENT_DELAY_MS = 2300;
+const IDLE_FOLLOW_UP_DELAY_MS = 15000;
+const IDLE_FOLLOW_UP_MESSAGE = '¿Hay algo más que pueda responderte sobre COHACER?';
 const MAX_MESSAGE_CHARS = 250;
 
 let esmiUiInstance = null;
@@ -156,8 +156,9 @@ function showTypingThenMessage(state, messagesElement, segment, cta, sequence, o
  * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
  * @param {{answer: string, cta: object | null}} result Respuesta generada por el asistente.
  * @param {number} sequence Identificador de la pregunta vigente.
+ * @param {function(): void} onComplete Función ejecutada cuando se entregó el último segmento.
  */
-function scheduleSegmentedReply(state, messagesElement, result, sequence) {
+function scheduleSegmentedReply(state, messagesElement, result, sequence, onComplete) {
   const segments = splitAnswerIntoMessages(result.answer);
 
   /**
@@ -165,7 +166,12 @@ function scheduleSegmentedReply(state, messagesElement, result, sequence) {
    * @param {number} index Posición del segmento que debe enviarse.
    */
   function deliverSegment(index) {
-    if (state.responseSequence !== sequence || index >= segments.length) {
+    if (state.responseSequence !== sequence) {
+      return;
+    }
+
+    if (index >= segments.length) {
+      onComplete();
       return;
     }
 
@@ -272,6 +278,54 @@ function appendMessage(messagesElement, author, text, cta) {
 }
 
 /**
+ * Oculta los chips de preguntas sugeridas mientras hay una conversación activa.
+ * @param {HTMLElement} chipsElement Contenedor de chips frecuentes.
+ */
+function hideChips(chipsElement) {
+  chipsElement.classList.add('esmi-chips--hidden');
+}
+
+/**
+ * Muestra los chips de preguntas sugeridas cuando Esmi queda disponible para otra duda.
+ * @param {HTMLElement} chipsElement Contenedor de chips frecuentes.
+ */
+function showChips(chipsElement) {
+  chipsElement.classList.remove('esmi-chips--hidden');
+}
+
+/**
+ * Cancela el temporizador que ofrece continuar la conversación.
+ * @param {object} state Estado interno de la interfaz de Esmi.
+ */
+function clearIdleFollowUp(state) {
+  if (state.idleTimer) {
+    window.clearTimeout(state.idleTimer);
+    state.idleTimer = null;
+  }
+}
+
+/**
+ * Programa una pregunta de seguimiento si la persona no responde tras terminar Esmi.
+ * @param {object} state Estado interno de la interfaz de Esmi.
+ * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
+ * @param {HTMLElement} chipsElement Contenedor de chips frecuentes.
+ * @param {number} sequence Identificador de la respuesta vigente.
+ */
+function scheduleIdleFollowUp(state, messagesElement, chipsElement, sequence) {
+  clearIdleFollowUp(state);
+
+  state.idleTimer = window.setTimeout(() => {
+    if (state.responseSequence !== sequence) {
+      return;
+    }
+
+    appendMessage(messagesElement, 'bot', IDLE_FOLLOW_UP_MESSAGE);
+    showChips(chipsElement);
+    state.idleTimer = null;
+  }, IDLE_FOLLOW_UP_DELAY_MS);
+}
+
+/**
  * Construye los chips de preguntas frecuentes y conecta su envío al chat.
  * @param {function(string): void} onQuestionSelected Función llamada cuando se elige una pregunta.
  * @returns {HTMLDivElement} Contenedor con chips frecuentes alineados a la base Markdown.
@@ -337,7 +391,7 @@ export function createEsmiUi({ assistant }) {
     return esmiUiInstance;
   }
 
-  const state = { hasGreeting: false, isOpen: false, audioContext: null, responseSequence: 0 };
+  const state = { hasGreeting: false, isOpen: false, audioContext: null, responseSequence: 0, idleTimer: null };
   const root = createElement('div', { className: 'esmi-root' });
   const launcher = createElement('button', {
     className: 'esmi-launcher',
@@ -382,6 +436,7 @@ export function createEsmiUi({ assistant }) {
       'aria-label': 'Pregunta para Esmi',
     },
   });
+  const chips = createChips(ask);
   const sendButton = createElement('button', {
     className: 'esmi-send',
     text: 'Enviar',
@@ -423,6 +478,8 @@ export function createEsmiUi({ assistant }) {
 
     open();
     appendMessage(messages, 'user', cleanQuestion);
+    hideChips(chips);
+    clearIdleFollowUp(state);
 
     state.responseSequence += 1;
     const currentSequence = state.responseSequence;
@@ -432,7 +489,9 @@ export function createEsmiUi({ assistant }) {
       return;
     }
 
-    scheduleSegmentedReply(state, messages, result, currentSequence);
+    scheduleSegmentedReply(state, messages, result, currentSequence, () => {
+      scheduleIdleFollowUp(state, messages, chips, currentSequence);
+    });
   }
 
   restoreHistory(messages, assistant.getHistory(), state);
@@ -440,7 +499,7 @@ export function createEsmiUi({ assistant }) {
   headerCopy.append(title, subtitle);
   header.append(headerCopy, closeButton);
   form.append(input, sendButton);
-  panel.append(header, messages, createChips(ask), form);
+  panel.append(header, messages, chips, form);
   root.append(panel, launcher);
   document.body.append(root);
 
