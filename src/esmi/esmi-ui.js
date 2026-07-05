@@ -10,8 +10,8 @@ const FREQUENT_QUESTIONS = [
   '¿Hay becas disponibles?',
 ];
 
-const MIN_REPLY_DELAY_MS = 750;
-const MAX_REPLY_DELAY_MS = 1400;
+const REPLY_SEGMENT_DELAY_MS = 900;
+const MAX_MESSAGE_CHARS = 520;
 
 let esmiUiInstance = null;
 
@@ -89,13 +89,72 @@ function createCtaElement(cta) {
 }
 
 /**
- * Calcula una pausa breve antes de responder para que el chat se sienta conversacional.
- * @param {string} answer Texto de respuesta que Esmi está por mostrar.
- * @returns {number} Duración de espera en milisegundos dentro del rango permitido.
+ * Divide un texto largo en mensajes cortos para que Esmi no responda como bloque robótico.
+ * @param {string} answer Texto completo generado por el motor local.
+ * @returns {Array<string>} Segmentos listos para mostrarse uno por uno.
  */
-function getReplyDelay(answer) {
-  const readingDelay = String(answer || '').length * 9;
-  return Math.min(MAX_REPLY_DELAY_MS, Math.max(MIN_REPLY_DELAY_MS, readingDelay));
+function splitAnswerIntoMessages(answer) {
+  const text = String(answer || '').replace(/\s+/g, ' ').trim();
+
+  if (!text) {
+    return [];
+  }
+
+  const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+  const messages = [];
+  let currentMessage = '';
+
+  sentences.forEach((sentence) => {
+    const cleanSentence = sentence.trim();
+    const candidate = [currentMessage, cleanSentence].filter(Boolean).join(' ');
+
+    if (candidate.length <= MAX_MESSAGE_CHARS) {
+      currentMessage = candidate;
+      return;
+    }
+
+    if (currentMessage) {
+      messages.push(currentMessage);
+    }
+
+    if (cleanSentence.length <= MAX_MESSAGE_CHARS) {
+      currentMessage = cleanSentence;
+      return;
+    }
+
+    const chunks = cleanSentence.match(new RegExp(`.{1,${MAX_MESSAGE_CHARS}}(\\s|$)`, 'g')) || [cleanSentence];
+    messages.push(...chunks.map((chunk) => chunk.trim()).filter(Boolean));
+    currentMessage = '';
+  });
+
+  if (currentMessage) {
+    messages.push(currentMessage);
+  }
+
+  return messages;
+}
+
+/**
+ * Programa la entrega secuencial de una respuesta y permite interrumpirla con una nueva pregunta.
+ * @param {object} state Estado interno de la interfaz de Esmi.
+ * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
+ * @param {{answer: string, cta: object | null}} result Respuesta generada por el asistente.
+ * @param {number} sequence Identificador de la pregunta vigente.
+ */
+function scheduleSegmentedReply(state, messagesElement, result, sequence) {
+  const segments = splitAnswerIntoMessages(result.answer);
+
+  segments.forEach((segment, index) => {
+    window.setTimeout(() => {
+      if (state.responseSequence !== sequence) {
+        return;
+      }
+
+      const isLastSegment = index === segments.length - 1;
+      appendMessage(messagesElement, 'bot', segment, isLastSegment ? result.cta : null);
+      playNotificationSound(state);
+    }, REPLY_SEGMENT_DELAY_MS * index);
+  });
 }
 
 /**
@@ -252,7 +311,7 @@ export function createEsmiUi({ assistant }) {
     return esmiUiInstance;
   }
 
-  const state = { hasGreeting: false, isOpen: false, audioContext: null };
+  const state = { hasGreeting: false, isOpen: false, audioContext: null, responseSequence: 0 };
   const root = createElement('div', { className: 'esmi-root' });
   const launcher = createElement('button', {
     className: 'esmi-launcher',
@@ -339,14 +398,20 @@ export function createEsmiUi({ assistant }) {
     open();
     appendMessage(messages, 'user', cleanQuestion);
 
+    state.responseSequence += 1;
+    const currentSequence = state.responseSequence;
     const typingIndicator = appendTypingIndicator(messages);
     const result = await assistant.reply(cleanQuestion);
 
     window.setTimeout(() => {
       typingIndicator.remove();
-      appendMessage(messages, 'bot', result.answer, result.cta);
-      playNotificationSound(state);
-    }, getReplyDelay(result.answer));
+
+      if (state.responseSequence !== currentSequence) {
+        return;
+      }
+
+      scheduleSegmentedReply(state, messages, result, currentSequence);
+    }, REPLY_SEGMENT_DELAY_MS);
   }
 
   restoreHistory(messages, assistant.getHistory(), state);

@@ -46,6 +46,7 @@ function chunkMarkdownDocument(document) {
     .filter(Boolean);
 
   return sections.flatMap((section, sectionIndex) => {
+    const heading = section.match(/^#{1,4}\s+(.+)$/m)?.[1] || '';
     const blocks = section
       .split(/\n{2,}/)
       .map((block) => block.trim())
@@ -56,8 +57,9 @@ function chunkMarkdownDocument(document) {
       filename: document.filename,
       sectionIndex,
       blockIndex,
-      text: block.replace(/\s+/g, ' ').trim(),
-      normalizedText: normalizeText(block),
+      text: `${heading} ${block}`.replace(/\s+/g, ' ').trim(),
+      sourceText: block.replace(/\s+/g, ' ').trim(),
+      normalizedText: normalizeText(`${heading} ${block}`),
     }));
   });
 }
@@ -103,6 +105,35 @@ function getTermScore(normalizedQuestion, chunk) {
   return Math.min(1, matches.length / Math.min(terms.length, 6));
 }
 
+
+/**
+ * Agrega términos equivalentes a preguntas cortas para mejorar clics de menú e intenciones comunes.
+ * @param {string} normalizedQuestion Pregunta normalizada escrita o seleccionada por el usuario.
+ * @returns {string} Pregunta enriquecida con sinónimos operativos locales.
+ */
+function expandQuestionTerms(normalizedQuestion) {
+  const additions = [];
+
+  if (/\b(inscripcion|inscribo|inscribirme|registrarme|registro|iniciar|inicio|empezar|entrar)\b/.test(normalizedQuestion)) {
+    additions.push('proceso acuerdo 286 requisitos documentos candidato');
+  }
+
+  if (/\b(necesito|requerimiento|requerimientos|requisito|requisitos|documento|documentos|papeles)\b/.test(normalizedQuestion)) {
+    additions.push('requisitos formales documentacion obligatoria edad experiencia bachillerato');
+  }
+  return [normalizedQuestion, ...additions].join(' ').trim();
+}
+
+
+/**
+ * Detecta consultas sobre becas o promociones que no tienen un dato oficial confirmado.
+ * @param {string} normalizedQuestion Pregunta normalizada del usuario.
+ * @returns {boolean} Verdadero cuando debe redirigirse sin inferir disponibilidad.
+ */
+function isUnconfirmedScholarshipQuestion(normalizedQuestion) {
+  return /\b(beca|becas|promocion|promociones|apoyo)\b/.test(normalizedQuestion);
+}
+
 /**
  * Identifica archivos prioritarios según la intención sensible o temática de la pregunta.
  * @param {string} normalizedQuestion Pregunta normalizada del usuario.
@@ -113,8 +144,12 @@ function getPreferredFiles(normalizedQuestion) {
     return ['07-costos-y-cuentas.md'];
   }
 
-  if (/\b(requisito|documento|papeles|credito|bachillerato)\b/.test(normalizedQuestion)) {
+  if (/\b(requisito|requerimiento|documento|papeles|credito|bachillerato|necesito)\b/.test(normalizedQuestion)) {
     return ['03-valor-acreditacion-requisitos.md'];
+  }
+
+  if (/\b(inscripcion|inscribo|inscribirme|registrarme|registro|iniciar|inicio|empezar|entrar)\b/.test(normalizedQuestion)) {
+    return ['02-acuerdo-286-proceso.md', '03-valor-acreditacion-requisitos.md', '06-tiempos-validez.md'];
   }
 
   if (/\b(acuerdo 286|sep|dgair|legal|validez|cedula|titulo)\b/.test(normalizedQuestion)) {
@@ -187,7 +222,7 @@ function getOfficialContactDetails(documents) {
  * @param {string} verifiedText Texto final que se debe confirmar contra la fuente Markdown.
  * @returns {boolean} Verdadero cuando el texto se confirma en el archivo fuente.
  */
-function verifySensitiveChunk(chunk, documents, verifiedText = chunk?.text) {
+function verifySensitiveChunk(chunk, documents, verifiedText = chunk?.sourceText) {
   const source = documents.find((document) => document.filename === chunk?.filename);
 
   return Boolean(source && normalizeText(source.content).includes(normalizeText(verifiedText)));
@@ -229,11 +264,11 @@ function getExpandedChunkText(chunk, chunks) {
       && candidate.blockIndex === chunk.blockIndex + 1;
   });
 
-  if (!nextChunk || chunk.text.includes('|') || !nextChunk.text.includes('|')) {
-    return chunk.text;
+  if (!nextChunk || chunk.sourceText.includes('|') || !nextChunk.sourceText.includes('|')) {
+    return chunk.sourceText;
   }
 
-  return `${chunk.text} ${nextChunk.text}`;
+  return `${chunk.sourceText} ${nextChunk.sourceText}`;
 }
 
 /**
@@ -268,6 +303,7 @@ export function createEsmiEngine(documents) {
      */
     ask(question) {
       const normalizedQuestion = normalizeText(question);
+      const expandedQuestion = expandQuestionTerms(normalizedQuestion);
 
       if (isRudeOrProvocative(question)) {
         return {
@@ -280,12 +316,12 @@ export function createEsmiEngine(documents) {
         };
       }
 
-      if (!normalizedQuestion) {
+      if (!normalizedQuestion || isUnconfirmedScholarshipQuestion(normalizedQuestion)) {
         return createFallbackResult(index.documents);
       }
 
-      const preferredFiles = getPreferredFiles(normalizedQuestion);
-      const fuseResults = index.fuse.search(normalizedQuestion).slice(0, 10);
+      const preferredFiles = getPreferredFiles(expandedQuestion);
+      const fuseResults = index.fuse.search(expandedQuestion).slice(0, 10);
       const preferredResults = index.chunks
         .filter((chunk) => preferredFiles.includes(chunk.filename))
         .map((chunk) => ({ item: chunk, score: 0.35 }));
@@ -293,7 +329,7 @@ export function createEsmiEngine(documents) {
       const rankedItems = combinedResults
         .map((result) => {
           const fuseScore = Math.max(0, 1 - result.score);
-          const termScore = getTermScore(normalizedQuestion, result.item);
+          const termScore = getTermScore(expandedQuestion, result.item);
           const fileBonus = preferredFiles.includes(result.item.filename) ? 0.55 : 0;
           const score = Math.min(1, Math.max(fuseScore * 0.62 + termScore * 0.38, termScore) + fileBonus);
 

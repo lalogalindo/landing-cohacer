@@ -2,6 +2,7 @@
 
 const ADVISOR_PATTERN = /\b(asesor|asesora|humano|persona|whatsapp|tel[eé]fono|telefono|llamada|contacto|hablar con alguien|hablar con un asesor)\b/i;
 const GENERIC_INFO_PATTERN = /\b(info|informaci[oó]n|quiero saber|me interesa|dudas|ayuda|orientaci[oó]n)\b/i;
+const TOPIC_PATTERN = /\b(inscripci[oó]n|inscripcion|inscribo|inscribirme|registro|registrarme|iniciar|inicio|empezar|requisito|requisitos|requerimiento|requerimientos|documento|documentos|necesito|costo|costos|cuesta|precio|beca|becas|validez|acuerdo 286|carrera|licenciatura)\b/i;
 
 const CLARIFICATION_QUESTION =
   'Para ayudarte mejor, ¿tu duda es sobre inscripción, costos, requisitos, becas o validez oficial?';
@@ -28,7 +29,9 @@ function isGenericQuestion(question, context) {
   const text = String(question || '').trim();
   const hasStoredInterest = Array.isArray(context.interests) && context.interests.length > 0;
 
-  return text.length < 12 || (GENERIC_INFO_PATTERN.test(text) && !hasStoredInterest);
+  const hasKnownTopic = TOPIC_PATTERN.test(text);
+
+  return (text.length < 12 && !hasKnownTopic) || (GENERIC_INFO_PATTERN.test(text) && !hasStoredInterest && !hasKnownTopic);
 }
 
 /**
