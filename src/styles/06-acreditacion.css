@@ -504,15 +504,6 @@
   }
 }
 
-.acred-cta-image {
-  width: 56px;
-  height: 56px;
-  border: 2px solid rgba(255, 198, 41, 0.28);
-  border-radius: 16px;
-  object-fit: cover;
-  flex-shrink: 0;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
-}
 
 .instituciones-modal-content {
   max-width: 860px;
@@ -585,5 +576,44 @@
 
   .instituciones-locations {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.acred-cta-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.acred-cta-card {
+  width: 100%;
+}
+
+.instituciones-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 4vw, 28px);
+  margin: 0 0 22px;
+}
+
+.instituciones-logo-row img {
+  width: clamp(96px, 28vw, 150px);
+  max-height: 150px;
+  object-fit: contain;
+}
+
+.instituciones-logo-row span {
+  color: var(--gold);
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 900;
+}
+
+@media (min-width: 860px) {
+  .acred-cta-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .acred-cta-card--full {
+    grid-column: 1 / -1;
   }
 }

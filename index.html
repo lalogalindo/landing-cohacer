@@ -296,25 +296,6 @@
       <div class="container acred-cta-inner">
         <div class="acred-cta-card">
           <div class="acred-cta-copy">
-            <span class="acred-seal-icon" aria-hidden="true">🏅</span>
-            <div>
-              <p class="acred-cta-label">Centro Evaluador Acreditado · CONOCER</p>
-              <p class="acred-cta-sub">Nuestras certificaciones por competencias son oficiales y verificables.</p>
-            </div>
-          </div>
-
-          <button class="btn acred-cta-btn" id="open-acred-modal" type="button" aria-haspopup="dialog" aria-controls="acred-modal">
-            Ver acreditación oficial
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
-              <polyline points="15 3 21 3 21 9" />
-              <line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
-          </button>
-        </div>
-
-        <div class="acred-cta-card">
-          <div class="acred-cta-copy">
             <span class="acred-seal-icon" aria-hidden="true">📍</span>
             <div>
               <p class="acred-cta-label">Sede de Aplicación Autorizada</p>
@@ -329,7 +310,7 @@
 
         <div class="acred-cta-card">
           <div class="acred-cta-copy">
-            <img class="acred-cta-image" src="https://picsum.photos/1600/900" alt="Instituciones Hermanas COHACER e ICEM" loading="lazy" />
+            <span class="acred-seal-icon" aria-hidden="true">🤝</span>
             <div>
               <p class="acred-cta-label">Instituciones Hermanas</p>
               <p class="acred-cta-sub">COHACER en alianza con ICEM ofrece programas 100% en línea con RVOE propio.</p>
@@ -338,6 +319,25 @@
 
           <button class="btn acred-cta-btn" id="open-instituciones-modal" type="button" aria-haspopup="dialog" aria-controls="instituciones-modal">
             Ver programas
+          </button>
+        </div>
+
+        <div class="acred-cta-card acred-cta-card--full">
+          <div class="acred-cta-copy">
+            <span class="acred-seal-icon" aria-hidden="true">🏅</span>
+            <div>
+              <p class="acred-cta-label">Centro Evaluador Acreditado · CONOCER</p>
+              <p class="acred-cta-sub">Nuestras certificaciones por competencias son oficiales y verificables.</p>
+            </div>
+          </div>
+
+          <button class="btn acred-cta-btn" id="open-acred-modal" type="button" aria-haspopup="dialog" aria-controls="acred-modal">
+            Ver acreditación oficial
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
           </button>
         </div>
       </div>
@@ -481,6 +481,11 @@
       <div class="acred-modal-content instituciones-modal-content">
         <button class="acred-close" id="close-instituciones-modal" type="button" aria-label="Cerrar información de Instituciones Hermanas">✕</button>
         <article class="titulacion-doc instituciones-doc">
+          <div class="instituciones-logo-row" aria-label="Logos de COHACER e ICEM">
+            <img src="/assets/logoHome.png" alt="COHACER" loading="lazy" />
+            <span aria-hidden="true">+</span>
+            <img src="/assets/icem-logo.svg" alt="Colegio ICEM" loading="lazy" />
+          </div>
           <p class="titulacion-eyebrow">COHACER + ICEM</p>
           <h2 id="instituciones-modal-title">Instituciones Hermanas COHACER + ICEM</h2>
           <p>COHACER en alianza con su universidad hermana ICEM ofrecen la Maestría en Dirección de Negocios con RVOE propio 20221164, en un proceso 100% en línea, con 3 horas sabatinas.</p>
