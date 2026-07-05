@@ -1,17 +1,17 @@
 // src/esmi/esmi-ui.js
 
 const INITIAL_GREETING =
-  'Hola, soy Esmi. Puedo ayudarte con inscripción, costos, requisitos, becas, validez oficial y contacto con un asesor.';
+  'Hola, soy Esmi. Puedo ayudarte con inscripción, costos, requisitos, carreras, validez oficial y contacto con un asesor.';
 
 const FREQUENT_QUESTIONS = [
   '¿Cómo me inscribo?',
   '¿Cuánto cuesta?',
   '¿Qué necesito para empezar?',
-  '¿Hay becas disponibles?',
+  '¿Tiene validez oficial?',
 ];
 
-const MIN_REPLY_DELAY_MS = 750;
-const MAX_REPLY_DELAY_MS = 1400;
+const REPLY_SEGMENT_DELAY_MS = 1400;
+const MAX_MESSAGE_CHARS = 250;
 
 let esmiUiInstance = null;
 
@@ -89,13 +89,97 @@ function createCtaElement(cta) {
 }
 
 /**
- * Calcula una pausa breve antes de responder para que el chat se sienta conversacional.
- * @param {string} answer Texto de respuesta que Esmi está por mostrar.
- * @returns {number} Duración de espera en milisegundos dentro del rango permitido.
+ * Divide un texto largo en mensajes cortos sin cortar palabras ni oraciones.
+ * @param {string} answer Texto completo generado por el motor local.
+ * @returns {Array<string>} Segmentos listos para mostrarse uno por uno.
  */
-function getReplyDelay(answer) {
-  const readingDelay = String(answer || '').length * 9;
-  return Math.min(MAX_REPLY_DELAY_MS, Math.max(MIN_REPLY_DELAY_MS, readingDelay));
+function splitAnswerIntoMessages(answer) {
+  const text = String(answer || '').replace(/\s+/g, ' ').trim();
+
+  if (!text) {
+    return [];
+  }
+
+  const sentences = text.match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [text];
+  const messages = [];
+  let currentMessage = '';
+
+  sentences.forEach((sentence) => {
+    const cleanSentence = sentence.trim();
+    const candidate = [currentMessage, cleanSentence].filter(Boolean).join(' ');
+
+    if (candidate.length <= MAX_MESSAGE_CHARS || !currentMessage) {
+      currentMessage = candidate;
+      return;
+    }
+
+    messages.push(currentMessage);
+    currentMessage = cleanSentence;
+  });
+
+  if (currentMessage) {
+    messages.push(currentMessage);
+  }
+
+  return messages;
+}
+
+/**
+ * Muestra un indicador de escritura por un intervalo fijo antes de cada segmento pendiente.
+ * @param {object} state Estado interno de la interfaz de Esmi.
+ * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
+ * @param {string} segment Texto del segmento que se mostrará después de la espera.
+ * @param {{label: string, href: string} | null} cta CTA que sólo debe acompañar el último segmento.
+ * @param {number} sequence Identificador de la pregunta vigente.
+ * @param {function(): void} onComplete Función que continúa con el siguiente segmento.
+ */
+function showTypingThenMessage(state, messagesElement, segment, cta, sequence, onComplete) {
+  const typingIndicator = appendTypingIndicator(messagesElement);
+
+  window.setTimeout(() => {
+    typingIndicator.remove();
+
+    if (state.responseSequence !== sequence) {
+      return;
+    }
+
+    appendMessage(messagesElement, 'bot', segment, cta);
+    playNotificationSound(state);
+    onComplete();
+  }, REPLY_SEGMENT_DELAY_MS);
+}
+
+/**
+ * Programa la entrega secuencial de una respuesta y permite interrumpirla con una nueva pregunta.
+ * @param {object} state Estado interno de la interfaz de Esmi.
+ * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
+ * @param {{answer: string, cta: object | null}} result Respuesta generada por el asistente.
+ * @param {number} sequence Identificador de la pregunta vigente.
+ */
+function scheduleSegmentedReply(state, messagesElement, result, sequence) {
+  const segments = splitAnswerIntoMessages(result.answer);
+
+  /**
+   * Entrega el siguiente segmento pendiente respetando interrupciones del usuario.
+   * @param {number} index Posición del segmento que debe enviarse.
+   */
+  function deliverSegment(index) {
+    if (state.responseSequence !== sequence || index >= segments.length) {
+      return;
+    }
+
+    const isLastSegment = index === segments.length - 1;
+    showTypingThenMessage(
+      state,
+      messagesElement,
+      segments[index],
+      isLastSegment ? result.cta : null,
+      sequence,
+      () => deliverSegment(index + 1),
+    );
+  }
+
+  deliverSegment(0);
 }
 
 /**
@@ -226,9 +310,9 @@ function ensureGreeting(messagesElement, state) {
 }
 
 /**
- * Restaura mensajes persistidos por el orquestador sin duplicar el saludo inicial.
+ * Restaura mensajes temporales del orquestador sin duplicar el saludo inicial.
  * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
- * @param {Array<object>} history Historial persistente de la conversación.
+ * @param {Array<object>} history Historial temporal de la conversación.
  * @param {object} state Estado interno de la interfaz de Esmi.
  */
 function restoreHistory(messagesElement, history, state) {
@@ -244,7 +328,7 @@ function restoreHistory(messagesElement, history, state) {
 
 /**
  * Inicializa la interfaz flotante de Esmi y expone métodos para abrirla o enviar preguntas.
- * @param {{assistant: {reply: function(string): object, getHistory: function(): Array<object>}}} options Dependencias necesarias para responder preguntas.
+ * @param {{assistant: {reply: function(string): object | Promise<object>, getHistory: function(): Array<object>}}} options Dependencias necesarias para responder preguntas.
  * @returns {{open: function(): void, close: function(): void, ask: function(string): void}} API pública del chat flotante.
  */
 export function createEsmiUi({ assistant }) {
@@ -252,7 +336,7 @@ export function createEsmiUi({ assistant }) {
     return esmiUiInstance;
   }
 
-  const state = { hasGreeting: false, isOpen: false, audioContext: null };
+  const state = { hasGreeting: false, isOpen: false, audioContext: null, responseSequence: 0 };
   const root = createElement('div', { className: 'esmi-root' });
   const launcher = createElement('button', {
     className: 'esmi-launcher',
@@ -329,7 +413,7 @@ export function createEsmiUi({ assistant }) {
    * Envía una pregunta al motor local y renderiza la respuesta segura de Esmi.
    * @param {string} question Pregunta escrita por el usuario o seleccionada desde un chip.
    */
-  function ask(question) {
+  async function ask(question) {
     const cleanQuestion = String(question || '').trim();
 
     if (!cleanQuestion) {
@@ -339,14 +423,15 @@ export function createEsmiUi({ assistant }) {
     open();
     appendMessage(messages, 'user', cleanQuestion);
 
-    const result = assistant.reply(cleanQuestion);
-    const typingIndicator = appendTypingIndicator(messages);
+    state.responseSequence += 1;
+    const currentSequence = state.responseSequence;
+    const result = await assistant.reply(cleanQuestion);
 
-    window.setTimeout(() => {
-      typingIndicator.remove();
-      appendMessage(messages, 'bot', result.answer, result.cta);
-      playNotificationSound(state);
-    }, getReplyDelay(result.answer));
+    if (state.responseSequence !== currentSequence) {
+      return;
+    }
+
+    scheduleSegmentedReply(state, messages, result, currentSequence);
   }
 
   restoreHistory(messages, assistant.getHistory(), state);

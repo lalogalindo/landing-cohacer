@@ -1,156 +1,53 @@
 // src/esmi/esmi-knowledge.js
 
-export const ESMI_KNOWLEDGE = [
-  {
-    id: 'inscripcion',
-    title: 'Inscripción',
-    keywords: [
-      'inscribirme',
-      'inscripción',
-      'inscripcion',
-      'registrarme',
-      'empezar',
-      'iniciar',
-      'entrar',
-      'proceso',
-      'cómo inicio',
-      'como inicio',
-      'quiero entrar',
-      'cómo me apunto',
-      'como me apunto',
-    ],
-    equivalentQuestions: [
-      '¿Cómo me inscribo?',
-      'quiero iniciar mi inscripción',
-      'cómo puedo entrar a cohacer',
-      'qué pasos debo seguir para inscribirme',
-    ],
-    answer:
-      'Para iniciar tu proceso, puedes contactar a una asesora para revisar tu caso, validar tus documentos y explicarte los pasos de inscripción.',
-  },
-  {
-    id: 'costos',
-    title: 'Costos',
-    keywords: [
-      'costo',
-      'costos',
-      'precio',
-      'cuánto cuesta',
-      'cuanto cuesta',
-      'pago',
-      'mensualidad',
-      'colegiatura',
-      'inversión',
-      'inversion',
-      'pagar',
-      'financiamiento',
-      'pagos',
-    ],
-    equivalentQuestions: [
-      '¿Cuánto cuesta?',
-      'cuál es el precio',
-      'qué mensualidad se paga',
-      'quiero saber la inversión',
-    ],
-    answer:
-      'Los costos pueden variar según el programa y tu situación. Lo ideal es que una asesora revise tu caso para darte información clara sobre inversión, formas de pago y opciones disponibles.',
-  },
-  {
-    id: 'requisitos',
-    title: 'Requisitos',
-    keywords: [
-      'requisitos',
-      'documentos',
-      'papeles',
-      'qué necesito',
-      'que necesito',
-      'empezar',
-      'documentación',
-      'documentacion',
-      'certificado',
-      'experiencia laboral',
-      'trabajo',
-      'años trabajando',
-    ],
-    equivalentQuestions: [
-      '¿Qué necesito para empezar?',
-      'qué documentos necesito',
-      'cuáles son los requisitos',
-      'necesito experiencia laboral',
-    ],
-    answer:
-      'Para saber qué necesitas, es importante revisar tu caso, el programa que te interesa y tu experiencia. Una asesora puede ayudarte a validar documentos y confirmar si cumples con los requisitos.',
-  },
-  {
-    id: 'becas',
-    title: 'Becas',
-    keywords: [
-      'beca',
-      'becas',
-      'descuento',
-      'descuentos',
-      'apoyo',
-      'promoción',
-      'promocion',
-      'ayuda económica',
-      'ayuda economica',
-      'facilidad de pago',
-    ],
-    equivalentQuestions: [
-      '¿Hay becas disponibles?',
-      'tienen descuentos',
-      'hay apoyo económico',
-      'quiero una promoción',
-    ],
-    answer:
-      'Puede haber apoyos, promociones o facilidades según el programa y la disponibilidad. Te recomiendo consultar con una asesora para revisar las opciones vigentes.',
-  },
-  {
-    id: 'validez-oficial',
-    title: 'Validez oficial',
-    keywords: [
-      'validez',
-      'oficial',
-      'sep',
-      'rvoe',
-      'título',
-      'titulo',
-      'certificado',
-      'legal',
-      'reconocido',
-      'reconocimiento',
-      'válido',
-      'valido',
-    ],
-    equivalentQuestions: [
-      'tiene validez sep',
-      'el título es válido',
-      'cuenta con rvoe',
-      'está reconocido oficialmente',
-    ],
-    answer:
-      'COHACER puede orientarte sobre la validez del proceso y la documentación correspondiente. Para darte una respuesta exacta, una asesora debe revisar el programa que te interesa.',
-  },
-  {
-    id: 'contacto-asesor',
-    title: 'Contacto con asesor',
-    keywords: [
-      'asesor',
-      'asesora',
-      'humano',
-      'hablar',
-      'llamada',
-      'contacto',
-      'whatsapp',
-      'teléfono',
-      'telefono',
-      'quiero hablar con alguien',
-    ],
-    equivalentQuestions: [
-      'quiero hablar con un asesor',
-      'me puede llamar alguien',
-    ],
-    answer:
-      'Claro. Puedes continuar con un asesor de COHACER para recibir atención personalizada y resolver dudas específicas sobre tu caso.',
-  },
+const KNOWLEDGE_BASE_PATH = '/esmi-knowledge/';
+
+export const ESMI_KNOWLEDGE_FILES = [
+  '00-README.md',
+  '01-institucional-contacto.md',
+  '02-acuerdo-286-proceso.md',
+  '03-valor-acreditacion-requisitos.md',
+  '04-oferta-perfiles-licenciaturas.md',
+  '05-temarios-por-licenciatura.md',
+  '06-tiempos-validez.md',
+  '07-costos-y-cuentas.md',
+  '08-argumentarios-garantia-datos-duros.md',
+  '09-faq-acuerdo-286.md',
+  '10-icem-ejecutivas-posgrado.md',
+  '11-esmi-identidad.md',
+  '12-politicas-internas-esmi.md',
+  '13-casos-uso-propuestos-esmi.md',
 ];
+
+let cachedKnowledge = null;
+
+/**
+ * Lee un archivo Markdown público de la base oficial de ESMI.
+ * @param {string} filename Nombre del archivo Markdown que se debe cargar.
+ * @returns {Promise<{filename: string, content: string}>} Documento cargado con su contenido original.
+ */
+async function fetchKnowledgeFile(filename) {
+  const response = await fetch(`${KNOWLEDGE_BASE_PATH}${filename}`);
+
+  if (!response.ok) {
+    throw new Error(`No se pudo cargar ${filename}`);
+  }
+
+  return {
+    filename,
+    content: await response.text(),
+  };
+}
+
+/**
+ * Carga una sola vez los archivos Markdown oficiales y conserva una caché en memoria.
+ * @returns {Promise<Array<{filename: string, content: string}>>} Documentos Markdown disponibles para ESMI.
+ */
+export async function loadEsmiKnowledge() {
+  if (cachedKnowledge) {
+    return cachedKnowledge;
+  }
+
+  cachedKnowledge = await Promise.all(ESMI_KNOWLEDGE_FILES.map(fetchKnowledgeFile));
+  return cachedKnowledge;
+}

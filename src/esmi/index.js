@@ -1,7 +1,7 @@
 // src/esmi/index.js
 
 import { createEsmiEngine } from './esmi-engine.js';
-import { ESMI_KNOWLEDGE } from './esmi-knowledge.js';
+import { loadEsmiKnowledge } from './esmi-knowledge.js';
 import { createEsmiOrchestrator } from './esmi-orchestrator.js';
 import { resolveActiveAdvisor } from './esmi-whatsapp.js';
 import { createEsmiUi } from './esmi-ui.js';
@@ -62,9 +62,9 @@ function bindOpenTriggers(ui) {
 
 /**
  * Inicializa Esmi una sola vez, crea motor local, orquestador, monta UI y conecta la sección existente.
- * @returns {{engine: object, advisor: object, assistant: object, ui: object} | null} Instancia del asesor o null si no hay document disponible.
+ * @returns {Promise<{engine: object, advisor: object, assistant: object, ui: object} | null>} Instancia del asesor o null si no hay document disponible.
  */
-export function initEsmiAssistant() {
+export async function initEsmiAssistant() {
   if (esmiAssistantInstance) {
     return esmiAssistantInstance;
   }
@@ -73,7 +73,8 @@ export function initEsmiAssistant() {
     return null;
   }
 
-  const engine = createEsmiEngine(ESMI_KNOWLEDGE);
+  const knowledge = await loadEsmiKnowledge();
+  const engine = createEsmiEngine(knowledge);
   const advisor = resolveActiveAdvisor();
   const assistant = createEsmiOrchestrator({ engine, advisor });
   const ui = createEsmiUi({ assistant });
