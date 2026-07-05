@@ -22,6 +22,10 @@ export function initAcreditacionModal(options = {}) {
   const openTitulacionBtn = $('#open-titulacion-modal');
   const closeTitulacionBtn = $('#close-titulacion-modal');
   const titulacionBackdrop = $('.titulacion-modal-backdrop');
+  const institucionesModal = $('#instituciones-modal');
+  const openInstitucionesBtn = $('#open-instituciones-modal');
+  const closeInstitucionesBtn = $('#close-instituciones-modal');
+  const institucionesBackdrop = $('.instituciones-modal-backdrop');
 
   /**
    * openAcredModal
@@ -49,16 +53,48 @@ export function initAcreditacionModal(options = {}) {
     openAcredBtn?.focus();
   }
 
+  /**
+   * Abre la modal de titulación y bloquea el scroll del documento.
+   *
+   * @returns {void}
+   */
   function openTitulacionModal() {
     titulacionModal?.classList.add('is-open');
     setBodyLocked(true);
     closeTitulacionBtn?.focus();
   }
 
+  /**
+   * Cierra la modal de titulación y devuelve el foco al botón que la abrió.
+   *
+   * @returns {void}
+   */
   function closeTitulacionModal() {
     titulacionModal?.classList.remove('is-open');
     setBodyLocked(false);
     openTitulacionBtn?.focus();
+  }
+
+  /**
+   * Abre la modal de Instituciones Hermanas y bloquea el scroll del documento.
+   *
+   * @returns {void}
+   */
+  function openInstitucionesModal() {
+    institucionesModal?.classList.add('is-open');
+    setBodyLocked(true);
+    closeInstitucionesBtn?.focus();
+  }
+
+  /**
+   * Cierra la modal de Instituciones Hermanas y devuelve el foco al botón que la abrió.
+   *
+   * @returns {void}
+   */
+  function closeInstitucionesModal() {
+    institucionesModal?.classList.remove('is-open');
+    setBodyLocked(false);
+    openInstitucionesBtn?.focus();
   }
 
   /**
@@ -89,11 +125,15 @@ export function initAcreditacionModal(options = {}) {
   openTitulacionBtn?.addEventListener('click', openTitulacionModal);
   closeTitulacionBtn?.addEventListener('click', closeTitulacionModal);
   titulacionBackdrop?.addEventListener('click', closeTitulacionModal);
+  openInstitucionesBtn?.addEventListener('click', openInstitucionesModal);
+  closeInstitucionesBtn?.addEventListener('click', closeInstitucionesModal);
+  institucionesBackdrop?.addEventListener('click', closeInstitucionesModal);
   centroEvaluadorNavLink?.addEventListener('click', openCentroEvaluadorFromNav);
 
   window.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
     if (acredModal?.classList.contains('is-open')) closeAcredModal();
     if (titulacionModal?.classList.contains('is-open')) closeTitulacionModal();
+    if (institucionesModal?.classList.contains('is-open')) closeInstitucionesModal();
   });
 }

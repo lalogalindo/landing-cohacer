@@ -503,3 +503,117 @@
     flex-direction: column;
   }
 }
+
+
+.instituciones-modal-content {
+  max-width: 860px;
+}
+
+.instituciones-doc h4 {
+  margin: 0 0 6px;
+  color: var(--royal);
+  font-size: 0.95rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.instituciones-program-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.instituciones-program-list li {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(21, 29, 51, 0.08);
+}
+
+.instituciones-program-list li::marker {
+  content: "";
+}
+
+.instituciones-program-list strong {
+  color: var(--royal);
+  font-size: 0.88rem;
+}
+
+.instituciones-highlight {
+  margin: 22px 0 4px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 198, 41, 0.18);
+  color: var(--navy) !important;
+  font-weight: 900;
+  text-align: center;
+}
+
+.instituciones-locations {
+  display: grid;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.instituciones-locations > div {
+  padding: 16px;
+  border: 1px solid rgba(21, 29, 51, 0.08);
+  border-radius: 16px;
+  background: rgba(21, 29, 51, 0.04);
+}
+
+.instituciones-locations p {
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .instituciones-program-list li {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 18px;
+  }
+
+  .instituciones-locations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.acred-cta-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.acred-cta-card {
+  width: 100%;
+}
+
+.instituciones-logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 4vw, 28px);
+  margin: 0 0 22px;
+}
+
+.instituciones-logo-row img {
+  width: clamp(96px, 28vw, 150px);
+  max-height: 150px;
+  object-fit: contain;
+}
+
+.instituciones-logo-row span {
+  color: var(--gold);
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 900;
+}
+
+@media (min-width: 860px) {
+  .acred-cta-inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .acred-cta-card--full {
+    grid-column: 1 / -1;
+  }
+}

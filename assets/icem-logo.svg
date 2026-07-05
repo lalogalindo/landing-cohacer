@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" role="img" aria-labelledby="title desc">
+  <title id="title">Colegio ICEM</title>
+  <desc id="desc">Logotipo estilizado de Colegio ICEM para Instituciones Hermanas.</desc>
+  <rect width="420" height="420" fill="none"/>
+  <ellipse cx="210" cy="210" rx="155" ry="185" fill="#050505" stroke="#f3d869" stroke-width="10"/>
+  <path d="M90 252 205 82l128 171H90Z" fill="#873f16"/>
+  <path d="M72 244 118 170l36 59-54 15H72Z" fill="#873f16"/>
+  <circle cx="300" cy="96" r="22" fill="#f2dd18"/>
+  <path d="M210 82v44M191 104h38" stroke="#f8e9aa" stroke-width="5" stroke-linecap="round" opacity=".75"/>
+  <text x="210" y="300" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="45" font-weight="700" fill="#873f16">COLEGIO</text>
+  <text x="210" y="356" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="76" font-weight="900" fill="#873f16">ICEM</text>
+  <path id="arc" d="M77 207a133 165 0 0 1 266 0" fill="none"/>
+  <text font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#292724" letter-spacing="2">
+    <textPath href="#arc" startOffset="50%" text-anchor="middle">POR EL SENDERO DE LA SUPERACIÓN</textPath>
+  </text>
+</svg>
