@@ -138,6 +138,47 @@ function isUnconfirmedScholarshipQuestion(normalizedQuestion) {
   return /\b(beca|becas|promocion|promociones|apoyo)\b/.test(normalizedQuestion);
 }
 
+
+/**
+ * Clasifica preguntas financieras para separar costos de datos bancarios.
+ * @param {string} normalizedQuestion Pregunta normalizada y enriquecida.
+ * @returns {'costs' | 'banking' | ''} Intención financiera detectada.
+ */
+function getFinancialIntent(normalizedQuestion) {
+  if (/\b(clabe|cuenta|rfc|banco|banca|transferencia|deposito|datos bancarios)\b/.test(normalizedQuestion)
+    || /\b(datos|donde|dónde|adonde|a donde|donde puedo|como|cómo)\b.*\b(pagar|pago|pagos)\b/.test(normalizedQuestion)) {
+    return 'banking';
+  }
+
+  if (/\b(costo|costos|cuesta|precio|mensualidad|plan|planes|inversion|inversión)\b/.test(normalizedQuestion)) {
+    return 'costs';
+  }
+
+  return '';
+}
+
+/**
+ * Revisa si un fragmento corresponde a la intención financiera detectada.
+ * @param {'costs' | 'banking' | ''} financialIntent Intención financiera actual.
+ * @param {object} chunk Fragmento indexado de la base Markdown.
+ * @returns {boolean} Verdadero cuando el fragmento es compatible o no hay intención financiera.
+ */
+function matchesFinancialIntent(financialIntent, chunk) {
+  if (!financialIntent) {
+    return true;
+  }
+
+  if (chunk.filename !== '07-costos-y-cuentas.md') {
+    return false;
+  }
+
+  if (financialIntent === 'banking') {
+    return /\b(datos bancarios|cuenta institucional|clabe|rfc|bbva|beneficiario)\b/.test(chunk.normalizedText);
+  }
+
+  return /\b(costos y planes|plan 1|plan 2|plan 3|pago inicial|pago unico|inversion financiera)\b/.test(chunk.normalizedText);
+}
+
 /**
  * Identifica archivos prioritarios según la intención sensible o temática de la pregunta.
  * @param {string} normalizedQuestion Pregunta normalizada del usuario.
@@ -378,11 +419,14 @@ export function createEsmiEngine(documents) {
       }
 
       const preferredFiles = getPreferredFiles(expandedQuestion);
+      const financialIntent = getFinancialIntent(expandedQuestion);
       const fuseResults = index.fuse.search(expandedQuestion).slice(0, 10);
       const preferredResults = index.chunks
-        .filter((chunk) => preferredFiles.includes(chunk.filename))
+        .filter((chunk) => preferredFiles.includes(chunk.filename) && matchesFinancialIntent(financialIntent, chunk))
         .map((chunk) => ({ item: chunk, score: 0.35 }));
-      const combinedResults = [...fuseResults, ...preferredResults];
+      const combinedResults = [...fuseResults, ...preferredResults].filter((result) => {
+        return matchesFinancialIntent(financialIntent, result.item);
+      });
       const rankedItems = combinedResults
         .map((result) => {
           const fuseScore = Math.max(0, 1 - result.score);
