@@ -321,6 +321,7 @@ function scheduleIdleFollowUp(state, messagesElement, chipsElement, sequence) {
 
     appendMessage(messagesElement, 'bot', IDLE_FOLLOW_UP_MESSAGE);
     showChips(chipsElement);
+    scrollMessagesToBottom(messagesElement);
     state.idleTimer = null;
   }, IDLE_FOLLOW_UP_DELAY_MS);
 }

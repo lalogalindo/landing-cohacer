@@ -48,18 +48,47 @@ function getClarificationQuestion(context) {
 }
 
 /**
- * Revisa si hay datos mínimos para generar un CTA de WhatsApp con contexto útil.
+ * Obtiene los datos faltantes antes de preparar el CTA de WhatsApp.
  * @param {object} context Contexto conversacional acumulado.
- * @returns {boolean} Verdadero si hay al menos un interés o dato personal relevante.
+ * @returns {Array<string>} Etiquetas de datos que todavía necesita Esmi.
  */
-function hasWhatsappContext(context) {
-  return Boolean(
-    context.workArea
-      || context.experienceYears
-      || context.name
-      || context.phone
-      || (Array.isArray(context.interests) && context.interests.length),
-  );
+function getMissingWhatsappFields(context) {
+  const missingFields = [];
+
+  if (!context.name) missingFields.push('nombre');
+  if (!context.phone) missingFields.push('teléfono');
+  if (!context.workArea) missingFields.push('área laboral');
+  if (!context.experienceYears) missingFields.push('años de experiencia');
+
+  if (!Array.isArray(context.interests) || !context.interests.length) {
+    missingFields.push('tema de interés');
+  }
+
+  return missingFields;
+}
+
+/**
+ * Construye una pregunta breve para recabar datos antes de abrir WhatsApp.
+ * @param {object} context Contexto conversacional acumulado.
+ * @returns {string} Mensaje de solicitud de datos faltantes.
+ */
+function buildWhatsappIntakeQuestion(context) {
+  const missingFields = getMissingWhatsappFields(context);
+
+  return [
+    'Antes de pasarte a WhatsApp, ayúdame con estos datos para que el asesor reciba tu caso completo:',
+    missingFields.join(', '),
+    'Puedes responderlos en un solo mensaje.',
+  ].join(' ');
+}
+
+/**
+ * Revisa si el contexto ya tiene los datos mínimos para generar un CTA útil de WhatsApp.
+ * @param {object} context Contexto conversacional acumulado.
+ * @returns {boolean} Verdadero cuando no falta información para el resumen de WhatsApp.
+ */
+function hasCompleteWhatsappContext(context) {
+  return getMissingWhatsappFields(context).length === 0;
 }
 
 /**
@@ -72,15 +101,27 @@ function hasWhatsappContext(context) {
  * @returns {object} Decisión de flujo para responder, aclarar o enviar a WhatsApp.
  */
 export function decideEsmiFlow({ question, context, searchResult, advisor }) {
-  if (isAdvisorRequest(question)) {
-    if (hasWhatsappContext(context) || searchResult.confidence === 'high') {
+  if (context.pendingClarification === 'whatsapp-intake') {
+    if (hasCompleteWhatsappContext(context)) {
       return { type: 'whatsapp' };
     }
 
     return {
       type: 'clarify',
-      pendingClarification: 'advisor',
-      question: ADVISOR_CLARIFICATION_QUESTION,
+      pendingClarification: 'whatsapp-intake',
+      question: buildWhatsappIntakeQuestion(context),
+    };
+  }
+
+  if (isAdvisorRequest(question)) {
+    if (hasCompleteWhatsappContext(context)) {
+      return { type: 'whatsapp' };
+    }
+
+    return {
+      type: 'clarify',
+      pendingClarification: 'whatsapp-intake',
+      question: buildWhatsappIntakeQuestion(context),
     };
   }
 
@@ -97,6 +138,14 @@ export function decideEsmiFlow({ question, context, searchResult, advisor }) {
   }
 
   if (!searchResult.matched || searchResult.confidence === 'low') {
+    if (!hasCompleteWhatsappContext(context)) {
+      return {
+        type: 'clarify',
+        pendingClarification: 'whatsapp-intake',
+        question: buildWhatsappIntakeQuestion(context),
+      };
+    }
+
     return {
       type: 'whatsapp',
       reason: advisor?.hasAdvisor ? 'advisorFallback' : 'defaultFallback',
