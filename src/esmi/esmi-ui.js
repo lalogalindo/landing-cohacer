@@ -138,15 +138,14 @@ function splitAnswerIntoMessages(answer) {
  * @param {function(): void} onComplete Función que continúa con el siguiente segmento.
  */
 function showTypingThenMessage(state, messagesElement, segment, cta, sequence, onComplete) {
-  const typingIndicator = appendTypingIndicator(messagesElement);
+  showTypingIndicator(state, messagesElement, sequence);
 
   window.setTimeout(() => {
-    typingIndicator.remove();
-
-    if (state.responseSequence !== sequence) {
+    if (state.responseSequence !== sequence || state.typingSequence !== sequence) {
       return;
     }
 
+    hideTypingIndicator(state);
     appendMessage(messagesElement, 'bot', segment, cta);
     playNotificationSound(state);
     onComplete();
@@ -212,17 +211,25 @@ function createTypingIndicator() {
 }
 
 /**
- * Muestra el indicador de tres puntos y mantiene visible la parte más reciente del chat.
+ * Muestra la única instancia del indicador de escritura y la mueve al final del chat.
+ * @param {object} state Estado interno de la interfaz de Esmi.
  * @param {HTMLElement} messagesElement Contenedor de mensajes del panel.
- * @returns {HTMLDivElement} Indicador temporal para retirarlo cuando llegue la respuesta.
+ * @param {number} sequence Identificador de la respuesta vigente.
  */
-function appendTypingIndicator(messagesElement) {
-  const typingIndicator = createTypingIndicator();
-
-  messagesElement.append(typingIndicator);
+function showTypingIndicator(state, messagesElement, sequence) {
+  state.typingSequence = sequence;
+  state.typingIndicator.hidden = false;
+  messagesElement.append(state.typingIndicator);
   scrollMessagesToBottom(messagesElement);
+}
 
-  return typingIndicator;
+/**
+ * Oculta la instancia persistente del indicador de escritura.
+ * @param {object} state Estado interno de la interfaz de Esmi.
+ */
+function hideTypingIndicator(state) {
+  state.typingIndicator.hidden = true;
+  state.typingSequence = null;
 }
 
 /**
@@ -395,7 +402,15 @@ export function createEsmiUi({ assistant }) {
     return esmiUiInstance;
   }
 
-  const state = { hasGreeting: false, isOpen: false, audioContext: null, responseSequence: 0, idleTimer: null };
+  const state = {
+    hasGreeting: false,
+    isOpen: false,
+    audioContext: null,
+    responseSequence: 0,
+    idleTimer: null,
+    typingIndicator: createTypingIndicator(),
+    typingSequence: null,
+  };
   const root = createElement('div', { className: 'esmi-root' });
   const launcher = createElement('button', {
     className: 'esmi-launcher',
@@ -486,6 +501,7 @@ export function createEsmiUi({ assistant }) {
     clearIdleFollowUp(state);
 
     state.responseSequence += 1;
+    hideTypingIndicator(state);
     const currentSequence = state.responseSequence;
     const result = await assistant.reply(cleanQuestion);
 
