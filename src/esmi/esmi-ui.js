@@ -244,7 +244,7 @@ function restoreHistory(messagesElement, history, state) {
 
 /**
  * Inicializa la interfaz flotante de Esmi y expone métodos para abrirla o enviar preguntas.
- * @param {{assistant: {reply: function(string): object, getHistory: function(): Array<object>}}} options Dependencias necesarias para responder preguntas.
+ * @param {{assistant: {reply: function(string): object | Promise<object>, getHistory: function(): Array<object>}}} options Dependencias necesarias para responder preguntas.
  * @returns {{open: function(): void, close: function(): void, ask: function(string): void}} API pública del chat flotante.
  */
 export function createEsmiUi({ assistant }) {
@@ -329,7 +329,7 @@ export function createEsmiUi({ assistant }) {
    * Envía una pregunta al motor local y renderiza la respuesta segura de Esmi.
    * @param {string} question Pregunta escrita por el usuario o seleccionada desde un chip.
    */
-  function ask(question) {
+  async function ask(question) {
     const cleanQuestion = String(question || '').trim();
 
     if (!cleanQuestion) {
@@ -339,8 +339,8 @@ export function createEsmiUi({ assistant }) {
     open();
     appendMessage(messages, 'user', cleanQuestion);
 
-    const result = assistant.reply(cleanQuestion);
     const typingIndicator = appendTypingIndicator(messages);
+    const result = await assistant.reply(cleanQuestion);
 
     window.setTimeout(() => {
       typingIndicator.remove();
