@@ -95,7 +95,10 @@ function createCtaElement(cta) {
  * @returns {Array<string>} Segmentos listos para mostrarse uno por uno.
  */
 function splitAnswerIntoMessages(answer) {
-  const text = String(answer || '').replace(/\s+/g, ' ').trim();
+  const text = String(answer || '')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 
   if (!text) {
     return [];
@@ -506,6 +509,10 @@ export function createEsmiUi({ assistant }) {
 
   launcher.addEventListener('click', open);
   closeButton.addEventListener('click', close);
+  input.addEventListener('input', () => {
+    clearIdleFollowUp(state);
+  });
+
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     ask(input.value);

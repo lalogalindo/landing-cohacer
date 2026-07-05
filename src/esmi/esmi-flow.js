@@ -75,11 +75,13 @@ function getMissingWhatsappFields(context) {
 function buildWhatsappIntakeQuestion(context) {
   const missingFields = getMissingWhatsappFields(context);
 
+  const formattedFields = missingFields.map((field) => `• ${field}`).join('\n');
+
   return [
     'Antes de pasarte a WhatsApp, ayúdame con estos datos para que el asesor reciba tu caso completo:',
-    missingFields.join(', '),
+    formattedFields,
     'Puedes responderlos en un solo mensaje.',
-  ].join(' ');
+  ].join('\n');
 }
 
 /**

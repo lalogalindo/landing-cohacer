@@ -10,8 +10,8 @@ const INTEREST_PATTERNS = [
 ];
 
 const WORK_AREA_PATTERNS = [
-  /(?:trabajo|trabajo en|laboro en|me dedico a|soy|área|area|sector)\s+(?:de|en|como)?\s*([a-záéíóúñ\s]{3,45})/i,
-  /(?:mi área es|mi area es|mi sector es)\s+([a-záéíóúñ\s]{3,45})/i,
+  /(?:trabajo|trabajo en|laboro en|me dedico a|área|area|sector)\s+(?:de|en|como)?\s*([a-záéíóúñ\s]{2,45})/i,
+  /(?:mi área es|mi area es|mi sector es)\s+([a-záéíóúñ\s]{2,45})/i,
 ];
 
 /**
@@ -46,6 +46,42 @@ function cleanCapturedText(value) {
     .slice(0, 60);
 }
 
+
+/**
+ * Divide una respuesta libre por comas para detectar datos enviados en una sola línea.
+ * @param {string} text Mensaje escrito por la persona usuaria.
+ * @returns {Array<string>} Partes limpias separadas por coma.
+ */
+function getCommaSeparatedParts(text) {
+  return String(text || '')
+    .split(',')
+    .map((part) => cleanCapturedText(part))
+    .filter(Boolean);
+}
+
+/**
+ * Revisa si una parte separada por comas parece nombre de persona.
+ * @param {string} value Fragmento candidato del mensaje.
+ * @returns {boolean} Verdadero si el fragmento parece nombre y no dato operativo.
+ */
+function looksLikeName(value) {
+  return /^[a-záéíóúñ]+(?:\s+[a-záéíóúñ]+){0,3}$/i.test(value)
+    && !/\b(trabajo|laboro|experiencia|años|anos|tel|whatsapp|titulaci[oó]n|costos?|requisitos?)\b/i.test(value);
+}
+
+/**
+ * Revisa si una parte separada por comas puede ser área laboral.
+ * @param {string} value Fragmento candidato del mensaje.
+ * @returns {boolean} Verdadero si el fragmento parece área o sector laboral.
+ */
+function looksLikeWorkArea(value) {
+  const cleanValue = String(value || '').trim();
+
+  return /^[a-záéíóúñ\s]{2,45}$/i.test(cleanValue)
+    && (cleanValue.length <= 3 || !looksLikeName(cleanValue))
+    && !/\b(años|anos|tel|whatsapp|titulaci[oó]n|costos?|requisitos?)\b/i.test(cleanValue);
+}
+
 /**
  * Detecta un posible nombre cuando la persona lo comparte de forma conversacional.
  * @param {string} text Mensaje escrito por la persona usuaria.
@@ -53,7 +89,13 @@ function cleanCapturedText(value) {
  */
 function extractName(text) {
   const match = String(text).match(/(?:me llamo|mi nombre es|soy)\s+([a-záéíóúñ]+(?:\s+[a-záéíóúñ]+){0,3})/i);
-  return match ? cleanCapturedText(match[1]) : '';
+
+  if (match) {
+    return cleanCapturedText(match[1]);
+  }
+
+  const [firstPart] = getCommaSeparatedParts(text);
+  return firstPart && looksLikeName(firstPart) ? firstPart : '';
 }
 
 /**
@@ -84,12 +126,14 @@ function extractExperienceYears(text) {
 function extractWorkArea(text) {
   const matchedPattern = WORK_AREA_PATTERNS.find((pattern) => pattern.test(text));
 
-  if (!matchedPattern) {
-    return '';
+  if (matchedPattern) {
+    const [, area] = String(text).match(matchedPattern) || [];
+    return cleanCapturedText(area);
   }
 
-  const [, area] = String(text).match(matchedPattern) || [];
-  return cleanCapturedText(area);
+  const parts = getCommaSeparatedParts(text);
+  const workArea = parts.find((part, index) => index > 0 && looksLikeWorkArea(part));
+  return workArea || '';
 }
 
 /**
