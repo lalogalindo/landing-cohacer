@@ -33,6 +33,8 @@ initLicenciaturaPdfModal();
 initAcreditacionModal({ closeMenu: menuApi.closeMenu });
 initAsesores();
 initCompaniesMarquee();
+/*
 initEsmiAssistant().catch((error) => {
   console.error('No se pudo inicializar Esmi:', error);
 });
+*/
